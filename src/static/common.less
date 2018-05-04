@@ -1,19 +1,25 @@
 @import url('./mui.min.css');
 @import url('./iconfont.css');
 
+@bgcolor: #e3e8fe;
+
 html{
   height: 100%;
 }
 
 body{
 	line-height: 15px;
-  background-color: #e8e8e8;
+  background-color: @bgcolor;
   height: 100%;
   display: flex;
   flex-direction: column;
   .mui-content{
     background: none;
   }
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 .mui-bar-nav{
@@ -59,6 +65,7 @@ body{
 .mui-btn-block{
 	padding: 10px 0;
 }
+
 
 
 .fix-popup{

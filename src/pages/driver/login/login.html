@@ -6,22 +6,25 @@
 		<title><%= htmlWebpackPlugin.options.title %></title>
 	</head>
 	<body>
-		
+		<div class="avator">
+			<i class="iconfont icon-login"></i>
+		</div>
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号" autocomplete="off">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码" autocomplete="off">
 				</div>
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' data-loading-text="登录中" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 			</div>
 		</div>
+		<div class="footer">©2018 深圳物链科技</div>
 	</body>
 </html>
 	
