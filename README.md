@@ -1,2 +1,14 @@
-# react-mui-plus-app
-利用react作为视图层的h5 plus 项目
+###安装依赖
+```
+npm i
+```
+###开发运行
+
+```
+npm run dev
+```
+
+###发布运行
+
+```
+npm run build

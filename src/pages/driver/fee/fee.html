@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title><%= htmlWebpackPlugin.options.title %></title>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="search" style="display:flex;">
+				<div class="mui-input-row mui-search">
+    			<input type="text" class="mui-input-clear fee-search-input" placeholder="请输入承运单号" id="search_input"/>
+				</div>
+				<button type="button" class="fee-search-btn" id="search_btn">查询</button>
+			</div>
+			<div class="fee-continer">
+				<table>
+					<thead>
+				    <tr class="fee-row">
+				      <th>日期</th>
+				      <th>装货地</th>
+				      <th>承运单号</th>
+				      <th>运费总额</th>
+				    </tr>
+  				</thead>
+  				<tbody id="fee-mui-scroll">
+  					<script id="fee-template" type="text/html">
+	  					{{each data as arr i}}
+	  					<tr class="fee-row">
+	  						<td>{{arr.PresentTime}}</td>
+	  						<td>{{arr.FullName}}</td>
+	  						<td class="orderRow" data-id="{{arr.OrderId}}">
+	  						<a style="color: #1929e2" class="tbody-OrderNo" id="tbody-OrderNo">{{arr.OrderNo}}</a>
+	  						</td>
+	  						<td class="feeRow" data-id="{{arr.OrderId}}">
+	  						<a style="color: #1929e2" class="tbody-fee">{{arr.Amount}}</a>
+	  						</td>
+	  					</tr>
+	  					{{/each}}
+  					</script>
+  				</tbody>
+  				<tfoot>
+  					<tr class="fee-row">
+  						<td style="border-right-color: transparent;"></td>
+  						<td style="border-right-color: transparent;"></td>
+  						<td class="fee-total">合计:</td>
+  						<td style="color: #f30" id="total">0</td>
+  					</tr>
+  				</tfoot>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
