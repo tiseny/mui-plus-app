@@ -1,5 +1,5 @@
 import mui from '../../../helpers/middleware';
-import { getQuery } from '../../../helpers/util';
+import { getQuery, callPhone, openMap } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
 import './orderDetail.redux';
 import './orderDetail.less';
