@@ -1,6 +1,6 @@
 import mui from '../../../helpers/middleware';
 import { getQuery, callPhone, openMap } from '../../../helpers/util';
-import { setState, getState } from '../../../helpers/state';
+import './recieveOrderDetail.redux';
 import './recieveOrderDetail.less';
 
 const template = require('../../../libs/art.template');
@@ -56,7 +56,7 @@ const task = {
 	// 获取 待解运单数据
 	fetchDetail: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
-		app.orderDetail.fetchDetail({
+		app.recieveOrderDetail.fetchDetail({
       id: getQuery(mui,'order_id')
 		}).then(json => {
 			mui.os.plus && plus.nativeUI.closeWaiting();

@@ -8,58 +8,45 @@ const template = require('../../../libs/art.template');
 let ids = []
 
 const task = {
+
 	listenMobile: () => {
 		mui('body').on('tap', '.sys-mobile', function() {
 			const mobile = this.getAttribute('data-mobile')
-
 			callPhone(mobile);
 		})
 	},
+
 	listenAddress: () => {
 		mui('body').on('tap', '.sys-address', function() {
 			const address = this.getAttribute('data-address')
-
 			openMap(address)
 		})
 	},
+
 	acceptOrder: () => {
-		mui('#waitOrderDetail-page').on('tap', '#accept-btn', function() {
+		mui('body').on('tap', '.mui-btn', function() {
 			const accept = this.getAttribute('data-accept')
-			// 开启loading
-			mui(this).button('loading');
-			app.waitOrderDetail.acceptOrder({
-				id: ids,
-				accept
-			}).then(json => {
-				mui(this).button('reset');
-				if (json.result) {
-					mui._toast(json.data.Msg || '接单成功')
-				}
-			})
-		})		
-	},
-	refuseOrder: () => {
-		mui('#waitOrderDetail-page').on('tap', '#refuse-btn', function() {
-			const accept = this.getAttribute('data-accept')
-			
-			// 弹窗
-			mui.prompt('', '', '拒单理由', ['确定','取消'], (e) => {
+			const confirm_title = accept ? '接单提醒' : '拒单提醒'
+			const confirm_content = accept ? '确定要接取订单？' : '拒接订单后，需要等待一定的时间直到下次订单的派发！'
+
+			mui.confirm(confirm_content, confirm_title, ['确认', '取消'], e => {
 				if (e.index == 0) {
+					// 开启loading
 					mui(this).button('loading');
-					app.waitOrderDetail.refuseOrder({
-						id: ids,
-						accept,
-						fromSingleReason: e.value
+					app.waitOrderDetail.acceptOrder({
+						ids,
+						accept
 					}).then(json => {
 						mui(this).button('reset');
 						if (json.result) {
-							mui._toast(json.data.Msg || '拒单成功')
+							mui._toast(json.data.Msg || '接单成功')
 						}
 					})
 				} 
 			})
-		})
+		})		
 	},
+
 	// 获取 待解运单数据
 	fetchDetail: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
@@ -105,8 +92,6 @@ mui._ready(function() {
 	task.listenAddress()
 
 	task.acceptOrder()
-
-	task.refuseOrder()
 
 });
 

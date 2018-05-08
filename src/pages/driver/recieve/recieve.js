@@ -26,7 +26,7 @@ const task = {
 	fetchRecieveList: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
 		app.recieve.fetchRecieveList({
-      orderNode: "RECEIVED"
+      type: "RECEIVED"
 		}).then(json => {
 			mui.os.plus && plus.nativeUI.closeWaiting();
 			//mui('#recieve-page').pullRefresh().endPulldownToRefresh();

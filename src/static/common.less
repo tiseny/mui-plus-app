@@ -5,16 +5,61 @@
 
 html{
   height: 100%;
+  background-color: @bgcolor;
 }
 
 body{
 	line-height: 15px;
-  background-color: @bgcolor;
   height: 100%;
   display: flex;
   flex-direction: column;
   .mui-content{
     background: none;
+  }
+
+  // 头部
+  .mui-bar-nav{
+    box-shadow: none;
+    background: transparent;
+    .mui-icon {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    .mui-title{
+      color: #222;
+      font-size: 14px;
+    }
+    ~.mui-content {
+      padding-bottom: 50px;
+
+      .mui-scroll-wrapper{
+        top: 44px;
+        bottom: 50px;
+      }
+    }
+    &.mui-bar .mui-icon{
+      color: #222;
+    }
+    & ~ .mui-content .mui-scroll-wrapper{
+      bottom: 0;
+    }
+  }
+
+
+  // 底部
+  .mui-bar.mui-bar-tab{
+    box-shadow: 0 0 1px rgba(0,0,0,.3);
+    background: #fff;
+    .mui-icon {
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+    &.mui-bar-tab{
+      background: #fff; 
+      .mui-tab-item.mui-active{
+        color: #1AAD19;
+      }
+    }
   }
 }
 
@@ -22,33 +67,6 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
-.mui-bar-nav{
-	background-color: #007aff;
-	.mui-title{
-		color: #fff;
-	}
-	~.mui-content {
-		padding-bottom: 50px;
-
-		.mui-scroll-wrapper{
-			top: 44px;
-			bottom: 50px;
-		}
-	}
-	&.mui-bar .mui-icon{
-		color: #fff;
-	}
-	& ~ .mui-content .mui-scroll-wrapper{
-		bottom: 0;
-	}
-}
-
-.mui-bar{
-	box-shadow: 0 0 1px rgba(0,0,0,.3);
-	.mui-icon {
-		font-size: 20px;
-	}
-}
 
 .mui-scroll-wrapper{
 	overflow: auto;
@@ -66,7 +84,21 @@ input:-webkit-autofill {
 	padding: 10px 0;
 }
 
+input[type='submit'], 
+.mui-btn-primary, 
+.mui-btn-blue{
+  border-color: #1AAD19;
+  background-color: #1AAD19;
+}
 
+.mui-table-view{
+  border-radius: 6px;
+  box-shadow: 0 0 4px #ccc;
+  &:before,&:after{
+    display: none;
+    border-radius: 6px;
+  }
+}
 
 .fix-popup{
 	position: fixed;

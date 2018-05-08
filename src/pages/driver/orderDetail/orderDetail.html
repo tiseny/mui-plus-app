@@ -15,7 +15,6 @@
 		    <div class="mui-scroll" id="orderDetail-mui-scroll">
           <script id="orderDetail-template" type="text/html">
             {{if data && !!data.OrderNo}}
-              <div class="title">&nbsp;</div>
               <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed"> 
                 <li class="mui-table-view-cell">
                   <div class="mui-table">
@@ -36,38 +35,38 @@
                         {{if data.Factories.length == 1}}
                           <div class="row">
                             <span class="name">装货工厂</span>
-                            <span class="value">{{Factory.FactoryOr}}</span> 
+                            <span class="value">{{Factory.FactoryFullName}}</span> 
                           </div>
                         {{else}}
                           <div class="row">
                             <span class="name">装货工厂{{key + 1}}</span>
-                            <span class="value">{{Factory.FactoryOr}}</span> 
+                            <span class="value">{{Factory.FactoryFullName}}</span> 
                           </div>
                         {{/if}}
                         <div class="row">
                           <span class="name">联系人</span>
-                          <span class="value">{{Factory.ContactName}}</span> 
+                          <span class="value">{{Factory.Contact}}</span> 
                         </div>
-                        <div class="row full arrow-right sys-mobile" data-mobile="{{Factory.LinkMobile}}">
+                        <div class="row full arrow-right sys-mobile" data-mobile="{{Factory.Mobile}}">
                           <span class="name">电话</span>
-                          <span class="value">{{Factory.LinkMobile}}</span> 
+                          <span class="value">{{Factory.Mobile}}</span> 
                         </div>
-                        <div class="row full arrow-right sys-address" data-address="{{Factory.FactoryAddress}}">
+                        <div class="row full arrow-right sys-address" data-address="{{Factory.FullPathAddress}}">
                           <span class="name">装卸地址</span>
-                          <span class="value">{{Factory.FactoryAddress}}</span> 
+                          <span class="value">{{Factory.FullPathAddress}}</span> 
                         </div>
                       {{/each}}  
                       <div class="row">
                         <span class="name">贸易方式</span>
-                        <span class="value">{{data.TradeWayName}}</span> 
+                        <span class="value">{{data.TradeWay}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">提柜地</span>
-                        <span class="value">{{data.ContainerToName}}</span> 
+                        <span class="value">{{data.ContainerYard}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">还柜地</span>
-                        <span class="value">{{data.ContainerToName}}</span> 
+                        <span class="value">{{data.AlsoTankDepot}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">货重</span>
@@ -75,15 +74,15 @@
                       </div>
                       <div class="row">
                         <span class="name">柜型</span>
-                        <span class="value">{{data.ArkOfName}}</span> 
+                        <span class="value">{{data.Ark}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">报关方式</span>
-                        <span class="value">{{data.CustomsWayName}}</span> 
+                        <span class="value">{{data.CustomsClearanceWay}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">起运海关</span>
-                        <span class="value">{{data.CustomsDataName}}</span> 
+                        <span class="value">{{data.CustomsName}}</span> 
                       </div>
                       <div class="row full">
                         <span class="name">订舱号</span>
@@ -95,7 +94,7 @@
                       </div>
                       <div class="row">
                         <span class="name">柜号</span>
-                        <span class="value">{{data.SealNumber}}</span> 
+                        <span class="value">{{data.TankNo}}</span> 
                       </div>
                       <div class="row">
                         <span class="name">过磅货重</span>
@@ -125,18 +124,19 @@
                         <span class="name">调度员</span>
                         <span class="value">{{data.DispatcherName}}</span> 
                       </div>
-                      <div class="row full arrow-right sys-mobile" data-mobile="{{data.DispartcherMobile}}">
+                      <div class="row full arrow-right sys-mobile" data-mobile="{{data.DispatcherMobile}}">
                         <span class="name">电话</span>
-                        <span class="value">{{data.DispartcherMobile}}</span> 
+                        <span class="value">{{data.DispatcherMobile}}</span> 
                       </div>
                       <div class="row full">
                         <span class="name">备注</span>
-                        <span class="value">{{data.OrderRemark}}</span> 
+                        <span class="value">{{data.OrderEntrustRemark}}</span> 
                       </div>
                     </div>
                   </div>
                 </li>
               </ul>
+              <div class="title">&nbsp;</div>
             {{else}}
               <div class="nothing-box">
                 <div class="no-result">

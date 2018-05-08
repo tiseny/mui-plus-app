@@ -1,4 +1,4 @@
-const driver_url = 'http://api2.wlwulian.com'
+const driver_url = 'https://wlTestApi.wlwulian.com'
 const bussiness_url = 'https://bms4cs.zhiduotong.net'
 
 export default {
@@ -8,15 +8,15 @@ export default {
     url: driver_url,                                                         // 接口处理
     api: {
       login: driver_url + '/api/Passport',                                   // 登陆
-      trailer: driver_url + '/api/Trailer',                                  // 司机
-      order: driver_url + '/api/Order',                                      // 运单
-      orderContainer: driver_url + '/api/OrderContainer',                    // 保存订单流程
-      orderContainerImage: driver_url + '/api/OrderContainerImage',          // 图片上传地址
-      orderHistory: driver_url + '/api/OrderHistory',                        // 历史运单
-      evaluate: driver_url + '/api/DriverEvaluate',                          // 评价
-      feeCategory: driver_url + '/api/CostItem',                             // 费用种类
-      fee: driver_url + '/api/OrderCost',                                    // 费用录入
-      checkSheet: driver_url + '/api/DriverCheckSheet'                       // 对账单  
+      orderTruck: driver_url + '/api/OrderTruck/GetByType',                  // 已接待接数据
+      orderHistory: driver_url + '/api/OrderTruck/GetOrderHistory',          // 历史运单分页
+      orderDetail: driver_url + '/api/OrderTruck',                           // 运单详情
+      fee: driver_url + '/api/OrderCost',                                    // 查看费用
+      feeCategory: driver_url + '/api/CostItem',                             // 费用类目
+      trailer: driver_url + '/api/Trailer',                                  // 司机资料
+      orderContainer: driver_url + '/api/OrderContainer',                    // 货柜信息
+      orderContainerImage: driver_url + '/api/OrderContainerImage',          // 货柜信息环节图片上传
+      checkSheet: driver_url + '/api/DriverCheckSheet'                       // 对账单
     }
   },
   bussiness: {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="ui-page-login">
+<html class="ui-page-feeDetail">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -8,57 +8,34 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
       <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-      <h1 class="mui-title">运单详情</h1>
+      <h1 class="mui-title">费用详情</h1>
     </header>
 		<div class="mui-content detail-page" id="feeDetail-page">
-			<div class="mui-scroll-wrapper" id="fee-mui-scroll">
-				<script id="fee-template" type="text/html"> 
-		    	<div class="mui-scroll">
-	          <div class="title">&nbsp;</div>
-	          {{if OrderStatus == 25}}
-	          <!-- 录入费用 -->
-	          <button class="feeDetail-add" id="add_feeList">加一笔</button>
-	          <!-- 录入费用from提交 -->
-	          <form action="" method="post" class="form">
-		          <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-	              <li class="mui-table-view-cell">
-	              	<a class="mui-navigate-right add_feeList_a">压夜费<input type="text" class="add_feeList_input"></a>
-   							</li>
-	              <li class="mui-table-view-cell orderRow fee-sum" >
-	              	<span class="fee-left">总额(元)</span>
-	              	<span class="fee-right" style="color:#ff0033">{{total}}</span>
-	              </li>
-	          	</ul>
-	          	<input type="submit" value="提交" class="submit" />
-	          	<input type="button" value="取消" class="submit" />
-          	</form>
-	          {{else}}
-	          <!-- 查看费用 -->
-	          <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-            	{{each list as Item i}}
-              <li class="mui-table-view-cell orderRow" id="fee-text" >
-                <span class="fee-CostItemName fee-left">{{Item.CostItemName}}</span>
-                <span class="fee-price fee-right">{{Item.Price}}</span>
-              </li>
-              {{/each}}
-              <li class="mui-table-view-cell orderRow fee-sum" >
-              	<span class="fee-left">总额(元)</span>
-              	<span class="fee-right" style="color:#ff0033">{{total}}</span>
-              </li>
-          	</ul>
-	    			{{/if}}
-	    			{{if hidden == 1}}
-	    			<div>这是费用选择</div>
-	    			{{each extraCategory as Item i}}
-	    			<div class="mui-input-row mui-checkbox mui-left">
-						  <label>{{Item.CostName}}</label>
-						  <input name="checkbox1" value="Item 1" type="checkbox">
+		<script id="fee-template" type="text/html"> 
+			<div class="fee-header">
+				费用总额(元)<br>
+				<b>9000.66</b>
+			</div>
+			<div class="fee-list-wrap">
+				<div class="title">明细</div>
+				<div class="list-wrap">
+					<div class="item">
+						<div class="text">
+							拖车费
+							<p>2018-05-02 02:20:20</p>
 						</div>
-						{{/each}}
-	    			{{/if}}
+						<div class="number"><b>500</b> 元</div>
 					</div>
-				</script>	
-			</div>	
+					<div class="item">
+						<div class="text">
+							拖车费
+							<p>2018-05-02 02:20:20</p>
+						</div>
+						<div class="number"><b>500</b> 元</div>
+					</div>
+				</div>
+			</div>
+		</script>	
 		</div>
 	</body>
 </html>

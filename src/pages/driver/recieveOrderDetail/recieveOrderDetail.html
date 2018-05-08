@@ -13,7 +13,7 @@
     <div id="recieveOrderDetail-mui">
     <script id="recieveOrderDetail-template" type="text/html">
       <ul class="mui-table-view mui-grid-view mui-grid-9">
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 21 ? 'done' : ''}} {{+data.OrderStatus == 21 ? 'active' : ''}}" data-action="提柜确认" data-valid="{{+data.OrderStatus >= 21 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 21 ? 'add' : 'show'}}">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 6 ? 'done' : ''}} {{+data.OrderStatus == 6 ? 'active' : ''}}" data-action="提柜确认" data-valid="{{+data.OrderStatus >= 6 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 6 ? 'add' : 'show'}}">
           <div class="back-line"></div>
           <a href="#">
             <span class="mui-icon mask"></span>
@@ -21,7 +21,7 @@
             <div class="mui-media-body">提柜确认</div>
           </a>
         </li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 22 ? 'done' : ''}} {{+data.OrderStatus == 22 ? 'active' : ''}}" data-action="到场确认" data-valid="{{+data.OrderStatus >= 22 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 22 ? 'add' : 'show'}}">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 7 ? 'done' : ''}} {{+data.OrderStatus == 7 ? 'active' : ''}}" data-action="到场确认" data-valid="{{+data.OrderStatus >= 7 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 7 ? 'add' : 'show'}}">
           <div class="back-line"></div>
           <a href="#">
             <span class="mui-icon mask"></span>
@@ -29,15 +29,15 @@
             <div class="mui-media-body">到场确认</div>
           </a>
         </li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 23 ? 'done' : ''}} {{+data.OrderStatus == 23 ? 'active' : ''}}" data-action="离场确认" data-valid="{{+data.OrderStatus >= 23 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 23 ? 'add' : 'show'}}">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 8 ? 'done' : ''}} {{+data.OrderStatus == 8 ? 'active' : ''}}" data-action="离场确认" data-valid="{{+data.OrderStatus >= 8 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 8 ? 'add' : 'show'}}">
           <div class="back-line"></div>
           <a href="#">
             <span class="mui-icon mask"></span>
             <span class="mui-icon ">离</span>
-            <div class="mui-media-body">离场确认</div>
+            <div class="mui-media-body">离场确认</div>  
           </a>
         </li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 24 ? 'done' : ''}} {{+data.OrderStatus == 24 ? 'active' : ''}}" data-action="还柜确认" data-valid="{{+data.OrderStatus >= 24 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 24 ? 'add' : 'show'}}">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 {{+data.OrderStatus >= 9 ? 'done' : ''}} {{+data.OrderStatus == 9 ? 'active' : ''}}" data-action="还柜确认" data-valid="{{+data.OrderStatus >= 9 ? 'true': 'false'}}" data-id="{{data.Id}}" data-mode="{{+data.OrderStatus == 9 ? 'add' : 'show'}}">
           <div class="back-line"></div>
           <a href="#">
             <span class="mui-icon mask"></span>

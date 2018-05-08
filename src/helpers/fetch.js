@@ -57,7 +57,7 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 	// 如果需要 token, 除了登录注册以外.
 	if (hasToken) {
 		Object.assign(headers, {
-			"ctp-token-sign": getState('token')
+			"api-token-sign": getState('token')
 		})
 	}
 
@@ -79,8 +79,9 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 					},2000)
 				} else {
 					resolve({
-						result: true,
-						data: data
+						result: data ? data.IsSuccess : false,
+						data: data ? data.Data : null,
+						msg: data ? data.Msg : ''
 					})	
 				}
 			},

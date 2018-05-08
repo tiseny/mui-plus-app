@@ -24,7 +24,7 @@ mui._ready(function() {
 		let self = plus.webview.currentWebview();
 		for (let i = 0; i < 5; i++) {
 			let sub = plus.webview.create(subpages[i], subpages[i], {
-				top: '45px',
+				top: '43px',
 				bottom: '51px',
 				styles: {
 					hardwareAccelerated: true
@@ -54,6 +54,13 @@ mui._ready(function() {
 		if (targetTab == activeTab) {
 			return;
 		}
+		// 如果是当前是费用
+		if (targetTab == 'fee.html') {
+			document.getElementById('header').classList.add('black')
+		} else {
+			document.getElementById('header').classList.remove('black')
+		}
+		
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		//显示目标选项卡

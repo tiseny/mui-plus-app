@@ -9,7 +9,7 @@ window.app.waitOrderDetail = {
 	//  获取 待接 列表
 	fetchDetail: params => {
 		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.order}/${params.id}`, null, 'get').then(json => {
+			fetch(`${config.driver.api.orderDetail}/${params.id}`, {}, 'get').then(json => {
 				resolve(json)
 			})
 		})
@@ -17,20 +17,11 @@ window.app.waitOrderDetail = {
 
 	acceptOrder: params => {
 		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.order}`, {
-				header: {accept: params.accept},
-				body: params.id
-			}, 'put').then(json => {
-				resolve(json)
-			})
-		})
-	},
-
-	refuseOrder: params => {
-		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.order}`, {
-				header: {fromSingleReason: params.fromSingleReason, accept: params.accept},
-				body: params.id
+			fetch(config.driver.api.orderDetail, {
+				header: {
+					accept: params.accept
+				},
+				body: params.ids
 			}, 'put').then(json => {
 				resolve(json)
 			})

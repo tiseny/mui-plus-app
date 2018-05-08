@@ -24,8 +24,9 @@ const task = {
 	fetchWaitList: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
 		app.wait.fetchWaitList({
-      orderNode: "WAITING"
+      type: "WAITING"
 		}).then(json => {
+			console.log(json.data)
 			mui.os.plus && plus.nativeUI.closeWaiting();
 			//mui('#wait-page').pullRefresh().endPulldownToRefresh();
 			document.getElementById('wait-mui-scroll').innerHTML = template('wait-template', {

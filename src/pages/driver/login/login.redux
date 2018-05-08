@@ -11,8 +11,8 @@ window.app.login = params => {
 			resolve(json)
 
 			if (json.result) {
-				setState('token',json.data.Data.Token)
-				setState('userInfo', JSON.stringify(json.data.Data))
+				setState('token',json.data.Token)
+				setState('userInfo', JSON.stringify(json.data))
 			}
 		})
 	})

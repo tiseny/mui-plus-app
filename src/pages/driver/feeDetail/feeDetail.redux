@@ -7,7 +7,7 @@ window.app.feeDetail = {
 	//获取费用数据
 	fetchFee: params => {
 		return new Promise((resolve,reject) => {
-			fetch(`${config.driver.api.fee}/${params.id}`,null,"get").then(json => {
+			fetch(config.driver.api.fee, {header: params}, "get").then(json => {
 				resolve(json)
 			})
 		})

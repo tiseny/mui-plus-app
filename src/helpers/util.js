@@ -2,7 +2,7 @@ import { setState, getState, clearState } from './state';
 import EXIF from '../libs/exif';
 import { loadBmap } from './loader';
 
-const BLANK_LIST = ['^/login.*', '^/register.*'];
+const BLANK_LIST = ['/login.*', '/register.*'];
 const LOGIN_URL = 'login.html'
 
 let geoWatch = null

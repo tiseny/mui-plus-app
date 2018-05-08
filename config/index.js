@@ -7,9 +7,9 @@ module.exports = {
     cssSourceMap: false,
     assetsPublicPath: '/', // 开发环境的PublicPath为'/'
     proxyTable: {
-      'http://api2.wlwulian.com/api': {
-        //target: 'http://dmp-admin-dev.mypaas.com.cn',
-        target: 'https://api2.wlwulian.com',
+      'https://wlTestApi.wlwulian.com/api': {
+        //target: 'https://bms4cs.zhiduotong.net',
+        target: 'https://wlTestApi.wlwulian.com',
         changeOrigin: true,
 
         //修改代理响应头cookie域名与开发域名一致，方便登录认证
@@ -19,7 +19,7 @@ module.exports = {
         }*/
       },
       'https://bms4cs.zhiduotong.net/api': {
-        //target: 'http://dmp-admin-dev.mypaas.com.cn',
+        //target: 'https://bms4cs.zhiduotong.net',
         target: 'https://bms4cs.zhiduotong.net',
         changeOrigin: true,
 
@@ -28,7 +28,7 @@ module.exports = {
         /*pathRewrite: {
           '^/api': '/'
         }*/
-      }
+      },
     }
   },
   build: {

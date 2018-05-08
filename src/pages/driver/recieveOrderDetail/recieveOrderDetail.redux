@@ -5,13 +5,13 @@ import { setState, getState } from '../../../helpers/state';
  * 用户登录
  **/
 window.app = window.app || {}
-window.app.orderDetail = {
+window.app.recieveOrderDetail = {
 	//  获取 待接 列表
 	fetchDetail: params => {
 		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.orderDetail}/${params.id}`, null, 'get').then(json => {
+			fetch(`${config.driver.api.orderDetail}/${params.id}`, {}, 'get').then(json => {
 				resolve(json)
 			})
 		})
-	}		
+	}
 }

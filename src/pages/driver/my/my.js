@@ -13,9 +13,7 @@ const task = {
 			mui(this).button('loading');
 			app.my.quit().then(json => {
 				mui(this).button('reset');
-				if (json.result) {
-					goLogin(mui)
-				}
+				goLogin(mui)
 			})
 		})
 	},

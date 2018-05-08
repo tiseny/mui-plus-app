@@ -1,38 +1,72 @@
 @import url('../../../static/common.less');
 
-.mui-table-view .orderRow .fee-left{
-	float: left;
-}
-.mui-table-view .orderRow .fee-right{
-	float: right;
-}
-.mui-table-view .fee-sum{
-	border-top:1px solid #1296db;
-}
-// .mui-scroll .feeDetail-add{
-// 	height:37px;
-// 	line-height: 100%;
-//   text-align: center;
-// }
-.mui-scroll .feeDetail-add{
-  // position: fixed;
-  width: 100%;
-  z-index: 3;
-  height: 35px;
-  background: #f7f7f7;
-  color: #1296db;
-  text-align: center;
-  line-height: 35px;
-  border-bottom: 1px solid #eee;
-}
+.ui-page-feeDetail{
+  background: #fff;
+  .mui-bar.mui-bar-nav{
+    background: #fff;
+  }
+  .fee-header{
+    padding: 5px 15px;
+    font-size: 16px;
+    color: #222;
+    background: #fff;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 4px #ddd;
+    b{
+      line-height: 60px;
+      font-size: 40px;
+      color: #f46f05;
+    }
+  }
 
-.mui-scroll .form ul li .add_feeList_input{
-  margin-bottom:0px;
-  padding:0px;
-  width:80%;
-  border: 0px;
-}
-
-.mui-scroll .form ul li .add_feeList_a{
-  margin: -22px -18px;
+  .fee-list-wrap{
+    font-size: 14px;
+    color: #666;
+    background: #fff;
+    box-shadow: 0px 0px 4px #ddd;
+    .title{
+      line-height: 40px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+      color: #999;
+    }
+    .list-wrap{
+      padding-left: 15px;
+      .item {
+        min-height: 40px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        .text{
+          display: flex;
+          flex: 1;
+          align-items: left;
+          flex-direction: column;
+          justify-content: center;
+          color: #000;
+          line-height: 30px;
+          p{
+            line-height: 30px;
+            margin-bottom: 0;
+            font-size: 12px;
+            color: #999;
+          }
+        }
+        .number{
+          align-items: center;
+          display: flex;
+          padding: 0 15px; 
+          b{
+            font-size: 16px;
+            color: #f46f05;
+            padding-right: 8px;
+            font-weight: normal;
+          }
+        }
+        &:last-child{
+          border-bottom: none;
+        }
+      }
+    }
+  }
 }

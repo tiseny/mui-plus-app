@@ -1,6 +1,12 @@
 @import url('../../../static/common.less');
 
 .ui-page-recieveOrderDetail{
+	.mui-bar-nav.mui-bar{
+		background: #222;
+		.mui-icon, .mui-title{
+			color: #fff;
+		}
+	}
 	#recieveOrderDetail-mui{
 		overflow: auto;
 		margin-top: 44px;
@@ -61,8 +67,14 @@
 		background: #fff;
 		&.mui-grid-9 {
 			border-top-color: #d6d3d3;
-			overflow: hidden;
-			display: flex;
+	    overflow: hidden;
+	    display: flex;
+	    margin: 0;
+	    box-shadow: none;
+	    border-radius: 0;
+	    border: none;
+	    background: #222;
+	    color: #fff;
 			.mui-table-view-cell{
 				position: relative;
 				padding: 10px;
@@ -75,9 +87,10 @@
 					color: #aaa;
 					position: absolute;
 					top: 54px;
+					font-size: 12px;
 				}
 				.mui-icon{
-					background-color: #b5b8bd;
+					background-color: #fff;
 			    border-radius: 50%;
 			    color: #fff;
 			    width: 40px;
@@ -100,31 +113,34 @@
 			    right: -1px;
 			    left: -1px;
 			    height: 1px;
-			    background: #b5b8bd;
+			    background: #fff;
 				}
 				&.done, &.acitve{
 					.mui-media-body{
-						color: #007aff;
+						color: #fff;
 					}
 					.mui-icon{
-						background-color: #007aff;
+						background-color: #0bb20c;
 					}
 					.back-line{
-						background: #007aff;
+						background: #0bb20c;
 					}
+				}
+				&.mui-active{
+					background-color: #222;
 				}
 				&.done.active{
 					.mui-icon{
-						background-color: #007aff;
+						background-color: #0bb20c;
 						&.mask{
-							background: rgba(0, 122, 255, .3);
+							background: rgba(11, 178, 12, .3);
 							animation:flash 2s .2s linear infinite;
 							-webkit-animation:flash 2s .2s linear infinite;
 						}	
 					}
 					.back-line{
 						background: none;
-						background-image: linear-gradient(90deg, #007aff, #b5b8bd);
+						background-image: linear-gradient(90deg, #0bb20c, #fff);
 					}	
 				}
 			}
