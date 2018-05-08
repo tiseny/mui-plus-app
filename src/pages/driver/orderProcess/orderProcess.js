@@ -32,28 +32,53 @@ const IMG_KEY = {
 	'还柜纸': 'ORDER_CABINETPAPER'
 }
 
+const PAGE_KEY = {
+	'提柜确认': 'BORROW_CONTAINER',
+	'到场确认': 'ARRIVAL_VENUE',
+	'离场确认': 'LEAVE_VENUE',
+	'还柜确认': 'RETURN_CONTAINER',
+}
+
 const task = {
 
 	state: {
-		pageData: {}
+		pageData: {
+			ArkHeavy: "", 								// 柜重量
+			BookingNum: "",								// 订舱号
+			SealNumber: "",								// 封条号
+			SerialNumOfBookingNum: "",		// 序号
+			TankNo: "",										// 柜号
+			WeighingWeight: "",						// 过磅货重
+
+			ghm: "",											// 柜后门
+			ft: "",												// 封条
+
+			gcdm: "",											// 工厂大门
+
+			kg: "",												// 空柜
+			hzyb: "",											// 货装一半
+			zh: "",												// 装好
+			fst: "",											// 封锁条
+
+			gbd: "",											// 过磅单
+			hgz: "",											// 还柜纸
+		}
 	},
 
 	uploadImage: () => {
 		mui('#orderProcess-page').on('tap', '.image-box-inner.plus', function() {
 			const field = this.getAttribute('data-field');
-			const index = this.getAttribute('data-index');
 			const type = this.getAttribute('data-type');
 			
 			photo((path, base64, bitdata) => {
 				app.orderProcess.upaloadImage({
 		      orderId: getQuery(mui, 'order_id'),
-		      businessKey: IMG_KEY['柜后门'],
+		      businessKey: IMG_KEY[type],
 		      data: bitdata
 		    }).then(json => {
 		      // 如果成功
 		      if (json.result) {
-		       	console.log(json)
-		       	task.state.pageData[field][index] = base64
+		       	task.state.pageData[field] = base64
 						render(task.state.pageData)
 		      }
 		    })
@@ -70,15 +95,13 @@ const task = {
 			const src = this.getAttribute('data-src');
 			const mode = this.getAttribute('data-mode');
 			const field = this.getAttribute('data-field');
-			const index = this.getAttribute('data-index');
 
 			if (src) {
 				const deleteFunc = mode === 'add' ? () => {
 					return new Promise((resolve,reject) => {
 						// 清空本地的图片路径
-						task.state.pageData[field][index] = ""
+						task.state.pageData[field] = ""
 						render(task.state.pageData)
-
 						resolve();
 					})	
 				} : null 
@@ -90,12 +113,11 @@ const task = {
 	deleteImage: () => {
 		mui('#orderProcess-page').on('tap', '.mui-input-row.camera .mui-icon-close', function() {
 			const field = this.getAttribute('data-field');
-			const index = this.getAttribute('data-index');
 
 			mui.confirm('确认要删除图片？', '提示', ['是', '否'], function(e) {
 				if (e.index == 0) {
 					// 清空本地的图片路径
-					task.state.pageData[field][index] = ""
+					task.state.pageData[field] = ""
 					render(task.state.pageData)
 				} 
 			})
@@ -105,14 +127,44 @@ const task = {
 	// 获取 待解运单数据
 	fetchDetail: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
+
+		const sectionName = decodeURI(getQuery(mui, 'action'))
+
 		app.orderProcess.fetchDetail({
       orderId: getQuery(mui, 'order_id'),
-      sectionName: "BORROW_CONTAINER"
+      sectionName: PAGE_KEY[sectionName]
 		}).then(json => {
 			mui.os.plus && plus.nativeUI.closeWaiting();
+
+			const attachs = json.data.Attachs
+			const ghm = attachs.find(item => item.BusinessCode == IMG_KEY['柜后门'])
+			const ft = attachs.find(item => item.BusinessCode == IMG_KEY['封条'])
+
+			const gcdm = attachs.find(item => item.BusinessCode == IMG_KEY['工厂大门'])
+
+			const kg = attachs.find(item => item.BusinessCode == IMG_KEY['空柜'])
+			const hzyb = attachs.find(item => item.BusinessCode == IMG_KEY['货装一半'])
+			const zh = attachs.find(item => item.BusinessCode == IMG_KEY['装好'])
+			const fst = attachs.find(item => item.BusinessCode == IMG_KEY['封锁条'])
+
+			const gbd = attachs.find(item => item.BusinessCode == IMG_KEY['过磅单'])
+			const hgz = attachs.find(item => item.BusinessCode == IMG_KEY['还柜纸'])
+			
 			task.state.pageData = json.data
 			// 数组默认为数组
-			task.state.pageData.Attachs = task.state.pageData.Attachs || []
+			task.state.pageData.ghm = ghm && ghm.AttachUrl || ''
+			task.state.pageData.ft = ft && ft.AttachUrl || ''
+
+			task.state.pageData.gcdm = gcdm && gcdm.AttachUrl || ''			
+
+			task.state.pageData.kg = kg && kg.AttachUrl || ''
+			task.state.pageData.hzyb = hzyb && hzyb.AttachUrl || ''
+			task.state.pageData.zh = zh && zh.AttachUrl || ''
+			task.state.pageData.fst = fst && fst.AttachUrl || ''
+
+			task.state.pageData.gbd = gbd && gbd.AttachUrl || ''
+			task.state.pageData.hgz = hgz && hgz.AttachUrl || ''
+
 			render(task.state.pageData)
 		})
 	}

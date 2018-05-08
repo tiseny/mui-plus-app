@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="ui-page-login">
+<html class="ui-page-orderProcess">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -17,95 +17,412 @@
   		<div class="mui-content orderProcess-page">
         <form class="mui-input-group">
           {{if title == '提柜确认'}}
-          <div class="mui-input-row">
-            <label>订舱号</label>
-            {{if mode == 'show'}}
-            <input type="text" value="{{data.BookingNum}}" class="mui-input-clear mui-input" disabled>
-            {{else}}
-            <input type="text" value="{{data.BookingNum}}" class="mui-input-clear mui-input" placeholder="请输入订舱号">
-            {{/if}}
-          </div>
-          <div class="mui-input-row">
-            <label>序号</label>
-            {{if mode == 'show'}}
-            <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" disabled >
-            {{else}}
-            <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" placeholder="请输入序号">
-            {{/if}}
-          </div>
-          <div class="mui-input-row">
-            <label><i class="require">*</i>柜号</label>
-            {{if mode == 'show'}}
-            <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" disabled>
-            {{else}}
-            <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" placeholder="请输入柜号">
-            {{/if}}
-          </div>
-          <div class="mui-input-row">
-            <label><i class="require">*</i>封条号</label>
-            {{if mode == 'show'}}
-            <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" disabled>
-            {{else}}
-            <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" placeholder="请输入封条号">
-            {{/if}}
-          </div>
-          <div class="mui-input-row unit">
-            <label><i class="require">*</i>柜重量</label>
-            {{if mode == 'show'}}
-            <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" disabled>
-            {{else}}
-            <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" placeholder="请输入柜重量">
-            {{/if}}
-            <span class="mui-input-unit">千克</span>
-          </div>
-          <div class="mui-input-row camera">
-            <label><i class="require">*</i>柜后门</label>
-            {{if !!data.Attachs[0] && mode == 'add'}}
-            <span class="mui-icon mui-icon-close" data-field="Attachs" data-index="0" data-type="柜后门"></span>
-            {{/if}}
-          </div>
-          <div class="mui-input-row img-preview-wrap">
-            {{if mode == 'add' && !data.Attachs[0] }}
-            <div class="image-box">
-              <div class="image-box-inner plus" data-field="Attachs" data-index="0">
-                <span class="mui-icon mui-icon-camera"></span>    
+          {{if mode == 'show'}}
+            <div class="mui-input-row readonly">
+              <label>订舱号</label>
+              <input type="text" value="{{data.BookingNum}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row readonly">
+              <label>序号</label>
+              <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" disabled >
+            </div>
+            <div class="mui-input-row readonly">
+              <label>柜号</label>
+              <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row readonly">
+              <label>封条号</label>
+              <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row unit">
+              <label>柜重量</label>
+              <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" disabled>
+              <span class="mui-input-unit">千克</span>
+            </div>
+            <div class="mui-input-row camera">
+              <label>柜后门</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.ghm}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.ghm}}" data-mode="{{mode}}" data-field="ghm">
+                  <img class="mui-media-object" src="{{data.ghm}}">  
+                </div>
               </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+            <div class="mui-input-row camera">
+              <label>封条</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.ft}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.ft}}" data-mode="{{mode}}" data-field="ft" >
+                  <img class="mui-media-object" src="{{data.ft}}">  
+                </div>
+              </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="mui-input-row">
+              <label>订舱号</label>
+              <input type="text" value="{{data.BookingNum}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row">
+              <label>序号</label>
+              <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" placeholder="请输入序号">
+            </div>
+            <div class="mui-input-row">
+              <label style="color: #f30">柜号</label>
+              <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" placeholder="请输入柜号">
+            </div>
+            <div class="mui-input-row">
+              <label style="color: #f30">封条号</label>
+              <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" placeholder="请输入封条号">
+            </div>
+            <div class="mui-input-row unit">
+              <label style="color: #f30">柜重量</label>
+              <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" placeholder="请输入柜重量">
+              <span class="mui-input-unit">千克</span>
+            </div>
+            <div class="mui-input-row camera">
+              <label style="color: #f30">柜后门</label>
+              {{if data.ghm}}
+              <span class="mui-icon mui-icon-close" data-field="ghm" data-type="柜后门"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.ghm}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="ghm">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.ghm}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.ghm}}" data-mode="{{mode}}" data-field="ghm">
+                  <img class="mui-media-object" src="{{data.ghm}}">  
+                </div>
+              </div>
+              {{/if}}
+            </div>
+            <div class="mui-input-row camera">
+              <label style="color: #f30">封条</label>
+              {{if data.ft}}
+              <span class="mui-icon mui-icon-close" data-field="ft"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.ft}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="ft"  data-type="封条">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.ft}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.ft}}" data-mode="{{mode}}" data-field="ft">
+                  <img class="mui-media-object" src="{{data.ft}}">  
+                </div>
+              </div>
+              {{/if}}
             </div>
             {{/if}}
-            {{if !!data.Attachs[0]}}
-            <div class="image-box">
-              <div class="image-box-inner image" data-src="{{data.Attachs[0]}}" data-mode="{{mode}}" data-field="Attachs" data-index="0">
-                <img class="mui-media-object" src="{{data.Attachs[0]}}">  
+          {{/if}}
+
+          {{if title == '到场确认'}}
+          {{if mode == 'show'}}
+            <div class="mui-input-row camera">
+              <label>工厂大门</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.gcdm}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.gcdm}}" data-mode="{{mode}}" data-field="gcdm">
+                  <img class="mui-media-object" src="{{data.gcdm}}">  
+                </div>
               </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="mui-input-row camera">
+              <label style="color: #f30">工厂大门</label>
+              {{if data.gcdm}}
+              <span class="mui-icon mui-icon-close" data-field="gcdm" data-type="工厂大门"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.gcdm}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="gcdm">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.gcdm}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.gcdm}}" data-mode="{{mode}}" data-field="gcdm">
+                  <img class="mui-media-object" src="{{data.gcdm}}">  
+                </div>
+              </div>
+              {{/if}}
             </div>
             {{/if}}
-          </div>
-          <div class="mui-input-row camera">
-            <label><i class="require">*</i>封条</label>
-            {{if !!data.Attachs[1] && mode == 'add'}}
-            <span class="mui-icon mui-icon-close" data-field="Attachs" data-index="1"></span>
-            {{/if}}
-          </div>
-          <div class="mui-input-row img-preview-wrap">
-            {{if mode == 'add' && !data.Attachs[1]}}
-            <div class="image-box">
-              <div class="image-box-inner plus" data-field="Attachs" data-index="1" data-type="封条">
-                <span class="mui-icon mui-icon-camera"></span>    
+          {{/if}}
+
+          {{if title == '离场确认'}}
+          {{if mode == 'show'}}
+            <div class="mui-input-row camera">
+              <label>空柜</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.kg}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.kg}}" data-mode="{{mode}}" data-field="kg">
+                  <img class="mui-media-object" src="{{data.kg}}">  
+                </div>
               </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+
+            <div class="mui-input-row camera">
+              <label>货装一半</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.hzyb}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.hzyb}}" data-mode="{{mode}}" data-field="hzyb">
+                  <img class="mui-media-object" src="{{data.hzyb}}">  
+                </div>
+              </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+
+
+            <div class="mui-input-row camera">
+              <label>装好</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.zh}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.zh}}" data-mode="{{mode}}" data-field="zh">
+                  <img class="mui-media-object" src="{{data.zh}}">  
+                </div>
+              </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+
+            <div class="mui-input-row camera">
+              <label>封锁条</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.fst}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.fst}}" data-mode="{{mode}}" data-field="fst">
+                  <img class="mui-media-object" src="{{data.fst}}">  
+                </div>
+              </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="mui-input-row camera">
+              <label>空柜</label>
+              {{if data.kg}}
+              <span class="mui-icon mui-icon-close" data-field="kg" data-type="空柜"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.kg}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="kg">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.kg}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.kg}}" data-mode="{{mode}}" data-field="kg">
+                  <img class="mui-media-object" src="{{data.kg}}">  
+                </div>
+              </div>
+              {{/if}}
+            </div>
+
+            <div class="mui-input-row camera">
+              <label>货装一半</label>
+              {{if data.hzyb}}
+              <span class="mui-icon mui-icon-close" data-field="hzyb" data-type="货装一半"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.hzyb}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="hzyb">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.hzyb}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.hzyb}}" data-mode="{{mode}}" data-field="hzyb">
+                  <img class="mui-media-object" src="{{data.hzyb}}">  
+                </div>
+              </div>
+              {{/if}}
+            </div>
+
+            <div class="mui-input-row camera">
+              <label>装好</label>
+              {{if data.zh}}
+              <span class="mui-icon mui-icon-close" data-field="zh" data-type="装好"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.zh}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="zh">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.zh}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.zh}}" data-mode="{{mode}}" data-field="zh">
+                  <img class="mui-media-object" src="{{data.zh}}">  
+                </div>
+              </div>
+              {{/if}}
+            </div>
+
+            <div class="mui-input-row camera">
+              <label style="color: #f30">封锁条</label>
+              {{if data.fst}}
+              <span class="mui-icon mui-icon-close" data-field="fst" data-type="封锁条"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.fst}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="fst">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.fst}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.fst}}" data-mode="{{mode}}" data-field="fst">
+                  <img class="mui-media-object" src="{{data.fst}}">  
+                </div>
+              </div>
+              {{/if}}
             </div>
             {{/if}}
-            {{if !!data.Attachs[1]}}
-            <div class="image-box">
-              <div class="image-box-inner image" data-src="{{data.Attachs[1]}}" data-mode="{{mode}}" data-field="Attachs" data-index="1">
-                <img class="mui-media-object" src="{{data.Attachs[1]}}">  
+          {{/if}}
+
+          {{if title == '还柜确认'}}
+          {{if mode == 'show'}}
+            <div class="mui-input-row">
+              <label>过磅货重</label>
+              <input type="text" value="{{data.WeighingWeight}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row camera">
+              <label>过磅单</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.gbd}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.gbd}}" data-mode="{{mode}}" data-field="gbd">
+                  <img class="mui-media-object" src="{{data.gbd}}">  
+                </div>
               </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+            <div class="mui-input-row camera">
+              <label>还柜纸</label>
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if data.gbd}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.gbd}}" data-mode="{{mode}}" data-field="gbd">
+                  <img class="mui-media-object" src="{{data.gbd}}">  
+                </div>
+              </div>
+              {{else}}
+              <div class="image-box"><div class="image-box-inner image">暂无图片</div></div>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="mui-input-row">
+              <label>过磅货重</label>
+              <input type="text" value="{{data.WeighingWeight}}" class="mui-input-clear mui-input" disabled>
+            </div>
+            <div class="mui-input-row camera">
+              <label>过磅单</label>
+              {{if data.gbd}}
+              <span class="mui-icon mui-icon-close" data-field="gbd" data-type="过磅单"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.gbd}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="gbd">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.gbd}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.gbd}}" data-mode="{{mode}}" data-field="gcdm">
+                  <img class="mui-media-object" src="{{data.gcdm}}">  
+                </div>
+              </div>
+              {{/if}}
+            </div>
+            <div class="mui-input-row camera">
+              <label style="color: #f30">还柜纸</label>
+              {{if data.hgz}}
+              <span class="mui-icon mui-icon-close" data-field="hgz" data-type="还柜纸"></span>
+              {{/if}}
+            </div>
+            <div class="mui-input-row img-preview-wrap">
+              {{if !data.hgz}}
+              <div class="image-box">
+                <div class="image-box-inner plus" data-field="hgz">
+                  <span class="mui-icon mui-icon-camera"></span>    
+                </div>
+              </div>
+              {{/if}}
+              {{if data.hgz}}
+              <div class="image-box">
+                <div class="image-box-inner image" data-src="{{data.hgz}}" data-mode="{{mode}}" data-field="hgz">
+                  <img class="mui-media-object" src="{{data.hgz}}">  
+                </div>
+              </div>
+              {{/if}}
             </div>
             {{/if}}
-          </div>
           {{/if}}
         </form>
         {{if mode == 'add'}}
-        <button type="button"  class="mui-btn mui-btn-primary mui-btn-block" id="sure-btn">确定</button>
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="sure-btn">确定</button>
         {{/if}}
   		</div>
       </script>

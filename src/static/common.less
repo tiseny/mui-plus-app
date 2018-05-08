@@ -1,7 +1,7 @@
 @import url('./mui.min.css');
 @import url('./iconfont.css');
 
-@bgcolor: #e3e8fe;
+@bgcolor: #eff2f5;
 
 html{
   height: 100%;
@@ -13,6 +13,7 @@ body{
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: @bgcolor;
   .mui-content{
     background: none;
   }
@@ -20,7 +21,7 @@ body{
   // 头部
   .mui-bar-nav{
     box-shadow: none;
-    background: transparent;
+    background: @bgcolor;
     .mui-icon {
       font-size: 18px;
       line-height: 24px;
