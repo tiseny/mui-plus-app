@@ -137,18 +137,18 @@ const task = {
 			mui.os.plus && plus.nativeUI.closeWaiting();
 
 			const attachs = json.data.Attachs
-			const ghm = attachs.filter(item => item.BusinessCode == IMG_KEY['柜后门'])
-			const ft = attachs.filter(item => item.BusinessCode == IMG_KEY['封条'])
+			const ghm = attachs.find(item => item.BusinessCode == IMG_KEY['柜后门'])
+			const ft = attachs.find(item => item.BusinessCode == IMG_KEY['封条'])
 
-			const gcdm = attachs.filter(item => item.BusinessCode == IMG_KEY['工厂大门'])
+			const gcdm = attachs.find(item => item.BusinessCode == IMG_KEY['工厂大门'])
 
-			const kg = attachs.filter(item => item.BusinessCode == IMG_KEY['空柜'])
-			const hzyb = attachs.filter(item => item.BusinessCode == IMG_KEY['货装一半'])
-			const zh = attachs.filter(item => item.BusinessCode == IMG_KEY['装好'])
-			const fst = attachs.filter(item => item.BusinessCode == IMG_KEY['封锁条'])
+			const kg = attachs.find(item => item.BusinessCode == IMG_KEY['空柜'])
+			const hzyb = attachs.find(item => item.BusinessCode == IMG_KEY['货装一半'])
+			const zh = attachs.find(item => item.BusinessCode == IMG_KEY['装好'])
+			const fst = attachs.find(item => item.BusinessCode == IMG_KEY['封锁条'])
 
-			const gbd = attachs.filter(item => item.BusinessCode == IMG_KEY['过磅单'])
-			const hgz = attachs.filter(item => item.BusinessCode == IMG_KEY['还柜纸'])
+			const gbd = attachs.find(item => item.BusinessCode == IMG_KEY['过磅单'])
+			const hgz = attachs.find(item => item.BusinessCode == IMG_KEY['还柜纸'])
 			
 			task.state.pageData = json.data
 			// 数组默认为数组
