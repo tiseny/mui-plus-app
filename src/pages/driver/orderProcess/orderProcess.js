@@ -76,6 +76,7 @@ const task = {
 		      businessKey: IMG_KEY[type],
 		      data: bitdata
 		    }).then(json => {
+		    	console.log(json)
 		      // 如果成功
 		      if (json.result) {
 		       	task.state.pageData[field] = base64

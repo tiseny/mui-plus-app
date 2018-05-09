@@ -24,7 +24,7 @@ window.app.orderProcess = {
 			const body = {
 				[params.businessKey] : params.data
 			}
-			fetch(config.driver.api.orderContainerImage, {header, body}, 'post').then(json => {
+			fetch(config.driver.api.orderContainerImage, {header, body}, 'upload').then(json => {
 				resolve(json)
 			})
 		})

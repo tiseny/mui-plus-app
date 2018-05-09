@@ -39,8 +39,10 @@ function getApiPath(url, paramData) {
 
 function fetch(url, params = {header: null, body: null}, method, hasToken = true) {
 
-	const header = params ? params.header : {}
-	const body = params ? params.body : null
+	method = method.toUpperCase();
+
+	let header = params ? params.header : {}
+	let body = params ? params.body : null
 
 	const NODE_ENV = document.title || ''
 	// 如果 url 不是 http 开头, 并且是 
@@ -52,13 +54,22 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 	url = getApiPath(url, header)
 
 	let headers = {
-		'Content-Type':'application/json'
+		'Content-Type': method == 'UPLOAD' ? "multipart/form-data" : 'application/json'
 	}
 	// 如果需要 token, 除了登录注册以外.
 	if (hasToken) {
 		Object.assign(headers, {
 			"api-token-sign": getState('token')
 		})
+	}
+	// 如果是上传文件。 数据改成文件流形式
+	if (method == 'UPLOAD') {
+		let formData = new FormData();
+		Object.keys(body).forEach(key => {
+			formData.append('file', body[key])
+		})
+
+		body = formData
 	}
 
 	return new Promise((resolve, reject) => {
