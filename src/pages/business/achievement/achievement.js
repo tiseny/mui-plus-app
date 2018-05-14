@@ -1,7 +1,7 @@
 import mui from '../../../helpers/middleware';
 import { goLogin, pageBack } from '../../../helpers/util';
-import './my.redux';
-import './my.less'
+import './achievement.redux';
+import './achievement.less'
 
 const DETAIL_URL = 'myDetail.html'
 
@@ -13,7 +13,9 @@ const task = {
 			mui(this).button('loading');
 			app.my.quit().then(json => {
 				mui(this).button('reset');
-				goLogin(mui)
+				if (json.result) {
+					goLogin(mui)
+				}
 			})
 		})
 	},
@@ -38,7 +40,7 @@ const task = {
 mui._ready(function () {
 
 	task.listenForward()
-	
+
 	task.quit()
 
 	pageBack(mui)

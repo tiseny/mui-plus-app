@@ -46,29 +46,27 @@ function goLogin(mui) {
 
 // 监听定位
 function watchLocation(mui) {
-	mui.plusReady(function() {
-		// 如果已经登录了
-		if (getState('token')) {
-			geoWatch = plus.geolocation.getCurrentPosition(function(position) {
-	    	// coords 经纬度
-	    	const coords = {
-	    		lng: position.coords.longitude,
-	    		lat: position.coords.latitude
-	    	}
-	    	// address
-	    	//const address = `${position.address.province}${position.address.city}${position.address.district}${position.address.street}`
-	    	//plus.nativeUI.toast(JSON.stringify(position))
-	    	// 清楚监听位置
-	    	plus.geolocation.clearWatch( geoWatch ); 
-	    	geoWatch = null
-	    }, function(e) {
-	      //plus.nativeUI.toast("异常:" + e.message);
-	      // 清楚监听位置
-	      plus.geolocation.clearWatch( geoWatch ); 
-	    	geoWatch = null
-	    },{ provider: 'baidu' });
-		}
-  });
+	// 如果已经登录了
+	if (getState('token')) {
+		geoWatch = plus.geolocation.getCurrentPosition(function(position) {
+    	// coords 经纬度
+    	const coords = {
+    		lng: position.coords.longitude,
+    		lat: position.coords.latitude
+    	}
+    	// address
+    	const address = `${position.address.province}${position.address.city}${position.address.district}${position.address.street}`
+    	console.log(JSON.stringify(position))
+    	// 清楚监听位置
+    	plus.geolocation.clearWatch( geoWatch ); 
+    	geoWatch = null
+    }, function(e) {
+      //plus.nativeUI.toast("异常:" + e.message);
+      // 清楚监听位置
+      plus.geolocation.clearWatch( geoWatch ); 
+    	geoWatch = null
+    },{ provider: 'baidu' });
+	}
 }
 
 // 调用系统电话
@@ -162,7 +160,6 @@ function compressImage(url, file, callback){
  	}); 
 }  
 
-
 // 获取 base64 图片数据
 //将图片压缩转成base64
 function getBase64Image(img, orientation) {
@@ -199,10 +196,10 @@ function getBase64Image(img, orientation) {
 	return canvas.toDataURL("image/jpeg", 0.5);
 }
 
-
 function pageBack(mui) {
 	// 退出
 	let backButtonPress = 0;
+	// 区分 mui.back 方法
 	mui._back = function(event) {
 		backButtonPress++;
 		if (backButtonPress > 1) {
@@ -290,6 +287,111 @@ function imagePreview(mui, src, deleteFunc) {
 	})
 }
 
+// 检索柜号
+function checkContainerNo(ContainerNo) {
+  const unicodetbs = [
+    "0","1","2","3","4","5","6","7","8","9","a","",
+    "b","c","d","e","f","g","h","i","j","k","",
+    "l","m","n","o","p","q","r","s","t","u","",
+    "v","w","x","y","z"
+  ]
+   // 转换成小写
+  ContainerNo = ContainerNo.toLowerCase().replace(/\s/g, "")
+  // 如果位数少于 1位
+  if (ContainerNo.length != 11) {
+    return false;
+  }
+
+  let b = 0
+  let c = 0
+
+  for (var i = 0; i < 10; i++) {
+    let s = ContainerNo.charAt(i) 
+    b = unicodetbs.indexOf(s)
+    c += Math.round(Math.pow(2, i)) * b
+  }
+
+  if ((c % 11) % 10 != ContainerNo.charAt(10)) { 
+    return false;
+  } else {
+   return true;
+ }
+}
+
+// 获取手持端信息
+function getDeviceInfo() {
+	return {
+		imei: plus.device.imei,  				//国际移动设备身份码	
+		imsi: plus.device.imsi,  				//国际移动用户识别码
+		model: plus.device.model, 			//设备的型号
+		vendor: plus.device.vendor, 		//设备的生产厂商
+		uuid: plus.device.uuid					//设备的唯一标识
+	}
+}
+// 更新版本
+function update(mui) {
+	plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+    var current_version = inf.version;
+    var url = severUlr +'version/gainApkVersion';
+    var ua = navigator.userAgent.toLowerCase();
+    if(/iphone|ipad|ipod/.test(ua)) {   //苹果手机            
+      mui.ajax({
+        type: "get",
+        dataType: 'json',
+        url: "https://itunes.apple.com/lookup?id=111030274", //获取当前上架APPStore版本信息
+        data:{            
+          id: 111030274 //APP唯一标识ID
+        },
+        contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+        success:function(data){
+          mui.each(data, function(i,norms) {
+            mui.each(norms, function(key,value) {
+              mui.each(value, function(j, version) {
+                if(j == "version"){
+                  if(version > current_version){                        
+                   	console.log("发现新版本:V" + version);
+                    document.location.href = 'https://itunes.apple.com/cn/app/san-gu-hui/id111030274?mt=8'; //上新APPStore下载地址
+                  }
+                }                            
+              });                
+            });
+          });        
+          return ;
+        }
+      });    
+    }else if(/android/.test(ua)) { 
+      mui.ajax(url, {
+        data:{
+          apkVersion: current_version,
+        },
+        dataType:'json',
+        type:'POST',
+        timeout:10000,
+        success:function(data){  
+          if(data.success){  
+            mui.toast("发现新版本:V" + data.data.apkVersion);//获取远程数据库中上新andriod版本号                       
+            var dtask = plus.downloader.createDownload(data.data.apkUrl, {}, function(d, status) {
+              if (status == 200) {                                        
+                plus.nativeUI.toast("正在准备环境，请稍后！");
+                plus.runtime.install(d.filename); // 自动安装apk文件
+              }else {
+                console.log('版本更新失败:' + status);
+              }
+            });
+            dtask.start(); 
+          }else{
+  					console.log('当前版本号已是最新');
+            return;
+          }
+        },
+        error: function(xhr, type, errerThrown) {
+          mui.toast('网络异常,请稍候再试');
+        }
+    	});
+    }
+  });
+}
+
 export {
 	getQuery,
 
@@ -300,5 +402,8 @@ export {
 	callPhone,
 	openMap,
 	photo,
-	imagePreview
+	imagePreview,
+	checkContainerNo,
+	getDeviceInfo,
+	update
 }

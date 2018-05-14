@@ -1,5 +1,5 @@
 import mui from '../../../helpers/middleware';
-import { goLogin } from '../../../helpers/util';
+import { goLogin, pageBack } from '../../../helpers/util';
 import './my.redux';
 import './my.less'
 
@@ -40,6 +40,8 @@ const task = {
 mui._ready(function () {
 
 	task.listenForward()
+
 	task.quit()
 
+	pageBack(mui)
 });

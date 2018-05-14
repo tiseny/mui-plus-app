@@ -1,5 +1,5 @@
 import mui from '../../../helpers/middleware';
-import { getQuery, imagePreview, photo } from '../../../helpers/util';
+import { getQuery, imagePreview, photo, checkContainerNo } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
 import './orderProcess.redux';
 import './orderProcess.less';
@@ -69,16 +69,18 @@ const task = {
 		mui('#orderProcess-page').on('tap', '.image-box-inner.plus', function() {
 			const field = this.getAttribute('data-field');
 			const type = this.getAttribute('data-type');
-			
+
+			mui.os.plus && plus.nativeUI.showWaiting('上传中...');
 			photo((path, base64, bitdata) => {
 				app.orderProcess.upaloadImage({
 		      orderId: getQuery(mui, 'order_id'),
 		      businessKey: IMG_KEY[type],
 		      data: bitdata
 		    }).then(json => {
-		    	console.log(json)
+		    	mui.os.plus && plus.nativeUI.closeWaiting();
 		      // 如果成功
 		      if (json.result) {
+		      	mui._toast('上传成功')
 		       	task.state.pageData[field] = base64
 						render(task.state.pageData)
 		      }
@@ -125,7 +127,6 @@ const task = {
 		})
 	},
 
-	// 获取 待解运单数据
 	fetchDetail: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
 
@@ -138,18 +139,18 @@ const task = {
 			mui.os.plus && plus.nativeUI.closeWaiting();
 
 			const attachs = json.data.Attachs
-			const ghm = attachs.find(item => item.BusinessCode == IMG_KEY['柜后门'])
-			const ft = attachs.find(item => item.BusinessCode == IMG_KEY['封条'])
+			const ghm = attachs.filter(item => item.BusinessCode == IMG_KEY['柜后门'])
+			const ft = attachs.filter(item => item.BusinessCode == IMG_KEY['封条'])
 
-			const gcdm = attachs.find(item => item.BusinessCode == IMG_KEY['工厂大门'])
+			const gcdm = attachs.filter(item => item.BusinessCode == IMG_KEY['工厂大门'])
 
-			const kg = attachs.find(item => item.BusinessCode == IMG_KEY['空柜'])
-			const hzyb = attachs.find(item => item.BusinessCode == IMG_KEY['货装一半'])
-			const zh = attachs.find(item => item.BusinessCode == IMG_KEY['装好'])
-			const fst = attachs.find(item => item.BusinessCode == IMG_KEY['封锁条'])
+			const kg = attachs.filter(item => item.BusinessCode == IMG_KEY['空柜'])
+			const hzyb = attachs.filter(item => item.BusinessCode == IMG_KEY['货装一半'])
+			const zh = attachs.filter(item => item.BusinessCode == IMG_KEY['装好'])
+			const fst = attachs.filter(item => item.BusinessCode == IMG_KEY['封锁条'])
 
-			const gbd = attachs.find(item => item.BusinessCode == IMG_KEY['过磅单'])
-			const hgz = attachs.find(item => item.BusinessCode == IMG_KEY['还柜纸'])
+			const gbd = attachs.filter(item => item.BusinessCode == IMG_KEY['过磅单'])
+			const hgz = attachs.filter(item => item.BusinessCode == IMG_KEY['还柜纸'])
 			
 			task.state.pageData = json.data
 			// 数组默认为数组
@@ -167,6 +168,125 @@ const task = {
 			task.state.pageData.hgz = hgz && hgz.AttachUrl || ''
 
 			render(task.state.pageData)
+		})
+	},
+
+	saveProcess: () => {
+		mui('body').on('tap', '#sure-btn', function() {
+			const processName = decodeURI(getQuery(mui, 'action'))
+			task.checkValid(processName).then(params => {
+				const saveFunc = processName == '提柜确认' ? app.orderProcess.saveCarryProcess : app.orderProcess.saveOtherProcess
+				// 开启loading
+				mui(this).button('loading');
+				saveFunc(params).then(json => {
+					mui(this).button('reset');
+					if (json.result) {
+						mui._toast('保存成功')
+						setTimeout(() => {
+							mui.openWindow({
+							  url: `recieveOrderDetail.html?order_id=${orderId}`,
+							  id: 'recieveOrderDetail.html',
+							  extras:{
+					        order_id: orderId
+						    }
+							});
+						},1500)
+					} else {
+						mui._toast(json.msg || '服务异常')
+					}
+				})
+			}).catch(msg => {
+				mui._toast(msg)
+			})
+			
+		})
+	},
+
+	// 校验表单数据
+	checkValid: (processName) => {
+		const orderId = getQuery(mui, 'order_id')
+		return new Promise((resolve,reject) => {
+			switch(processName) {
+				/**
+				 * 柜号（符合标准）
+				 * 封条号 
+				 * 柜重量
+				 * 柜后门
+				 * 封条
+				 */
+				case '提柜确认' : {
+					const TankNo = document.getElementById('TankNo').value
+		      const SealNumber = document.getElementById('SealNumber').value
+		      const ArkHeavy = document.getElementById('ArkHeavy').value
+		      const SerialNumOfBookingNum = document.getElementById('SerialNumOfBookingNum').value
+		      // 验证通过
+					if (task.state.pageData.ft && task.state.pageData.ghm && TankNo && SealNumber && ArkHeavy && checkContainerNo(TankNo)) {
+						resolve({
+							OrderId: orderId,
+				      SerialNumOfBookingNum,
+				      TankNo,
+				      SealNumber,
+				      ArkHeavy
+						})
+					} else if (!TankNo) {
+						reject('请输入柜号')
+					} else if (!checkContainerNo(TankNo)) {
+						reject('请输入符合标准的柜号')
+					} else if (!SealNumber) {
+						reject('请输入封条号')
+					} else if (!SerialNumOfBookingNum) {
+						reject('请输入柜重量')
+					} else if (!task.state.pageData.ft) {
+						reject('请先上传封条')
+					} else if (!task.state.pageData.ghm) {
+						reject('请先上传柜后门')
+					} 
+
+				}; break;
+				/**
+				 * 工厂大门
+				 */
+				case '到场确认': {
+					if (task.state.pageData.gcdm) {
+						resolve({
+							orderId: orderId,
+				      sectionName: PAGE_KEY[processName],
+				      WeighingWeight: ''
+						})
+					} else if (!task.state.pageData.gcdm) {
+						reject('请先上传工厂大门')
+					}
+				}; break;
+				/**
+				 * 封锁条
+				 */
+				case '离场确认': {
+					if (task.state.pageData.fst) {
+						resolve({
+							orderId: orderId,
+				      sectionName: PAGE_KEY[processName],
+				      WeighingWeight: ''
+						})
+					} else if (!task.state.pageData.fst) {
+						reject('请先上传封锁条')
+					}
+				}; break;
+				/**
+				 * 还柜纸
+				 */
+				case '还柜确认': {
+					const WeighingWeight = document.getElementById('WeighingWeight').value
+					if (task.state.pageData.hgz) {
+						resolve({
+							orderId: orderId,
+				      sectionName: PAGE_KEY[processName],
+				      WeighingWeight
+						})
+					} else if (!task.state.pageData.hgz) {
+						reject('请先上传还柜纸')
+					}
+				}; break;
+			}
 		})
 	}
 }
@@ -187,6 +307,8 @@ mui._ready(function() {
 
 	task.uploadImage()
 
-	task.deleteImage();
+	task.deleteImage()
+
+	task.saveProcess()
 
 });

@@ -25,7 +25,7 @@ function param(paramData) {
 // 请求地址
 function getApiPath(url, paramData) {
   const requestParams = paramData || {};
-  //requestParams.t = (new Date()).getTime();
+  requestParams.t = (new Date()).getTime();
 
   let params = param(requestParams);
 
@@ -65,11 +65,10 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 	// 如果是上传文件。 数据改成文件流形式
 	if (method == 'UPLOAD') {
 		let formData = new FormData();
-		Object.keys(body).forEach(key => {
-			formData.append('file', body[key])
-		})
-
+		formData.append('file', body)
 		body = formData
+		// 重置 method
+		method = 'post'
 	}
 
 	return new Promise((resolve, reject) => {
@@ -80,6 +79,7 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 			timeout: 10000,							//超时时间设置为10秒；
 			headers: headers,	              
 			success:function(data){
+				console.log(JSON.stringify(data))
 				// 如果
 				// 登录失效
 				if (data && data.Code === '000002') {
@@ -97,6 +97,7 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 				}
 			},
 			error:function(xhr,type,errorThrown){
+				console.log(JSON.stringify(xhr))
 				//异常处理；
 				mui._toast('系统异常');
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="ui-page-customerDetail">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title><%= htmlWebpackPlugin.options.title %></title>
+	</head>
+	<body>
+    <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">客户详情</h1>
+    </header>
+		<div class="mui-content">
+      <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label>信用代码</label>
+          <input type="text" value="" class="mui-input-clear mui-input" placeholder="请输入信用代码">
+        </div>
+        <div class="mui-input-row">
+          <label>客户全称</label>
+          <input type="text" value="" class="mui-input-clear  mui-input" placeholder="请输入客户全称">
+        </div>
+        <div class="mui-input-row">
+          <label>客户简称</label>
+          <input type="text" value="" class="mui-input-clear mui-input" placeholder="请输入客户简称">
+        </div>
+        <div class="mui-input-row">
+          <label>联系人</label>
+          <input type="text" value="" class="mui-input-clear mui-input" placeholder="请输入联系人">
+        </div>
+        <div class="mui-input-row">
+          <label>电话</label>
+          <input type="number" value="" class="mui-input-clear mui-input" placeholder="请输入电话">
+        </div>
+        <div class="mui-input-row">
+          <label>地址</label>
+          <textarea rows="3" placeholder="请输入地址" class="mui-input-clear mui-input"></textarea>
+        </div>
+      </form>
+      <button type="button" data-loading-text="提交中..." class="mui-btn mui-btn-primary mui-btn-block" id="sure-btn">确定</button>
+	</body>
+</html>

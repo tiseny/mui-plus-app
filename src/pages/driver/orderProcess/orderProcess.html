@@ -68,37 +68,37 @@
               {{/if}}
             </div>
           {{else}}
-            <div class="mui-input-row">
+            <div class="mui-input-row" style="background: #eff2f5;">
               <label>订舱号</label>
               <input type="text" value="{{data.BookingNum}}" class="mui-input-clear mui-input" disabled>
             </div>
             <div class="mui-input-row">
               <label>序号</label>
-              <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" placeholder="请输入序号">
+              <input type="text" value="{{data.SerialNumOfBookingNum}}" class="mui-input-clear  mui-input" placeholder="请输入序号" id="SerialNumOfBookingNum">
             </div>
             <div class="mui-input-row">
               <label style="color: #f30">柜号</label>
-              <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" placeholder="请输入柜号">
+              <input type="text" value="{{data.TankNo}}" class="mui-input-clear mui-input" placeholder="请输入柜号" id="TankNo">
             </div>
             <div class="mui-input-row">
               <label style="color: #f30">封条号</label>
-              <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" placeholder="请输入封条号">
+              <input type="text" value="{{data.SealNumber}}" class="mui-input-clear mui-input" placeholder="请输入封条号" id="SealNumber">
             </div>
             <div class="mui-input-row unit">
               <label style="color: #f30">柜重量</label>
-              <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" placeholder="请输入柜重量">
+              <input type="number" step="0.001" value="{{data.ArkHeavy}}" class="mui-input-clear mui-input" placeholder="请输入柜重量" id="ArkHeavy">
               <span class="mui-input-unit">千克</span>
             </div>
             <div class="mui-input-row camera">
               <label style="color: #f30">柜后门</label>
               {{if data.ghm}}
-              <span class="mui-icon mui-icon-close" data-field="ghm" data-type="柜后门"></span>
+              <span class="mui-icon mui-icon-close" data-field="ghm"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.ghm}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="ghm">
+                <div class="image-box-inner plus" data-field="ghm" data-type="柜后门">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -156,13 +156,13 @@
             <div class="mui-input-row camera">
               <label style="color: #f30">工厂大门</label>
               {{if data.gcdm}}
-              <span class="mui-icon mui-icon-close" data-field="gcdm" data-type="工厂大门"></span>
+              <span class="mui-icon mui-icon-close" data-field="gcdm" ></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.gcdm}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="gcdm">
+                <div class="image-box-inner plus" data-field="gcdm" data-type="工厂大门">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -244,13 +244,13 @@
             <div class="mui-input-row camera">
               <label>空柜</label>
               {{if data.kg}}
-              <span class="mui-icon mui-icon-close" data-field="kg" data-type="空柜"></span>
+              <span class="mui-icon mui-icon-close" data-field="kg"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.kg}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="kg">
+                <div class="image-box-inner plus" data-field="kg" data-type="空柜">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -267,13 +267,13 @@
             <div class="mui-input-row camera">
               <label>货装一半</label>
               {{if data.hzyb}}
-              <span class="mui-icon mui-icon-close" data-field="hzyb" data-type="货装一半"></span>
+              <span class="mui-icon mui-icon-close" data-field="hzyb" ></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.hzyb}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="hzyb">
+                <div class="image-box-inner plus" data-field="hzyb" data-type="货装一半">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -290,13 +290,13 @@
             <div class="mui-input-row camera">
               <label>装好</label>
               {{if data.zh}}
-              <span class="mui-icon mui-icon-close" data-field="zh" data-type="装好"></span>
+              <span class="mui-icon mui-icon-close" data-field="zh"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.zh}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="zh">
+                <div class="image-box-inner plus" data-field="zh" data-type="装好">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -313,13 +313,13 @@
             <div class="mui-input-row camera">
               <label style="color: #f30">封锁条</label>
               {{if data.fst}}
-              <span class="mui-icon mui-icon-close" data-field="fst" data-type="封锁条"></span>
+              <span class="mui-icon mui-icon-close" data-field="fst"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.fst}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="fst">
+                <div class="image-box-inner plus" data-field="fst" data-type="封锁条">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -372,18 +372,18 @@
           {{else}}
             <div class="mui-input-row">
               <label>过磅货重</label>
-              <input type="text" value="{{data.WeighingWeight}}" class="mui-input-clear mui-input" disabled>
+              <input type="text" value="{{data.WeighingWeight}}" class="mui-input-clear mui-input" id="WeighingWeight">
             </div>
             <div class="mui-input-row camera">
               <label>过磅单</label>
               {{if data.gbd}}
-              <span class="mui-icon mui-icon-close" data-field="gbd" data-type="过磅单"></span>
+              <span class="mui-icon mui-icon-close" data-field="gbd"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.gbd}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="gbd">
+                <div class="image-box-inner plus" data-field="gbd" data-type="过磅单">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -399,13 +399,13 @@
             <div class="mui-input-row camera">
               <label style="color: #f30">还柜纸</label>
               {{if data.hgz}}
-              <span class="mui-icon mui-icon-close" data-field="hgz" data-type="还柜纸"></span>
+              <span class="mui-icon mui-icon-close" data-field="hgz"></span>
               {{/if}}
             </div>
             <div class="mui-input-row img-preview-wrap">
               {{if !data.hgz}}
               <div class="image-box">
-                <div class="image-box-inner plus" data-field="hgz">
+                <div class="image-box-inner plus" data-field="hgz" data-type="还柜纸">
                   <span class="mui-icon mui-icon-camera"></span>    
                 </div>
               </div>
@@ -422,7 +422,7 @@
           {{/if}}
         </form>
         {{if mode == 'add'}}
-        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="sure-btn">确定</button>
+        <button type="button" data-loading-text="提交中..." class="mui-btn mui-btn-primary mui-btn-block" id="sure-btn">确定</button>
         {{/if}}
   		</div>
       </script>

@@ -1,5 +1,5 @@
 const driver_url = 'https://wlTestApi.wlwulian.com'
-const bussiness_url = 'https://bms4cs.zhiduotong.net'
+const bussiness_url = 'https://wlTestApi.wlwulian.com'  // https://bms4cs.zhiduotong.net
 
 export default {
   state_prefix: '$app::',                                                    // localStorage 数据缓存前缀
@@ -19,10 +19,10 @@ export default {
       checkSheet: driver_url + '/api/DriverCheckSheet'                       // 对账单
     }
   },
-  bussiness: {
+  business: {
     url: bussiness_url,                                                      // 接口处理
     api: {
-      login: bussiness_url + '/api/WxPassport',
+      login: bussiness_url + '/api/Passport',
       chat: bussiness_url + '/api/WxInfoBox',
       order: bussiness_url + '/api/WxOrderEasy',
       orderTotal: bussiness_url + '/api/GetOrderEasySummary',

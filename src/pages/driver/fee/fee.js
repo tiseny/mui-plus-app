@@ -143,8 +143,9 @@ mui._ready(function () {
 	task.listenChoose()
 
 	task.listenMonth()
+
+	pageBack(mui)
+	
 });
 
 
-// 退出
-pageBack(mui);

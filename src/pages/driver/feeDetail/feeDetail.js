@@ -71,5 +71,6 @@ mui._ready(function() {
 	task.fetchFeeCategory()
 
 	task.ListenerAddFee()
+
 });
 

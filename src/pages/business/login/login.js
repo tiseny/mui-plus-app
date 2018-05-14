@@ -15,7 +15,8 @@ const task = {
 			mui(this).button('loading');
 			app.login({
 				userCode: $account.value,
-				password: $password.value
+				password: $password.value,
+				loginType: 2
 			}).then(json => {
 				mui(this).button('reset');
 				if (json.result) {
@@ -33,6 +34,8 @@ const task = {
 							autoShow: false
 						}
 					});
+				} else {
+					mui._toast(json.msg || '服务异常')
 				}
 			})
 		})

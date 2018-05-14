@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class="ui-page-search">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div class="mui-content">
+      <div class="mui-input-row">
+        <label style="color:#999">选择出发地址</label>
+      </div>
+      <div class="mui-input-group">
+        <div class="mui-input-row">
+          <label>省/市/地区</label>
+          <input type="text" value="" class="mui-input-clear mui-input">
+        </div>
+        <div class="mui-input-row">
+          <label>街道</label>
+          <input type="text" value="" class="mui-input-clear  mui-input">
+        </div>
+      </div>
+      <div class="mui-input-row">
+        <label style="color:#999">选择终点地址</label>
+      </div>
+      <div class="mui-input-group">
+        <div class="mui-input-row">
+          <label>省/市/地区</label>
+          <input type="text" value="" class="mui-input-clear mui-input">
+        </div>
+        <div class="mui-input-row">
+          <label>街道</label>
+          <input type="text" value="" class="mui-input-clear  mui-input">
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="search" data-loading-text="查询中...">查询</button>  
+      </div>
+    </div>
+  </body>
+</html>

@@ -15,7 +15,8 @@ const task = {
 			mui(this).button('loading');
 			app.login({
 				userCode: $account.value,
-				password: $password.value
+				password: $password.value,
+				loginType: 1 // 司机端
 			}).then(json => {
 				mui(this).button('reset');
 				if (json.result) {

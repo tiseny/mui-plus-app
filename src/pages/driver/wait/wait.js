@@ -1,4 +1,5 @@
 import mui from '../../../helpers/middleware';
+import { pageBack } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
 import './wait.redux';
 import './wait.less';
@@ -63,4 +64,5 @@ mui._ready(function() {
 
 	task.listenForward()
 
+	pageBack(mui);
 });

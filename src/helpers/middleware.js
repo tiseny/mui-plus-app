@@ -1,5 +1,5 @@
 import '../libs/fastclick';
-import { pageBack, watchLocation, isLogin, goLogin } from './util';
+import { watchLocation, isLogin, goLogin } from './util';
 
 Number.prototype.formatMoney = function(places, symbol, thousand, decimal) {
   places = !isNaN(places = Math.abs(places)) ? places : 2;
@@ -18,20 +18,22 @@ const mui = require('../libs/mui.min.js');
 function middleware() {
 	// 重新定义 
 	mui._ready = func => {
-		if (mui.os.plus) {
-			mui.plusReady(func)
-		} else {
-			mui.ready(func)
-		}
 
-		// 退出
-		pageBack(mui)
+		let readyFunc = mui.os.plus ? mui.plusReady : mui.ready
 
-		// 判断是否已经登录
-		isLogin(mui);
+		readyFunc(() => {
 
-		// 定位信息
-		watchLocation(mui);
+			// 回调
+			func();
+
+			// 判断是否已经登录
+			isLogin(mui);
+
+			// 定位信息
+			watchLocation(mui);
+
+		})
+
 	}
 
 	mui._toast = msg => {

@@ -1,0 +1,33 @@
+@import url('../../../static/common.less');
+
+.ui-page-customerDetail{
+	.mui-content  .mui-table-view{
+		background: transparent;
+		border-radius: 0;
+		box-shadow: none;
+		&:first-child{
+			margin-top: 0px;
+		}
+	}
+
+	.mui-input-group .mui-input-row{
+		min-height: 40px;
+		height: auto;
+		font-size: 14px;
+		label{
+			color: #999;
+			& ~ input,  
+			& ~ select,  
+			& ~ textarea{
+				font-size: 14px;
+			}
+		}
+	}
+
+	#sure-btn{
+		position: fixed;
+    bottom: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+	}
+}
