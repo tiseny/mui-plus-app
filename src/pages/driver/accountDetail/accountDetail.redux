@@ -7,7 +7,7 @@ window.app.getAccount = {
 	//获取对账单费用数据
 	checkSheet: (params) => {
 		return new Promise((resolve,reject) => {
-			fetch(`${config.driver.api.checkSheet}/GetCheckSheet`,{header: params},"get").then(json => {
+			fetch(config.driver.api.checkSheet,{header: params},"get").then(json => {
 				resolve(json)
 			})
 		})

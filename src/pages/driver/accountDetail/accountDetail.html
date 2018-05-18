@@ -11,19 +11,160 @@
 
 <body>
     <div class="mui-content">
-        <ul id="account-view" class="mui-table-view">
-            <script id="fee-template" type="text/html">
-                {{each data as item i}}
-                <li class="mui-table-view-cell" data-Id="{{item.Id}}">
-                    <a class="mui-navigate-right">
-                        <div>{{item.CheckSheetDate}}</div>
-                        <div>{{item.CheckSheetStatusName}}</div>
-                        <div style="padding-right:20px;">{{item.Amount}}</div>
-                    </a>
-                </li>
-				{{/each}}
-            </script>
-        </ul>
+        <div class="total">
+            <div class="income-total">
+                <div class="total-title">净收入(元)</div>
+                <div class="total-value">5,000.00</div>
+            </div>
+            <div class="income-parts">
+                <div class="income-part">
+                    <div>运单收入(元)</div>
+                    <div>8,000.00</div>
+                </div>
+                <div class="income-part">
+                    <div>借款支出(元)</div>
+                    <div>-2,000.00</div>
+                </div>
+                <div class="income-part">
+                    <div>打油支出(元)</div>
+                    <div>-1,000.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="account-detail">
+            <div class="waybill-detail">
+                <header>运单明细</header>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="loan-detail">
+                <header>借款明细</header>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="oil-detail">
+                <header>打油明细</header>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <div class="cell-hd">
+                            <div class="cell-hd-part">
+                                <span>柜号：</span>AFRETWRGSDFG
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>装货地址：</span>广东省深圳市福田区或发哦is好的发
+                            </div>
+                            <div class="cell-hd-part">
+                                <span>备注：</span> 苦涩的广佛熬夜的广佛字士
+                            </div>
+                        </div>
+                        <div class="cell-bd">
+                            <div style="color: #f30;font-size: 18px;font-weight: bold;">500</div>
+                            <div style="color: #888;">运费</div>
+                            <div style="width: 74px;color: #888;">2018-04-12</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <button type="button" data-loading-icon="mui-spinner mui-spinner-custom" class="mui-btn mui-btn-success" data-loading-text="确认中">核对通过</button>
+        </div>
     </div>
 </body>
 
