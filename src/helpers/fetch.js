@@ -79,7 +79,6 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 			timeout: 10000,							//超时时间设置为10秒；
 			headers: headers,	              
 			success:function(data){
-				console.log(JSON.stringify(data))
 				// 如果
 				// 登录失效
 				if (data && data.Code === '000002') {
