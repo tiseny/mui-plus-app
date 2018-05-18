@@ -1,0 +1,61 @@
+@import url('../../../static/common.less');
+.mui-table-view-cell>a:not(.mui-btn) {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ui-page-accountDetail {
+    font-size: 14px;
+    .total {
+      font-size: 14px;
+        margin: 10px;
+        background-color: #5386df;
+        color: #fff;
+        border-radius: 3px;
+        padding: 15px;
+        .income-total {
+            padding: 5px 0;
+            border-bottom: 1px #eee solid;
+            .total-title {
+                font-size: 16px;
+            }
+            .total-value {
+                margin-top: 10px;
+                font-size: 22px;
+            }
+        }
+        .income-parts {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            .income-part div {
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .account-detail {
+        padding: 0 10px;
+        .waybill-detail,
+        .loan-detail,
+        .oil-detail{
+          margin-bottom: 10px;
+        }
+        .mui-table-view {
+            margin-top: 10px;
+            .mui-table-view-cell {
+                font-size: 14px;
+                display: flex;
+                justify-content: space-between;
+                .cell-hd {
+                    .cell-hd-part span {
+                        color: #888;
+                    }
+                }
+                .cell-bd {
+                    margin-left: 8px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

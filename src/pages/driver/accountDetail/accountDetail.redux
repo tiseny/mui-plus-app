@@ -1,0 +1,15 @@
+import config from '../../../config';
+import fetch from '../../../helpers/fetch';
+import { setState, getState } from '../../../helpers/state';
+
+window.app = window.app || {}
+window.app.getAccount = {
+	//获取对账单费用数据
+	checkSheet: (params) => {
+		return new Promise((resolve,reject) => {
+			fetch(config.driver.api.checkSheet,{header: params},"get").then(json => {
+				resolve(json)
+			})
+		})
+	}
+}
