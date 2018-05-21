@@ -12,12 +12,12 @@
 <body>
     <div class="mui-content">
         <ul id="account-view" class="mui-table-view">
-            <script id="fee-template" type="text/html">
+            <script id="account-template" type="text/html">
                 {{each data as item i}}
-                <li class="mui-table-view-cell" data-Id="{{item.Id}}">
+                <li class="mui-table-view-cell" data-Id="{{item.Id}}" data-state="{{item.stateName}}">
                     <a class="mui-navigate-right">
                         <div>{{item.CheckSheetDate}}</div>
-                        <div>{{item.CheckSheetStatusName}}</div>
+                        <div style="color:{{item.stateColor}};">{{item.stateName}}</div>
                         <div style="padding-right:20px;">{{item.Amount}}</div>
                     </a>
                 </li>

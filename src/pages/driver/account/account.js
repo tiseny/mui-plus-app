@@ -12,7 +12,10 @@ const task = {
     fetchList: () => {
         app.getAccount.checkSheet({}).then(json => {
             json.data = task.formatData(json.data)
-            const html = template('fee-template', { data: json.data });
+            json.data.forEach(ele => {
+                task.getStatus(ele)
+            })
+            const html = template('account-template', { data: json.data });
             document.getElementById('account-view').innerHTML = html;
         })
     },
@@ -28,16 +31,45 @@ const task = {
     //点击进入详情
     bindToDetail: () => {
         mui("body").on('tap', '.mui-table-view-cell', function () {
-            const id = this.getAttribute('data-Id')
-            console.log(id)
+            const Id = this.getAttribute('data-Id')
+            const state = this.getAttribute('data-state')
             mui.openWindow({
-                url: `${DETAIL_URL}?part_id=${id}`,
-                id: DETAIL_URL,
+                url: `${DETAIL_URL}?partnerBillId=${Id}&state=${state}`,
+                partnerBillId: DETAIL_URL,
                 extras: {
-                    part_id: id
+                    partnerBillId: Id,
+                    state: state
                 }
             });
         })
+    },
+
+    //状态值
+    getStatus: function (item) {
+        const StatusArr = ['未提交', '等待审核', '已提交', '审核中', '审核通过', '付款中', '付款完结', '已退回']
+        const StateArr = ['', '平台审核通过', '司机不通过', '司机通过']
+        const stateColor = {
+            '平台审核通过': '#222',
+            '司机不通过': '#f30',
+            '司机通过': '#1AAD19',
+            '未提交': '#999',
+            '等待审核': '#ffc107',
+            '已提交': '#222',
+            '审核中': '#9112c8',
+            '审核通过': '#ff9630',
+            '付款中': '#2196F3',
+            '付款完结': '#3a0',
+            '已退回': '#f30'
+        }
+
+        // 优先 支付状态 id 
+        if (item.PaymentStatusId != null) {
+            item.stateName = StatusArr[item.PaymentStatusId]
+            item.stateColor = stateColor[item.stateName]
+        } else {
+            item.stateName = StateArr[item.CheckSheetStatusId] || '司机通过'
+            item.stateColor = stateColor[item.stateName]
+        }
     }
 }
 

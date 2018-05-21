@@ -11,5 +11,15 @@ window.app.getAccount = {
 				resolve(json)
 			})
 		})
+	},
+
+	//提交核对
+	submitCheck: (params) => {
+		console.log(params)
+		return new Promise((resolve,reject) => {
+			fetch(`${config.driver.api.checkSheet}/${params.partnerBillId}`,{header: {isThrough: params.isThrough}},"put").then(json => {
+				resolve(json)
+			})
+		})
 	}
 }

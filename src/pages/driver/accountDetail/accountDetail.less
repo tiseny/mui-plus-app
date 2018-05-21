@@ -7,7 +7,7 @@
 .ui-page-accountDetail {
     font-size: 14px;
     .total {
-      font-size: 14px;
+        font-size: 14px;
         margin: 10px;
         background-color: #5386df;
         color: #fff;
@@ -21,7 +21,15 @@
             }
             .total-value {
                 margin-top: 10px;
+                margin-bottom: 6px;
                 font-size: 22px;
+            }
+            #account-state {
+                position: absolute;
+                right: 26px;
+                top: 40px;
+                transform: rotate(-25deg);
+                color: #f4ff00;
             }
         }
         .income-parts {
@@ -37,8 +45,13 @@
         padding: 0 10px;
         .waybill-detail,
         .loan-detail,
-        .oil-detail{
-          margin-bottom: 10px;
+        .oil-detail {
+            margin-bottom: 10px;
+            font-size: 14px;
+            .detail-hd {
+                padding: 0 15px;
+                color: #999;
+            }
         }
         .mui-table-view {
             margin-top: 10px;
@@ -56,6 +69,13 @@
                     text-align: right;
                 }
             }
+        }
+    }
+    .submit-btn {
+        padding: 10px;
+        .mui-btn {
+            width: 100%;
+            margin-bottom: 10px;
         }
     }
 }
