@@ -45,14 +45,7 @@ const task = {
             document.getElementById('mui-content').innerHTML = html;
         })
     },
-
-    //格式化数据列表
-    formatData: (data) => {
-        data.forEach(element => {
-            element.CheckSheetDate = element.CheckSheetDate.split(' ')[0]
-        });
-        return data
-    },
+    
     //核对账单
     bindCheck: () => {
         mui(document.body).on('tap', '.mui-btn', function (ele) {
