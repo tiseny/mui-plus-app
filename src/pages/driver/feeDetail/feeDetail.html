@@ -11,30 +11,66 @@
       <h1 class="mui-title">费用详情</h1>
     </header>
 		<div class="mui-content detail-page" id="feeDetail-page">
-		<script id="fee-template" type="text/html"> 
-			<div class="fee-header">
-				费用总额(元)<br>
-				<b>9000.66</b>
+		<script id="fee-template" type="text/html">
+			{{if mode == 'show'}}
+			<div class="total">
+				<div class="value">9000.66</div>
+				<div class="title">费用总额(元)</div>
 			</div>
-			<div class="fee-list-wrap">
-				<div class="title">明细</div>
-				<div class="list-wrap">
-					<div class="item">
-						<div class="text">
-							拖车费
-							<p>2018-05-02 02:20:20</p>
-						</div>
-						<div class="number"><b>500</b> 元</div>
-					</div>
-					<div class="item">
-						<div class="text">
-							拖车费
-							<p>2018-05-02 02:20:20</p>
-						</div>
-						<div class="number"><b>500</b> 元</div>
-					</div>
+			<div class="sub-title">
+				<i class="iconfont icon-jiekuan"></i>费用明细 （3）
+			</div>
+			<div class="fee-list">
+				<div class="item">
+					<label>运费</label>
+					<span>200</span>
+				</div>
+				<div class="item">
+					<label>运费</label>
+					<span>200</span>
+				</div>
+				<div class="item">
+					<label>运费</label>
+					<span>200</span>
 				</div>
 			</div>
+			{{else}}
+				<div class="add-btn" id="add-btn"><i class="iconfont icon-add"></i>加一笔</div>
+				<div class="input-wrap">
+					<div class="mui-input-row">
+		        <label>用户名</label>
+				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+			    </div>
+			    <div class="mui-input-row">
+		        <label>用户名</label>
+				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+			    </div>
+			    <div class="mui-input-row">
+		        <label>用户名</label>
+				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+			    </div>
+			    <div class="mui-input-row">
+		        <label>用户名</label>
+				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+			    </div>
+				</div>
+				<div class="footer">
+					<div class="mui-btn mui-btn-primary" data-action="0">确定</div>
+					<div class="mui-btn" data-action="1">取消</div>
+				</div>
+				<div class="category-wrap" id="category-wrap">
+					<div class="item">车费 <i class="iconfont icon-gouxuan"></i></div>
+					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
+					<div class="item">车费 <i class="iconfont icon-gouxuan"></i></div>
+					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
+					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
+
+					<div class="footer ">
+						<div class="mui-btn mui-btn-primary" data-action="2">确定</div>
+						<div class="mui-btn" data-action="3">取消</div>
+					</div>
+				</div>
+			{{/if}}
 		</script>	
 		</div>
 	</body>

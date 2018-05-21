@@ -4,67 +4,124 @@
   background: #fff;
   .mui-bar.mui-bar-nav{
     background: #fff;
+    .mui-icon,.mui-title{
+      color: #222;
+    }
   }
-  .fee-header{
-    padding: 5px 15px;
-    font-size: 16px;
-    color: #222;
-    background: #fff;
-    margin-bottom: 15px;
-    box-shadow: 0px 0px 4px #ddd;
-    b{
-      line-height: 60px;
-      font-size: 40px;
-      color: #f46f05;
+  
+  .total{
+    padding:15px 60px;
+    z-index:500;
+    margin:10px;
+    height:115px;
+    background:#5386df;
+    border-radius:6px;
+    color:#fff;
+    text-align:center;
+    .value{
+      font-size: 28px;
+      margin: 12px 0 15px 0;
+      font-weight: bold;
+      line-height: 30px;
+    }
+    .title{
+      font-size: 14px;
     }
   }
 
-  .fee-list-wrap{
+  .sub-title{
+    padding: 0 15px;
+    color: #999;
+    line-height: 30px;
     font-size: 14px;
-    color: #666;
-    background: #fff;
-    box-shadow: 0px 0px 4px #ddd;
-    .title{
-      line-height: 40px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-      font-size: 16px;
-      color: #999;
+    .iconfont{
+      font-size: 20px;
+      padding-right: 5px;
+      vertical-align: middle;
     }
-    .list-wrap{
-      padding-left: 15px;
-      .item {
-        min-height: 40px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        .text{
-          display: flex;
-          flex: 1;
-          align-items: left;
-          flex-direction: column;
-          justify-content: center;
-          color: #000;
-          padding-top: 10px;
-          p{
-            line-height: 30px;
-            margin-bottom: 0;
-            font-size: 12px;
-            color: #999;
-          }
-        }
-        .number{
-          align-items: center;
-          display: flex;
-          padding: 0 15px; 
-          b{
-            font-size: 16px;
-            color: #f46f05;
-            padding-right: 8px;
-            font-weight: normal;
-          }
-        }
-        &:last-child{
-          border-bottom: none;
+  }
+
+  .fee-list{
+    margin: 10px 15px;
+    color: #666;
+    font-size: 14px;
+    background: #fff;
+    padding-left: 15px;
+    box-shadow: 0 0 4px #ddd;
+    .item{
+      line-height: 40px;
+      border-bottom: 1px solid #eee;
+      &:last-child{
+        border-bottom: none;
+      }
+      span{
+        float: right;
+        text-align: right;
+        padding-right: 15px;
+        font-size: 16px;
+        color: #000;
+      }
+    }
+  }
+
+  .add-btn{
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #1296db;
+  }
+  .input-wrap{
+    background: #fff;
+    .mui-input-row{
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+      input{
+        font-size: 14px;
+      }
+    }
+  }
+  .footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    .mui-btn{
+      width: 50%;
+      float: left;
+      border-radius: 0;
+      border: none;
+      line-height: 30px;
+    }
+  }
+
+  #category-wrap{
+    position: fixed;
+    z-index: 100;
+    background: #eff2f5;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 10px 47px 10px;
+    .item{
+      position: relative;
+      display: inline-block;
+      padding: 10px 20px;
+      box-shadow: 0 0 4px #ccc;
+      font-size: 14px;
+      margin: 5px;
+      background: #f8f8f8;
+      i{
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #f8f8f8;
+      }
+      &.selected{
+        background: #1AAD19;
+        color: #fff;
+        i{
+          color: #fff;
         }
       }
     }

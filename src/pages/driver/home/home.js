@@ -23,7 +23,7 @@ mui._ready(function() {
 	// 如果 plus 支持
 	if (mui.os.plus) {
 		let self = plus.webview.currentWebview();
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < subpages.length; i++) {
 			let sub = plus.webview.create(subpages[i], subpages[i], {
 				top: '43px',
 				bottom: '51px',

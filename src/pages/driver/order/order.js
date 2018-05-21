@@ -40,7 +40,7 @@ const task = {
 	},
 
 	reachBottom: () => {
-		$(window).scroll(function() {
+		window.onscroll = function() {
 			// 如果是历史订单
 			if (task.state.activeIndex == 2) {
 				// 窗口高度
@@ -64,7 +64,7 @@ const task = {
 					}
 				}
 			}
-		})
+		}
 	},
 
 	fetchList: (index) => {

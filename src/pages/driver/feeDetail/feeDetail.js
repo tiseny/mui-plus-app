@@ -1,6 +1,7 @@
 import mui from '../../../helpers/middleware';
 import { getQuery } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
+import $ from 'jquery';
 import './feeDetail.redux';
 import './feeDetail.less';
 
@@ -14,20 +15,49 @@ const add_feeList = []
 const task = {
 	//状态
 	state: {
-		hidden: true
+		mode: getQuery(mui,'OrderStatus') == '11' ? 'add' : 'show'
 	},
 	
 	//监听加一笔按钮显示复选框
-	ListenerAddFee: () => {
-		mui('#fee-mui-scroll').on('tap', '#add_feeList', function(){
-			
+	listenerAddFee: () => {
+		mui('body').on('tap', '#add-btn', function(){
+			$('#category-wrap').show()
+		})
+	},
+
+	listenButton: () => {
+		mui('body').on('tap', '.mui-btn', function(){
+			const action = this.getAttribute('data-action')
+			switch (action) {
+				case "0":
+					// todo 添加费用
+					break;
+				case "1":
+					// 
+					mui.back();
+					break;
+				case "2":
+					// 选择了费用项
+					$('#category-wrap').hide()
+					break;
+				default:
+					// statements_def
+					$('#category-wrap').hide()
+					break;
+			}
+		})
+	},
+
+	listenCategory: () => {
+		mui('body').on('tap','.category-wrap .item', function(e) {
+			$(this).toggleClass('selected')
 		})
 	},
 
 	//获取费用数据
 	fetchFeeDetail:() => {
 		app.feeDetail.fetchFee({
-			OrderId: getQuery(mui,'order_id')
+			OrderId: getQuery(mui,'order_id'),
 		}).then(json => {
 			//费用总金额
 			let total = 0;
@@ -36,6 +66,7 @@ const task = {
 			})
 			document.getElementById('feeDetail-page').innerHTML = template('fee-template', {
 				list: json.data,
+				mode: task.state.mode,
 				total: Number(total).formatMoney()
 			})
 		})
@@ -70,7 +101,11 @@ mui._ready(function() {
 
 	task.fetchFeeCategory()
 
-	task.ListenerAddFee()
+	task.listenerAddFee()
+
+	task.listenButton() 
+
+	task.listenCategory()
 
 });
 
