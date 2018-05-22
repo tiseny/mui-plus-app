@@ -16,7 +16,9 @@ export default {
       trailer: driver_url + '/api/Trailer',                                  // 司机资料
       orderContainer: driver_url + '/api/OrderContainer',                    // 货柜信息
       orderContainerImage: driver_url + '/api/OrderContainerImage',          // 货柜信息环节图片上传
-      checkSheet: driver_url + '/api/DriverBillDetail'         // 对账单
+      checkSheet: driver_url + '/api/DriverBillDetail',                      // 对账单
+      loan: driver_url + '/api/DriverRequest',                               //借款列表与添加
+      oil: driver_url + '/api/Refuelling',                                   //打油列表
     }
   },
   business: {

@@ -1,21 +1,46 @@
 @import url('../../../static/common.less');
-
-.ui-page-loanOil{
-
-  .loanOil-page{
-    .tab-bar{
-      width: 100%;
-      background-color: #fff;
-      color: #222;
-      height: 48px;
-      line-height: 48px;
-      display: flex;
-      .tab-hd{
-        font-size: 16px;
-        text-align: center;
-        width: 50%;
-        border-bottom: 2px #fff solid;   //1AAD19
-      }
+.ui-page-loanOil {
+    .loanOil-page {
+        font-size: 14px;
+        .tab-bar {
+            width: 100%;
+            background-color: #fff;
+            color: #222;
+            height: 48px;
+            line-height: 48px;
+            display: flex;
+            box-shadow: 0 1px 1px #ddd;
+            .tab-hd {
+                font-size: 16px;
+                text-align: center;
+                width: 50%;
+                border-bottom: 2px #fff solid; //1AAD19
+            }
+        }
+        .content-bd {
+            margin: 10px 0;
+        }
+        .add-btn {
+            position: absolute;
+            right: 15px;
+            bottom: 70px;
+            background-color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 52px;
+            color: #1AAD19;
+            box-shadow: -2px 2px 2px #ddd;
+            .icon-add::before {
+                font-size: 28px;
+            }
+        }
+        .mui-table-view {
+            .mui-navigate-right {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
     }
-  }
 }

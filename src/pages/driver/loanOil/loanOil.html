@@ -1,18 +1,66 @@
 <!DOCTYPE html>
 <html class="ui-page-loanOil">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title><%= htmlWebpackPlugin.options.title %></title>
-	</head>
-	<body>
-		<div class="mui-content loanOil-page">
-			<div class="mui-content">
-        <div class="tab-bar">
-          <div data-activeIndex=0 class="tab-hd">借款信息</div>
-          <div data-activeIndex=1 class="tab-hd">打油信息</div>
-        </div>
-      </div>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>
+		<%= htmlWebpackPlugin.options.title %>
+	</title>
+</head>
+
+<body>
+	<div class="mui-content loanOil-page">
+		<div class="tab-bar">
+			<div data-index=0 class="tab-hd">借款信息</div>
+			<div data-index=1 class="tab-hd">打油信息</div>
 		</div>
-	</body>
+		<div class="mui-content">
+			<div class="content-bd">
+				<script id="loan-template" type="text/html">
+					<ul class="mui-table-view">
+						{{each data as item i}}
+						<li class="mui-table-view-cell mui-collapse">
+							<a class="mui-navigate-right" href="#">
+								<div>{{item.BorrowDate}}</div>
+								<div style="color:{{item.stateColor}}">{{item.State}}</div>
+								<div style="color:#1AAD19;padding-right: 18px;font-weight:bold;">{{item.Amount}}</div>
+							</a>
+							<div class="mui-collapse-content">
+								<p>代理申请人：{{item.DispatcherName}}</p>
+								<p>申请事由：{{item.UseDescription}}</p>
+								<p>扣款日期：{{item.PayDate}}</p>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+					<div class="add-btn">
+						<span class="mui-icon iconfont icon-add" ></span>
+					</div>
+				</script>
+			</div>
+			<div class="content-bd">
+				<script id="oil-template" type="text/html">
+						<ul class="mui-table-view">
+							{{each data as item i}}
+							<li class="mui-table-view-cell mui-collapse">
+								<a class="mui-navigate-right" href="#">
+									<div>{{item.CreateDate}}</div>
+									<div>{{item.DriverName}}</div>
+									<div style="color:#1AAD19;padding-right: 18px;font-weight:bold;">{{item.AmountOf}}</div>
+								</a>
+								<div class="mui-collapse-content">
+									<p>委托单号：{{item.OrderEntrustId}}</p>
+									<p>油卡卡号：{{item.OilKaka}}</p>
+									<p>备注：{{item.Note}}</p>
+								</div>
+							</li>
+						{{/each}}
+					</ul>
+				</script>
+			</div>
+		</div>
+	</div>
+</body>
+
 </html>
