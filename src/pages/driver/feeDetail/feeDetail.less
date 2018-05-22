@@ -8,6 +8,11 @@
       color: #222;
     }
   }
+  #feeDetail-page{
+    padding-bottom: 64px;
+    background: #efeff4;
+    padding-top: 85px;
+  }
   
   .total{
     padding:15px 60px;
@@ -69,6 +74,11 @@
     text-align: center;
     font-size: 14px;
     color: #1296db;
+    position: fixed;
+    width: 100%;
+    top: 44px;
+    background: #efeff4;
+    z-index: 10;
   }
   .input-wrap{
     background: #fff;
@@ -77,6 +87,24 @@
       border-bottom: 1px solid #eee;
       input{
         font-size: 14px;
+      }
+      label{
+        padding: 12px 15px;
+      }
+      &.total-row{
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 50px;
+        border-top: 1px solid #2196F3;
+        label{
+          padding: 16px 15px;
+        }
+        .number{
+          color: #f30;
+          float: right;
+          padding-right: 15px;
+          font-size: 18px;
+        }
       }
     }
   }
@@ -103,6 +131,7 @@
     right: 0;
     bottom: 0;
     padding: 10px 10px 47px 10px;
+    display: none;
     .item{
       position: relative;
       display: inline-block;

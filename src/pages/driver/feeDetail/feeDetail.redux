@@ -12,10 +12,24 @@ window.app.feeDetail = {
 			})
 		})
 	},
+	fetchDefault: params => {
+		return new Promise((resolve, reject) => {
+			fetch(config.driver.api.feeDefault, {}, 'get').then(json => {
+				resolve(json)
+			})
+		})
+	},
 	//获取费用种类
 	feeCategory: params => {
 		return new Promise((resolve,reject) => {
 			fetch(config.driver.api.feeCategory,{header: params},"get").then(json => {
+				resolve(json)
+			})
+		})
+	},
+	addFee: params => {
+		return new Promise((resolve,reject) => {
+			fetch(config.driver.api.fee,{body: params},"post").then(json => {
 				resolve(json)
 			})
 		})

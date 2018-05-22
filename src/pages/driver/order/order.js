@@ -128,12 +128,14 @@ const task = {
 		mui('.item-wrap').on('tap', '.history-bottom', function(){
 			const id = this.getAttribute('data-id')
 			const OrderStatus = this.getAttribute('data-OrderStatus')
+			const OrderNo = this.getAttribute('data-OrderNo')
 			mui.openWindow({
-		    url:`feeDetail.html?order_id=${id}&OrderStatus=${OrderStatus}`,
+		    url:`feeDetail.html?order_id=${id}&OrderStatus=${OrderStatus}&order_no=${OrderNo}`,
 		    id: 'feeDetail.html',
 		    extras:{
 	        order_id:id,
-	        OrderStatus:OrderStatus
+	        OrderStatus:OrderStatus,
+	        order_no: OrderNo
 		    }
 			});
 		})

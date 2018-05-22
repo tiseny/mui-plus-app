@@ -14,44 +14,32 @@
 		<script id="fee-template" type="text/html">
 			{{if mode == 'show'}}
 			<div class="total">
-				<div class="value">9000.66</div>
+				<div class="value">￥ {{total}}</div>
 				<div class="title">费用总额(元)</div>
 			</div>
 			<div class="sub-title">
 				<i class="iconfont icon-jiekuan"></i>费用明细 （3）
 			</div>
 			<div class="fee-list">
-				<div class="item">
-					<label>运费</label>
-					<span>200</span>
-				</div>
-				<div class="item">
-					<label>运费</label>
-					<span>200</span>
-				</div>
-				<div class="item">
-					<label>运费</label>
-					<span>200</span>
-				</div>
+				{{each list as item key}}
+	        <div class="item">
+						<label>{{item.CostName}}</label>
+						<span>{{item.Amount}}</span>
+					</div>
+	      {{/each}}  
 			</div>
 			{{else}}
 				<div class="add-btn" id="add-btn"><i class="iconfont icon-add"></i>加一笔</div>
 				<div class="input-wrap">
+					{{each list as item key}}
 					<div class="mui-input-row">
-		        <label>用户名</label>
-				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+		        <label>{{item.Name}}</label>
+				    <input type="text" class="mui-input-clear" value="{{item.Money}}" placeholder="请输入{{item.Name}},左滑可删除">
 			    </div>
-			    <div class="mui-input-row">
-		        <label>用户名</label>
-				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
-			    </div>
-			    <div class="mui-input-row">
-		        <label>用户名</label>
-				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
-			    </div>
-			    <div class="mui-input-row">
-		        <label>用户名</label>
-				    <input type="text" class="mui-input-clear" placeholder="请输入用户名">
+			    {{/each}}
+			    <div class="mui-input-row total-row">
+			    	<label>总额（元）</label>
+			    	<div class="number" id="number">{{total}}</div>
 			    </div>
 				</div>
 				<div class="footer">
@@ -59,12 +47,9 @@
 					<div class="mui-btn" data-action="1">取消</div>
 				</div>
 				<div class="category-wrap" id="category-wrap">
-					<div class="item">车费 <i class="iconfont icon-gouxuan"></i></div>
-					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
-					<div class="item">车费 <i class="iconfont icon-gouxuan"></i></div>
-					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
-					<div class="item selected">车费 <i class="iconfont icon-gouxuan"></i></div>
-
+					{{each categoryList as item key}}
+					<div class="item">{{item.Name}} <i class="iconfont icon-gouxuan"></i></div>
+					{{/each}}
 					<div class="footer ">
 						<div class="mui-btn mui-btn-primary" data-action="2">确定</div>
 						<div class="mui-btn" data-action="3">取消</div>
