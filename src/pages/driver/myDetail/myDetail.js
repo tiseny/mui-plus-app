@@ -11,9 +11,7 @@ const task = {
     //获取my页面传递的参数
     fetchDetail: () => {
         mui.os.plus && plus.nativeUI.showWaiting('加载中...')
-        app.myDetail.fetchDetail({
-
-        }).then(json => {
+        app.myDetail.fetchDetail({}).then(json => {
             mui.os.plus && plus.nativeUI.closeWaiting()
             //检查是否过期
             const checkData = () => {
@@ -66,7 +64,7 @@ const task = {
 
     //密码修改
     changePass: () => {
-        mui(".ui-page-myDetail").on('tap', '.mui-btn', function () {
+        mui("body").on('tap', '#changePassBtn', function () {
             let check = true
             let param = []
             mui("#myDetail-mui input").each(function () {
@@ -82,7 +80,23 @@ const task = {
             //新密码与确认密码是否相同
             if (check) {
                 if (param[1] === param[2]) {
-                    console.log(param)
+                    app.myDetail.changePass({
+                        "OldPassword": param[0],
+                        "NewPassword": param[1],
+                        "NewPasswordConfirm": param[2]
+                    }).then(json => {
+                        if (json.result) {
+                            mui.toast(json.msg || '修改成功')
+                            setTimeout(() => {
+                                mui.openWindow({
+                                    url: 'login.html',
+                                    extras: {}
+                                });
+                            }, 1500);
+                        } else {
+                            mui.toast(json.msg || '出现错误')
+                        }
+                    })
                 } else {
                     mui.toast('两次输入密码不一致', { duration: 'long', type: 'div' })
                 }
