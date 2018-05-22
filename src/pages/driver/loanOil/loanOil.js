@@ -66,6 +66,16 @@ const task = {
       const html = template(temp, { data: json.data });
       $('.content-bd')[task.obj.activeIndex].innerHTML = html;
     })
+  },
+
+  //跳转借款申请
+  bindAddLoan: () => {
+    mui('body').on('tap', "#add-btn", function () {
+      mui.openWindow({
+        url: 'addLoan.html',
+        extras: {}
+      });
+    })
   }
 }
 
@@ -84,5 +94,7 @@ mui._ready(function () {
   task.bindSwitchTab()
 
   task.setTab()
+
+  task.bindAddLoan()
 
 });

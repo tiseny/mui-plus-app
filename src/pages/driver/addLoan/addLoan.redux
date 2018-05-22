@@ -1,0 +1,15 @@
+import config from '../../../config';
+import fetch from '../../../helpers/fetch';
+import { setState, getState } from '../../../helpers/state';
+
+window.app = window.app || {}
+window.app.addLoan = {
+	//借款申请
+	addLoan: (params) => {
+		return new Promise((resolve,reject) => {
+			fetch(config.driver.api.loan,{body: params},"post").then(json => {
+				resolve(json)
+			})
+		})
+	}
+}
