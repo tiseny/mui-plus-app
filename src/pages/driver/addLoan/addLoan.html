@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="ui-page-addLoan">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+</head>
+
+<body>
+  <div class="addLoan-page">
+    <header class="mui-bar mui-bar-nav" style="background-color: #fff">
+      <a style="color: #000" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title" style="color: #000">借款申请</h1>
+    </header>
+    <div class="mui-content">
+      <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label>申请金额</label>
+          <input id="Amount" type="number" class="mui-input-clear applyVal" placeholder="请输入申请金额/元">
+        </div>
+      </form>
+      <div>
+        <header style="padding: 10px 15px;">申请事由</header>
+        <textarea id="cause" class="textarea" rows="3" cols="20" placeholder="请输入申请事由"></textarea>
+      </div>
+      <div class="btn">
+        <button id="submitApply" disabled="true" type="button" data-loading-text="提交中" class="mui-btn mui-btn-success applyVal">提交申请</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    <header class="mui-bar mui-bar-nav" style="background-color: #fff">
+        <a style="color: #000" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title" style="color: #000">对账单详情</h1>
+    </header>
     <div class="mui-content" id="mui-content">
         <script type="text/html" id="accountDetail-template">
             <div class="total">
@@ -36,6 +40,7 @@
             <div class="account-detail">
                     <div class="waybill-detail">
                         <header class="detail-hd">
+                            <span class="mui-icon iconfont icon-duizhangdan1" ></span>
                             运单明细
                             <span>({{waybill.length}})</span>
                         </header>
@@ -64,6 +69,7 @@
                     </div>
                     <div class="loan-detail">
                         <header class="detail-hd">
+                            <span class="mui-icon iconfont icon-jiekuan" ></span>
                             借款明细
                             <span>({{loan.length}})</span>
                         </header>
@@ -87,6 +93,7 @@
                     </div>
                     <div class="oil-detail">
                         <header class="detail-hd">
+                            <span class="mui-icon iconfont icon-dayou" ></span>
                             打油明细
                             <span>({{oil.length}})</span>
                         </header>

@@ -18,7 +18,7 @@
                     <a class="mui-navigate-right">
                         <div>{{item.CheckSheetDate}}</div>
                         <div style="color:{{item.stateColor}};">{{item.stateName}}</div>
-                        <div style="padding-right:20px;">{{item.Amount}}</div>
+                        <div style="padding-right:20px;color:{{item.Amount>0?'#f30':'#1AAD19'}};">{{item.Amount}}</div>
                     </a>
                 </li>
 				{{/each}}
