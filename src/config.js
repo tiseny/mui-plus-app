@@ -17,7 +17,7 @@ export default {
       orderContainer: driver_url + '/api/OrderContainer',                    // 货柜信息
       orderContainerImage: driver_url + '/api/OrderContainerImage',          // 货柜信息环节图片上传
       checkSheet: driver_url + '/api/DriverBillDetail',                      // 对账单
-      feeDefault: driver_url + '/api/CostItem/GetDefault'                    // 获取司机端的默认费用
+      feeDefault: driver_url + '/api/CostItem/GetDefault',                   // 获取司机端的默认费用
       loan: driver_url + '/api/DriverRequest',                               //借款列表与添加
       oil: driver_url + '/api/Refuelling',                                   //打油列表
     }
