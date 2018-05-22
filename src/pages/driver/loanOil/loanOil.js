@@ -89,8 +89,6 @@ mui.init({
 // 调用h5 plus的事件系统
 mui._ready(function () {
 
-  pageBack(mui)
-
   task.bindSwitchTab()
 
   task.setTab()

@@ -6,14 +6,13 @@ import './accountDetail.less';
 import { decode } from 'punycode';
 
 const ACCOUNT_URL = 'account.html'
-const partnerBillId = getQuery(mui, 'partnerBillId')
 
 const template = require('../../../libs/art.template');
 const task = {
     //获取对账单数据
     fetchList: () => {
         const state = getQuery(mui, 'state')
-        app.getAccount.checkSheet({ partnerBillId: partnerBillId }).then(json => {
+        app.getAccount.checkSheet({ partnerBillId: getQuery(mui, 'partnerBillId') }).then(json => {
             let waybill = []
             let loan = []
             let oil = []
@@ -55,7 +54,7 @@ const task = {
                     mui(this).button('loading');
                     document.getElementById(id).disabled = true
                     app.getAccount.submitCheck({
-                        partnerBillId: partnerBillId,
+                        partnerBillId: getQuery(mui, 'partnerBillId'),
                         isThrough: ele.detail.target.dataset.isthrough
                     }).then(json => {
                         if (json.result) {
@@ -90,9 +89,7 @@ mui.init({
 
 // 调用h5 plus的事件系统
 mui._ready(function () {
-
-    pageBack(mui)
-
+    
     task.fetchList()
 
     task.bindCheck()
