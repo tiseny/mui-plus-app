@@ -10,29 +10,29 @@
 </head>
 
 <body>
-    <div class="mui-content">
-        <ul id="account-view" class="mui-table-view">
-            <script id="account-template" type="text/html">
-                {{if data.length>0}}
-                {{each data as item i}}
-                <li class="mui-table-view-cell" data-Id="{{item.Id}}" data-state="{{item.stateName}}">
-                    <a class="mui-navigate-right">
-                        <div>{{item.CheckSheetDate}}</div>
-                        <div style="color:{{item.stateColor}};">{{item.stateName}}</div>
-                        <div style="padding-right:20px;color:{{item.Amount>0?'#f30':'#1AAD19'}};">{{item.Amount}}</div>
-                    </a>
-                </li>
-                {{/each}}
-                {{else}}
-                  <div class="nothing-box">
-                    <div class="no-result">
-                      <i class="iconfont icon-wushuju"></i>  
-                    </div>
-                    <p>暂时没有内容 ~ ~</p>
-                  </div>
-                {{/if}}
-            </script>
+    <div class="mui-content" id="account-view">
+        <script id="account-template" type="text/html">
+            {{if data.length>0}}
+        <ul class="mui-table-view">
+            {{each data as item i}}
+            <li class="mui-table-view-cell" data-Id="{{item.Id}}" data-state="{{item.stateName}}">
+                <a class="mui-navigate-right">
+                    <div>{{item.CheckSheetDate}}</div>
+                    <div style="color:{{item.stateColor}};">{{item.stateName}}</div>
+                    <div style="padding-right:20px;color:{{item.Amount>0?'#f30':'#1AAD19'}};">{{item.Amount}}</div>
+                </a>
+            </li>
+            {{/each}}
         </ul>
+        {{else}}
+        <div class="nothing-box">
+            <div class="no-result">
+              <i class="iconfont icon-wushuju"></i>  
+            </div>
+            <p>暂时没有内容 ~ ~</p>
+        </div>
+        {{/if}}
+    </script>
     </div>
 </body>
 

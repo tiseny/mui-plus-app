@@ -18,6 +18,7 @@
 		<div class="mui-content">
 			<div class="content-bd">
 				<script id="loan-template" type="text/html">
+					{{if data.length>0}}
 					<ul class="mui-table-view">
 						{{each data as item i}}
 						<li class="mui-table-view-cell mui-collapse">
@@ -34,6 +35,14 @@
 						</li>
 						{{/each}}
 					</ul>
+					{{else}}
+					<div class="nothing-box">
+							<div class="no-result">
+								<i class="iconfont icon-wushuju"></i>  
+							</div>
+							<p>暂时没有内容 ~ ~</p>
+					</div>
+					{{/if}}
 					<div class="add-btn" id="add-btn">
 						<span class="mui-icon iconfont icon-add" ></span>
 					</div>
@@ -41,6 +50,7 @@
 			</div>
 			<div class="content-bd">
 				<script id="oil-template" type="text/html">
+					{{if data.length>0}}
 						<ul class="mui-table-view">
 							{{each data as item i}}
 							<li class="mui-table-view-cell mui-collapse">
@@ -57,6 +67,14 @@
 							</li>
 						{{/each}}
 					</ul>
+					{{else}}
+        <div class="nothing-box">
+            <div class="no-result">
+              <i class="iconfont icon-wushuju"></i>  
+            </div>
+            <p>暂时没有内容 ~ ~</p>
+        </div>
+        {{/if}}
 				</script>
 			</div>
 		</div>
