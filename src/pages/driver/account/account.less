@@ -1,12 +1,23 @@
 @import url('../../../static/common.less');
-
-.mui-table-view-cell > a:not(.mui-btn){
-  display: flex;
-  justify-content: space-between;
+.mui-table-view-cell>a:not(.mui-btn) {
+    display: flex;
+    justify-content: space-between;
 }
 
-.mui-navigate-right{
-  font-size: 14px;
-  line-height: 14px;
+.mui-table-view-cell{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.mui-navigate-right {
+    font-size: 14px;
+    line-height: 14px;
 }
 
+.mui-content>.mui-table-view:first-child {
+    margin-top: 0px;
+}
+
+.mui-table-view {
+    margin-bottom: 15px;
+    border-radius: 0;
+}
