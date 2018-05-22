@@ -107,6 +107,8 @@ const task = {
 		activeIndex = activeIndex != null ? activeIndex : 0
 		
 		task.fetchList(activeIndex)
+
+		$('#slider .slider-header').find('.item').eq(activeIndex).removeClass('active').addClass('active').siblings().removeClass('active')
 	},
 
 	listenForward: () => {

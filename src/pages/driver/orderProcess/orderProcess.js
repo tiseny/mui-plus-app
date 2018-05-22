@@ -183,13 +183,23 @@ const task = {
 					if (json.result) {
 						mui._toast('保存成功')
 						setTimeout(() => {
-							mui.openWindow({
+							let params = {
 							  url: `recieveOrderDetail.html?order_id=${orderId}`,
 							  id: 'recieveOrderDetail.html',
 							  extras:{
 					        order_id: orderId
 						    }
-							});
+							}
+							if (processName == '还柜确认') {
+								params = {
+									url:`order.html?activeIndex=2`,
+							    id: 'order.html',
+							    extras:{
+						        activeIndex: 2
+							    }
+								}
+							}
+							mui.openWindow(params);
 						},1500)
 					} else {
 						mui._toast(json.msg || '服务异常')

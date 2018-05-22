@@ -39,7 +39,18 @@ const task = {
 					}).then(json => {
 						mui(this).button('reset');
 						if (json.result) {
-							mui._toast(json.data.Msg || '接单成功')
+							mui._toast(accept ? '接单成功' : '拒单成功')
+							if (accept) {
+								setTimeout(() => {
+									mui.openWindow({
+								    url:`order.html?activeIndex=1`,
+								    id: 'order.html',
+								    extras:{
+							        activeIndex:1
+								    }
+									});
+								}, 1500)
+							}
 						}
 					})
 				} 
