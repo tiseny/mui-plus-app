@@ -200,7 +200,7 @@ function pageBack(mui) {
 	// 退出
 	let backButtonPress = 0;
 	// 区分 mui.back 方法
-	mui._back = function(event) {
+	mui.back = function(event) {
 		backButtonPress++;
 		if (backButtonPress > 1) {
 			plus.runtime.quit();
