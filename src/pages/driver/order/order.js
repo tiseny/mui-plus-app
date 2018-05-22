@@ -34,6 +34,7 @@ const task = {
 			if (index < 2) {
 				$('#more').hide()
 			} else {
+				task.state.pageIndex = 1			// 当前页面
 				$('#more').show()
 			}
 		})
@@ -57,7 +58,8 @@ const task = {
 
 						task.fetchList(2)
 					} else {
-						task.state.loaded = true
+						// 必须大于 1页
+						task.state.loaded = task.state.total / task.state.pageSize > 1 
 						$('#more').html(template('more-template', {
 							loaded: task.state.loaded
 						}))

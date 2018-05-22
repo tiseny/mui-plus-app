@@ -15,7 +15,7 @@ const add_feeList = []
 const task = {
 	//状态
 	state: {
-		mode: getQuery(mui,'OrderStatus') == '11' ? 'show' : 'add',
+		mode: 'add',
 		defaultFeeList: [],																									// 管理端录入的费用
 		categoryList: [],																									  // 分类
 		feeList: [],																										    // 选择的分类
@@ -215,6 +215,7 @@ const task = {
 	},
 
 	initPage: () => {
+		task.state.mode = getQuery(mui,'OrderStatus') == '11' ? 'show' : 'add'
 		if (task.state.mode == 'show') {
 			task.fetchFeeDetail()
 		} else {
