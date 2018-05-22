@@ -9,24 +9,21 @@ window.app.myDetail = {
 	//  获取 信息 列表
 	fetchDetail: params => {
 		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.trailer}/${params.id}`, null, 'get')
+			fetch(config.driver.api.trailer, {header: params}, 'get')
 				.then(json => {
-					// console.log(json)
 					resolve(json)
 				})
 		})
 	},
 
-	//获取评论
-	fetchEvaluate: params => {
+	//修改密码
+	changePass: params => {
 		return new Promise((resolve, reject) => {
-			fetch(`${config.driver.api.evaluate}/${params.id}`, null, 'get')
+			fetch(config.driver.api.trailer, {body: params}, 'put')
 				.then(json => {
-					// console.log(json)
 					resolve(json)
-				}).catch(err=>{
-					console.log(err)
 				})
 		})
-	}
+	},
+
 }
