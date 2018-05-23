@@ -1,5 +1,4 @@
 @import url('../../../static/common.less');
-
 .ui-page-order{
 	.slider {
 		.slider-header{
@@ -81,4 +80,23 @@
     font-size: 12px;
     color: #999;
 	}
+
+	.refresh-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+        background-color: #1AAD19;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 42px;
+        color: #fff;
+				box-shadow: -2px 2px 2px #ddd;
+				z-index: 500;
+        .icon-refresh::before {
+            font-size: 16px;
+        }
+    }
+
 }

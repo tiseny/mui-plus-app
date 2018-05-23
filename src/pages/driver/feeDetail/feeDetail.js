@@ -154,6 +154,7 @@ const task = {
 
 						list.forEach(item => {
 							total += +item.Money
+							console.log(item.Money)
 						})
 
 						task.state.total = total
@@ -179,7 +180,7 @@ const task = {
 			//费用总金额
 			let total = 0;
 			json.data.forEach(item => {
-				total += +item.Money
+				total += +item.Amount
 			})
 			document.getElementById('feeDetail-page').innerHTML = template('fee-template', {
 				list: json.data,
