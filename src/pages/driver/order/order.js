@@ -123,11 +123,8 @@ const task = {
 		let activeIndex = getQuery(mui, 'activeIndex')
 		// 如果有参数
 		activeIndex = activeIndex != null ? activeIndex : 0
-<<<<<<< HEAD
-=======
 		// 赋值给 task.state.activeIndex
 		task.state.activeIndex = activeIndex
->>>>>>> ac324808655fbab1061c864ec909f7ae46385e9b
 
 		task.fetchList(activeIndex)
 
