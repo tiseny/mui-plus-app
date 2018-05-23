@@ -25,8 +25,9 @@ const task = {
 		mui('body').on('tap', '#refresh-btn', function () {
 			task.state.angle += 360
 			$('#refresh-btn').css({
-				'transform': 'rotate(' + task.state.angle +'deg)',
-				'transition': 'transform 1s'
+				'transform': 'rotate(' + task.state.angle + 'deg)',
+				'-webkit-transform': 'rotate(' + task.state.angle + 'deg)',
+				'transition': 'transform 1s',
 			})
 			console.log(1)
 			task.state.list = []
