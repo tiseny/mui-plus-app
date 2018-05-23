@@ -30,7 +30,6 @@ const task = {
 				'transition': 'transform 1s',
 				'-webkit-transition': '-webkit-transform 1s',
 			})
-			console.log(1)
 			task.state.list = []
 			task.state.pageIndex = 1
 			task.fetchList(task.state.activeIndex)

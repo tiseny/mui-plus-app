@@ -5,12 +5,12 @@ import './login.less';
 const FORWARD_URL = 'home.html';
 
 const task = {
-	login: function() {
+	login: function () {
 		const $loginbtn = document.getElementById('login');
 		const $account = document.getElementById('account');
 		const $password = document.getElementById('password');
 
-		$loginbtn.addEventListener('tap', function(e) {
+		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
 			app.login({
@@ -21,9 +21,9 @@ const task = {
 				mui(this).button('reset');
 				if (json.result) {
 					mui.openWindow({
-					  url: FORWARD_URL,
-					  id: FORWARD_URL,
-					  preload: true,
+						url: FORWARD_URL,
+						id: FORWARD_URL,
+						preload: true,
 						show: {
 							aniShow: 'pop-in'
 						},
@@ -39,6 +39,25 @@ const task = {
 				}
 			})
 		})
+	},
+
+	//关闭除登录页的所有页面
+	closePage: () => {
+		console.log(1)
+		// 获取所有Webview窗口
+		let curr = plus.webview.currentWebview();
+		let wvs = plus.webview.all();
+		for (let i = 0, len = wvs.length; i < len; i++) {
+			//关闭除当前页面外的其他页面
+			if (wvs[i].getURL() == curr.getURL())
+				continue;
+			plus.webview.close(wvs[i]);
+		}
+		//打开login页面后再关闭setting页面
+		plus.webview.open('../login/login.html');
+		curr.close();
+		console.log(curr)
+		console.log(wvs)
 	}
 }
 
@@ -49,9 +68,11 @@ mui.init({
 
 
 // 调用h5 plus的事件系统
-mui._ready(function() {
+mui._ready(function () {
 
 	// 登录时间
 	task.login()
+
+	// task.closePage()
 });
 

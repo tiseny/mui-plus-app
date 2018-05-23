@@ -1,5 +1,5 @@
 import mui from '../../../helpers/middleware';
-import { getQuery } from '../../../helpers/util';
+import { getQuery, goLogin } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
 import './myDetail.redux';
 import './myDetail.less';
@@ -88,10 +88,7 @@ const task = {
                         if (json.result) {
                             mui.toast(json.msg || '修改成功')
                             setTimeout(() => {
-                                mui.openWindow({
-                                    url: 'login.html',
-                                    extras: {}
-                                });
+                                goLogin(mui)
                             }, 1500);
                         } else {
                             mui.toast(json.msg || '出现错误')
