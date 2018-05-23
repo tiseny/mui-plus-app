@@ -107,7 +107,9 @@ const task = {
 		let activeIndex = getQuery(mui,'activeIndex')
 		// 如果有参数
 		activeIndex = activeIndex != null ? activeIndex : 0
-		
+		// 赋值给 task.state.activeIndex
+		task.state.activeIndex = activeIndex
+
 		task.fetchList(activeIndex)
 
 		$('#slider .slider-header').find('.item').eq(activeIndex).removeClass('active').addClass('active').siblings().removeClass('active')

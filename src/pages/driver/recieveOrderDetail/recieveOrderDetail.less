@@ -9,13 +9,20 @@
 	}
 	#recieveOrderDetail-mui{
 		overflow: auto;
-		margin-top: 44px;
+		margin-top: 144px;
 	}
 	.mui-table-view {
 		font-size: 14px;
     margin: 10px;
 		.mui-table-view-cell {
 			line-height: 21px;
+			.factory-row:nth-child(odd){
+				background: #fbffd4;
+		    overflow: hidden;
+		    clear: both;
+		    margin: 0 -15px;
+		    padding: 0 15px;
+			}
 			.row {
   			padding: 3px 0;
 				overflow: hidden;
@@ -75,6 +82,11 @@
 	    border: none;
 	    background: #222;
 	    color: #fff;
+	    position: fixed;
+	    top: 44px;
+	    left: 0;
+	    right: 0;
+	    z-index: 100;
 			.mui-table-view-cell{
 				position: relative;
 				padding: 10px;
