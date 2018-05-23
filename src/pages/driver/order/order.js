@@ -19,6 +19,13 @@ const task = {
 		loaded: false,    // 是否加载完毕
 	},
 
+	//刷新按钮
+	bindRefresh: () => {
+		mui('body').on('tap', '#refresh-btn', function () {
+			task.fetchList(task.state.activeIndex)
+		})
+	},
+
 	switchTab: () => {
 		$('#slider').on('tap', '.item', function(e) {
 			// 切换到第几个
@@ -177,6 +184,8 @@ mui._ready(function() {
 	task.switchTab()
 
 	task.initPage()
+
+	task.bindRefresh()
 
 	pageBack(mui)
 
