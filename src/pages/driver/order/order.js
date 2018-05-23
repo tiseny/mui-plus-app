@@ -17,17 +17,26 @@ const task = {
 		total: 0,					// 总条数
 		list: [],
 		loaded: false,    // 是否加载完毕
+		angle: 0,					//按钮角度
 	},
 
 	//刷新按钮
 	bindRefresh: () => {
 		mui('body').on('tap', '#refresh-btn', function () {
+			task.state.angle += 360
+			$('#refresh-btn').css({
+				'transform': 'rotate(' + task.state.angle +'deg)',
+				'transition': 'transform 1s'
+			})
+			console.log(1)
+			task.state.list = []
+			task.state.pageIndex = 1
 			task.fetchList(task.state.activeIndex)
 		})
 	},
 
 	switchTab: () => {
-		$('#slider').on('tap', '.item', function(e) {
+		$('#slider').on('tap', '.item', function (e) {
 			// 切换到第几个
 			const index = $(this).index()
 			// 效果
@@ -48,7 +57,7 @@ const task = {
 	},
 
 	reachBottom: () => {
-		window.onscroll = function() {
+		window.onscroll = function () {
 			// 如果是历史订单
 			if (task.state.activeIndex == 2) {
 				// 窗口高度
@@ -61,12 +70,12 @@ const task = {
 				if (contentH - wh - scrollH < 100) {
 					// 如果还没有加载完毕
 					if (task.state.pageIndex < Math.ceil(task.state.total / task.state.pageSize)) {
-						++ task.state.pageIndex
+						++task.state.pageIndex
 
 						task.fetchList(2)
 					} else {
 						// 必须大于 1页
-						task.state.loaded = task.state.total / task.state.pageSize > 1 
+						task.state.loaded = task.state.total / task.state.pageSize > 1
 						$('#more').html(template('more-template', {
 							loaded: task.state.loaded
 						}))
@@ -79,75 +88,75 @@ const task = {
 	fetchList: (index) => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
 
-		const apiList = ['fetchWaitList','fetchRecieveList','fetchHistoryList']
+		const apiList = ['fetchWaitList', 'fetchRecieveList', 'fetchHistoryList']
 		const templateList = ['wait-template', 'recieve-template', 'history-template']
 		// 请求参数
-		let params = {type: "WAITING"}
+		let params = { type: "WAITING" }
 		// 已接运单
 		if (index == 1) {
-			params = {type: 'RECEIVED'}
+			params = { type: 'RECEIVED' }
 		} else if (index == 2) {
 			params = {
 				pageIndex: task.state.pageIndex,
-      	pageSize: 5
+				pageSize: 5
 			}
 		}
 
 		app.order[apiList[index]](params).then(json => {
 			mui.os.plus && plus.nativeUI.closeWaiting();
 			if (json.result) {
-        if (index > 1) {
-          task.state.total = json.data.RecordCount * 1,
-          task.state.list = task.state.pageIndex == 1 ? json.data.Data : task.state.list.concat(json.data.Data)
-        } else {
-          task.state.list = json.data
-        }
-        
-        $('#slider .slider-body').find('.item-wrap').eq(index).html(template(templateList[index], {
+				if (index > 1) {
+					task.state.total = json.data.RecordCount * 1,
+						task.state.list = task.state.pageIndex == 1 ? json.data.Data : task.state.list.concat(json.data.Data)
+				} else {
+					task.state.list = json.data
+				}
+
+				$('#slider .slider-body').find('.item-wrap').eq(index).html(template(templateList[index], {
 					list: task.state.list
 				}))
-      }
+			}
 		})
 	},
 
 	initPage: () => {
-		let activeIndex = getQuery(mui,'activeIndex')
+		let activeIndex = getQuery(mui, 'activeIndex')
 		// 如果有参数
 		activeIndex = activeIndex != null ? activeIndex : 0
-		
+
 		task.fetchList(activeIndex)
 
 		$('#slider .slider-header').find('.item').eq(activeIndex).removeClass('active').addClass('active').siblings().removeClass('active')
 	},
 
 	listenForward: () => {
-		const urlAsrs = ['waitOrderDetail.html','recieveOrderDetail.html','orderDetail.html']
-		mui('.item-wrap').on('tap', '.orderRow', function(){
+		const urlAsrs = ['waitOrderDetail.html', 'recieveOrderDetail.html', 'orderDetail.html']
+		mui('.item-wrap').on('tap', '.orderRow', function () {
 			const id = this.getAttribute('data-id')
 			const url = urlAsrs[task.state.activeIndex]
 			mui.openWindow({
-		    url:`${url}?order_id=${id}`,
-		    id:url,
-		    extras:{
-	        order_id: id
-		    }
+				url: `${url}?order_id=${id}`,
+				id: url,
+				extras: {
+					order_id: id
+				}
 			});
 		})
 	},
 
 	listenFee: () => {
-		mui('.item-wrap').on('tap', '.history-bottom', function(){
+		mui('.item-wrap').on('tap', '.history-bottom', function () {
 			const id = this.getAttribute('data-id')
 			const OrderStatus = this.getAttribute('data-OrderStatus')
 			const OrderNo = this.getAttribute('data-OrderNo')
 			mui.openWindow({
-		    url:`feeDetail.html?order_id=${id}&OrderStatus=${OrderStatus}&order_no=${OrderNo}`,
-		    id: 'feeDetail.html',
-		    extras:{
-	        order_id:id,
-	        OrderStatus:OrderStatus,
-	        order_no: OrderNo
-		    }
+				url: `feeDetail.html?order_id=${id}&OrderStatus=${OrderStatus}&order_no=${OrderNo}`,
+				id: 'feeDetail.html',
+				extras: {
+					order_id: id,
+					OrderStatus: OrderStatus,
+					order_no: OrderNo
+				}
 			});
 		})
 	},
@@ -173,14 +182,14 @@ mui.init({
 
 
 // 调用h5 plus的事件系统
-mui._ready(function() {
+mui._ready(function () {
 
 	task.listenFee()
 
 	task.listenForward()
 
 	task.reachBottom()
-	
+
 	task.switchTab()
 
 	task.initPage()
