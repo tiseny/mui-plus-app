@@ -60,7 +60,7 @@ const task = {
 						        Currency_Id: item.Currency_Id,
 						        CostType: item.Category,
 										Amount: item.Money,
-										Quantity: 1										//费用数量
+										Quantity: 1										//费用数量,不可删除
 									})
 								})
 
