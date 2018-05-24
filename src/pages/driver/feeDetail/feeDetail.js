@@ -244,7 +244,7 @@ const task = {
 	// 校验 是否录入了 默认费用项目
 	checkValid: () => {
 		return new Promise((resolve, reject) => {
-			const item = task.state.defaultFeeList.find(item => $.trim(item.Money) == "")
+			const item = task.state.defaultFeeList.find(item => item.Money === "")
 			if (item) {
 				mui._toast(`${item.Name}为固定项目, 不能为空!`)
 			} else {
