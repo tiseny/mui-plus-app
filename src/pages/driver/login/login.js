@@ -18,7 +18,6 @@ const task = {
 				password: $password.value,
 				loginType: 1 // 司机端
 			}).then(json => {
-				mui(this).button('reset');
 				if (json.result) {
 					mui.openWindow({
 						url: FORWARD_URL,
@@ -36,29 +35,12 @@ const task = {
 					});
 				} else {
 					mui._toast(json.msg)
+					mui(this).button('reset');
 				}
 			})
 		})
-	},
-
-	//关闭除登录页的所有页面
-	closePage: () => {
-		console.log(1)
-		// 获取所有Webview窗口
-		let curr = plus.webview.currentWebview();
-		let wvs = plus.webview.all();
-		for (let i = 0, len = wvs.length; i < len; i++) {
-			//关闭除当前页面外的其他页面
-			if (wvs[i].getURL() == curr.getURL())
-				continue;
-			plus.webview.close(wvs[i]);
-		}
-		//打开login页面后再关闭setting页面
-		plus.webview.open('../login/login.html');
-		curr.close();
-		console.log(curr)
-		console.log(wvs)
 	}
+
 }
 
 // ios 导航状态
@@ -73,6 +55,5 @@ mui._ready(function () {
 	// 登录时间
 	task.login()
 
-	// task.closePage()
 });
 

@@ -105,7 +105,3 @@ mui._ready(function() {
 	task.acceptOrder()
 
 });
-
-
-// 退出
-pageBack(mui);

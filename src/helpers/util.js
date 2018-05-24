@@ -1,6 +1,8 @@
 import { setState, getState, clearState } from './state';
 import EXIF from '../libs/exif';
 import { loadBmap } from './loader';
+import config from '../config';
+import fetch from './fetch';
 
 const BLANK_LIST = ['/login.*', '/register.*'];
 const LOGIN_URL = 'login.html'
@@ -23,7 +25,6 @@ function isLogin(mui) {
 function goLogin(mui) {
 	// 清除 所有 localStorage
 	clearState()
-
 	// 获取所有Webview窗口
 	let curr = plus.webview.currentWebview();
 	let wvs = plus.webview.all();
@@ -50,7 +51,27 @@ function watchLocation(mui) {
 			}
 			// address
 			const address = `${position.address.province}${position.address.city}${position.address.district}${position.address.street}`
-			console.log(JSON.stringify(position))
+
+			//上传位置
+			Promise.all([uploadLocation.trailer(), uploadLocation.recievedList()]).then(json => {
+				//位置接口调用
+				uploadLocation.DriverLocation({
+					DriverId: json[0].data.Id,
+					PlateNumber: json[0].data.Partner_Id,
+					OrderNo: json[1].data[0].OrderNo,
+					Longitude: coords.lng,
+					Latitude: coords.lat,
+					Address: address,
+					CreateDate: new Date().toISOString().split('T')[0]
+				}).then(json => {
+					if (json.result) {
+						console.log(json.msg || '上传位置成功')
+					} else {
+						console.log(json.msg || '上传位置失败')
+					}
+				})
+			})
+
 			// 清楚监听位置
 			plus.geolocation.clearWatch(geoWatch);
 			geoWatch = null
@@ -63,8 +84,45 @@ function watchLocation(mui) {
 	}
 }
 
+//位置信息接口
+let uploadLocation = {
+	//上传位置接口
+	DriverLocation: params => {
+		return new Promise((resolve, reject) => {
+			fetch(config.driver.api.DriverLocation, { body: params }, 'post').then(json => {
+				resolve(json)
+			})
+		})
+	},
+	//司机信息
+	trailer: params => {
+		return new Promise((resolve, reject) => {
+			fetch(config.driver.api.trailer, { header: params }, 'get')
+				.then(json => {
+					resolve(json)
+				})
+		})
+	},
+	//已接运单
+	recievedList: () => {
+		return new Promise((resolve, reject) => {
+			fetch(config.driver.api.orderTruck, { header: { 'type': 'RECEIVED' } }, 'get').then(json => {
+				resolve(json)
+			})
+		})
+	},
+
+	getAny: () => {
+		Promise.all([uploadLocation.trailer(), uploadLocation.recievedList()]).then(json => {
+			console.log(json[1].data[0])
+		})
+	}
+}
+
 // 调用系统电话
 function callPhone(number) {
+	// console.log(uploadLocation.getTrailer())
+	uploadLocation.getAny()
 	plus.nativeUI.confirm(`拨打${number}？`, function (e) {
 		if (e.index == 0) {
 			plus.device.dial(number, true)

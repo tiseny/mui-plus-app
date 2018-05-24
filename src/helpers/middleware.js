@@ -46,7 +46,7 @@ function middleware() {
 		let localInterval = null
 		let curr = getState("login_url")
 		let wvs = plus.webview.currentWebview().getURL()
-		if (wvs == curr) {
+		if (wvs == curr && getState('token')) {
 			// 定位信息，未登录、切换到后台、退出应用不定位。
 			let clearInter = function () {
 				clearInterval(localInterval)
@@ -59,7 +59,7 @@ function middleware() {
 				} else {
 					document.addEventListener("pause", clearInter, false);
 				}
-			}, 3000)
+			}, 10000)
 		}
 	}
 
