@@ -6,10 +6,10 @@ import './recieveOrderDetail.less';
 const template = require('../../../libs/art.template');
 
 const ORDER_STATUS = {
-	'提归确认': 21,
-	'到场确认': 22,
-	'离场确认': 23,
-	'还柜确认': 24
+	'提归确认': 6,
+	'到场确认': 7,
+	'离场确认': 8,
+	'还柜确认': 9
 }
 
 const FORWARD_URL = 'orderProcess.html'
