@@ -32,7 +32,7 @@ function middleware() {
 
 			getLocal()
 
-			//从后台切换到前台
+			//从后台切换到前台开始定位。
 			document.addEventListener("resume", getLocal, false);
 		})
 
@@ -47,8 +47,7 @@ function middleware() {
 		let curr = getState("login_url")
 		let wvs = plus.webview.currentWebview().getURL()
 		if (wvs == curr) {
-			// 定位信息
-
+			// 定位信息，未登录、切换到后台、退出应用不定位。
 			let clearInter = function () {
 				clearInterval(localInterval)
 				clearState("login_url");
