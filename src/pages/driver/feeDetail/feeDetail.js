@@ -175,7 +175,10 @@ const task = {
 
 	//获取费用数据
 	fetchFeeDetail:() => {
-		app.feeDetail.fetchFee({
+		const isAccount = getQuery(mui, 'isAccount')
+		const func = !!isAccount ? app.feeDetail.fetchDetail : app.feeDetail.fetchFee
+
+		func({
 			OrderId: getQuery(mui,'order_id'),
 		}).then(json => {
 			//费用总金额

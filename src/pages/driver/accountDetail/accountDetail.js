@@ -81,11 +81,12 @@ const task = {
         mui('body').on('tap', '.fee-detail', function() {
             const id = this.getAttribute('data-id')
             mui.openWindow({
-                url: `feeDetail.html?order_id=${id}&OrderStatus=11`,
+                url: `feeDetail.html?order_id=${id}&OrderStatus=11&isAccount=true`,
                 id: 'feeDetail.html',
                 extras: {
                     order_id: id,
-                    OrderStatus: 11
+                    OrderStatus: 11,
+                    isAccount: true
                 }
             })
         })

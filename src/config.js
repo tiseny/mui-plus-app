@@ -12,6 +12,7 @@ export default {
       orderHistory: driver_url + '/api/OrderTruck/GetOrderHistory',          // 历史运单分页
       orderDetail: driver_url + '/api/OrderTruck',                           // 运单详情
       fee: driver_url + '/api/OrderCost',                                    // 查看费用
+      feeDetail: driver_url + '/api/OrderCost/GetByPartnerBillId',           // 查看出了对账单费用
       feeCategory: driver_url + '/api/CostItem',                             // 费用类目
       trailer: driver_url + '/api/Trailer',                                  // 司机资料
       orderContainer: driver_url + '/api/OrderContainer',                    // 货柜信息

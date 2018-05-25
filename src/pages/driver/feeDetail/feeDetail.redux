@@ -12,6 +12,14 @@ window.app.feeDetail = {
 			})
 		})
 	},
+	//获取费用数据
+	fetchDetail: params => {
+		return new Promise((resolve,reject) => {
+			fetch(config.driver.api.feeDetail, {header: params}, "get").then(json => {
+				resolve(json)
+			})
+		})
+	},
 	fetchDefault: params => {
 		return new Promise((resolve, reject) => {
 			fetch(config.driver.api.feeDefault, {}, 'get').then(json => {
