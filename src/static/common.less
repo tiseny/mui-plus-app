@@ -20,7 +20,7 @@ body{
 
   // 头部
   .mui-bar-nav{
-    box-shadow: none;
+    box-shadow: 0 0 4px #ccc;
     background: @bgcolor;
     .mui-icon {
       font-size: 18px;
@@ -99,6 +99,11 @@ input[type='submit'],
     display: none;
     border-radius: 6px;
   }
+}
+
+.mui-table-view-cell:after,
+.mui-table-view-cell:before{
+  background-color: #dedede;
 }
 
 .fix-popup{
