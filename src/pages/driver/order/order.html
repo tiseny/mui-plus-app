@@ -48,7 +48,7 @@
                           <span class="value">{{Item.TheActualAttendanceTime}}</span> 
                         </div>
                         {{each Item.Factories as Factory key}}
-                          <div class="factory-row">
+                          <div class="factory-row mui-navigate-right">
                             {{if Item.Factories.length == 1}}
                               <div class="row">
                                 <span class="name">装货工厂</span>
@@ -120,7 +120,7 @@
                             <span class="value">{{Item.TheActualAttendanceTime}}</span> 
                           </div>
                           {{each Item.Factories as Factory key}}
-                            <div class="factory-row">
+                            <div class="factory-row mui-navigate-right">
                               {{if Item.Factories.length == 1}}
                                 <div class="row">
                                   <span class="name">装货工厂</span>
@@ -192,7 +192,7 @@
                           <span class="value">{{Item.TheActualAttendanceTime}}</span> 
                         </div>
                         {{each Item.Factories as Factory key}}
-                          <div class="factory-row">
+                          <div class="factory-row mui-navigate-right" data-address="{{Factory.FullPathAddress}}">
                             {{if Item.Factories.length == 1}}
                               <div class="row">
                                 <span class="name">装货工厂</span>
@@ -206,7 +206,7 @@
                             {{/if}}
                             <div class="row">
                               <span class="name">装卸地址</span>
-                              <span class="value">{{Factory.DetailedAddress}}</span> 
+                              <span class="value">{{Factory.FullPathAddress}}</span> 
                             </div>
                           </div>
                         {{/each}}  

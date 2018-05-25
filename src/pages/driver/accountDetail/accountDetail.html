@@ -25,15 +25,15 @@
                 <div class="income-parts">
                     <div class="income-part">
                         <div>运单收入(元)</div>
-                        <div style="font-weight:bold;">{{waybillTotal}}</div>
+                        <div style="font-weight:bold;font-size: 16px;">{{waybillTotal}}</div>
                     </div>
                     <div class="income-part">
                         <div>借款支出(元)</div>
-                        <div style="font-weight:bold;">{{loanTotal}}</div>
+                        <div style="font-weight:bold;font-size: 16px;">{{loanTotal}}</div>
                     </div>
                     <div class="income-part">
                         <div>打油支出(元)</div>
-                        <div style="font-weight:bold;">{{oilTotal}}</div>
+                        <div style="font-weight:bold;font-size: 16px;">{{oilTotal}}</div>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,7 @@
                             运单明细
                             <span>({{waybill.length}})</span>
                         </header>
+                        {{if waybill.length > 0}}
                         {{each waybill as item i}}
                         <ul class="mui-table-view">
                                 <li class="mui-table-view-cell" data-Id="{{item.Id}}" data-state="{{item.stateName}}">
@@ -86,6 +87,9 @@
                             </li> -->
                         </ul>
                         {{/each}}
+                        {{else}}
+                        <div class="nothing"><span>暂无数据</span></div>
+                        {{/if}}
                     </div>
                     <div class="loan-detail">
                         <header class="detail-hd">
@@ -93,6 +97,7 @@
                             借款明细
                             <span>({{loan.length}})</span>
                         </header>
+                        {{if loan.length > 0}}
                         {{each loan as item i}}
                         <ul class="mui-table-view">
                             <li class="mui-table-view-cell">
@@ -110,6 +115,9 @@
                             </li>
                         </ul>
                         {{/each}}
+                        {{else}}
+                        <div class="nothing"><span>暂无数据</span></div>
+                        {{/if}}
                     </div>
                     <div class="oil-detail">
                         <header class="detail-hd">
@@ -117,6 +125,7 @@
                             打油明细
                             <span>({{oil.length}})</span>
                         </header>
+                        {{if oil.length > 0}}
                         {{each oil as item i}}
                         <ul class="mui-table-view">
                             <li class="mui-table-view-cell">
@@ -131,6 +140,9 @@
                             </li>
                         </ul>
                         {{/each}}
+                        {{else}}
+                        <div class="nothing"><span>暂无数据</span></div>
+                        {{/if}}
                     </div>
             </div>
             {{if state=='平台审核通过'}}

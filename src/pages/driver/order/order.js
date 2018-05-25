@@ -1,5 +1,5 @@
 import mui from '../../../helpers/middleware';
-import { pageBack, getQuery } from '../../../helpers/util';
+import { pageBack, getQuery, openMap } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
 import $ from 'jquery';
 import './order.redux';
@@ -164,6 +164,15 @@ const task = {
 		})
 	},
 
+
+	listenLocation: () => {
+		mui('body').on('tap', '.factory-row', function() {
+			const address = this.getAttribute('data-address')
+
+			openMap(address)
+		})
+	}
+
 }
 
 // ios 导航状态
@@ -198,6 +207,8 @@ mui._ready(function () {
 	task.initPage()
 
 	task.bindRefresh()
+
+	task.listenLocation()
 
 	pageBack(mui)
 

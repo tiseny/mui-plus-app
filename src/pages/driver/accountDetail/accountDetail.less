@@ -20,10 +20,11 @@
                 font-size: 14px;
             }
             .total-value {
-                margin-top: 10px;
-                margin-bottom: 6px;
+                margin-top: 15px;
+                margin-bottom: 10px;
                 font-size: 22px;
                 line-height: 24px;
+                font-weight: bold;
             }
             #account-state {
                 position: absolute;
@@ -38,8 +39,12 @@
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
-            .income-part div {
-                margin-bottom: 5px;
+            .income-part{
+                flex: 1;
+                div {
+                    margin-bottom: 10px;
+                    font-size: 12px;
+                }
             }
         }
     }
@@ -52,7 +57,7 @@
             font-size: 14px;
             .detail-hd {
                 color: #999;
-                font-size: 16px;
+                font-size: 14px;
             }
         }
         .mui-table-view {
@@ -72,6 +77,30 @@
                     text-align: right;
                     line-height: 25px;
                 }
+            }
+        }
+        .nothing{
+            position: relative;
+            text-align: center;
+            color: #999;
+            line-height: 80px;
+            height: 80px;
+            &:before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 10%;
+                width: 80%;
+                height: 1px;
+                background: #ddd;
+            };
+            span{
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 80px;
+                margin-left: -40px;
+                background: #eff2f5;
             }
         }
     }
