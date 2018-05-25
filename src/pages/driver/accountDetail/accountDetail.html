@@ -46,7 +46,27 @@
                         </header>
                         {{each waybill as item i}}
                         <ul class="mui-table-view">
-                            <li class="mui-table-view-cell">
+                                <li class="mui-table-view-cell" data-Id="{{item.Id}}" data-state="{{item.stateName}}">
+                                        <a class="mui-navigate-right">
+                                                <div class="cell-hd">
+                                                        <div class="cell-hd-part">
+                                                            <span>柜号：</span>{{item.TankNo}}
+                                                        </div>
+                                                        <div class="cell-hd-part">
+                                                            <span>装货地址：</span>{{item.DetailedAddress }}
+                                                        </div>
+                                                        <div class="cell-hd-part">
+                                                            <span>备注：</span> {{item.Remark }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-bd">
+                                                        <div style="color: #f30;font-size: 18px;font-weight: bold;">{{item.Amount}}</div>
+                                                        <div style="color: #888;">运单总额</div>
+                                                        <div style="width: 74px;color: #888;">{{item.OrderDate}}</div>
+                                                    </div>
+                                        </a>
+                                    </li>
+                            <!-- <li class="mui-table-view-cell">
                                 <div class="cell-hd">
                                     <div class="cell-hd-part">
                                         <span>柜号：</span>{{item.TankNo}}
@@ -60,10 +80,10 @@
                                 </div>
                                 <div class="cell-bd">
                                     <div style="color: #f30;font-size: 18px;font-weight: bold;">{{item.Amount}}</div>
-                                    <div style="color: #888;">{{item.Name}}</div>
+                                    <div style="color: #888;">运单总额</div>
                                     <div style="width: 74px;color: #888;">{{item.OrderDate}}</div>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                         {{/each}}
                     </div>

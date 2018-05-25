@@ -54,22 +54,27 @@ function watchLocation(mui) {
 
 			//上传位置
 			Promise.all([uploadLocation.trailer(), uploadLocation.recievedList()]).then(json => {
-				//位置接口调用
-				uploadLocation.DriverLocation({
-					DriverId: json[0].data.Id,
-					PlateNumber: json[0].data.Partner_Id,
-					OrderNo: json[1].data[0].OrderNo,
-					Longitude: coords.lng,
-					Latitude: coords.lat,
-					Address: address,
-					CreateDate: new Date().toISOString().split('T')[0]
-				}).then(json => {
-					if (json.result) {
-						console.log(json.msg || '上传位置成功')
-					} else {
-						console.log(json.msg || '上传位置失败')
-					}
-				})
+				if (json.result) {
+					console.log(json.msg || '网络连接成功，司机信息获取成功，进行位置上传...')
+					//位置接口调用
+					uploadLocation.DriverLocation({
+						DriverId: json[0].data.Id,
+						PlateNumber: json[0].data.Partner_Id,
+						OrderNo: json[1].data[0].OrderNo,
+						Longitude: coords.lng,
+						Latitude: coords.lat,
+						Address: address,
+						CreateDate: new Date().toISOString().split('T')[0]
+					}).then(json => {
+						if (json.result) {
+							console.log(json.msg || '上传位置成功')
+						} else {
+							console.log(json.msg || '上传位置失败')
+						}
+					})
+				} else {
+					console.log(json.msg || '网络连接失败，司机信息获取失败，将位置信息存入队列...')
+				}
 			})
 
 			// 清楚监听位置
