@@ -36,12 +36,16 @@
     margin-top: 15px;
 		.mui-table-view-cell {
 			line-height: 21px;
-			.factory-row:nth-child(even){
-				background: #fbffd4;
-		    overflow: hidden;
+			.factory-row{
+				position: relative;
+				overflow: hidden;
 		    clear: both;
 		    margin: 0 -15px;
 		    padding: 0 15px;
+		    padding-right: 0;
+			}
+			.factory-row:nth-child(even){
+				background: #fbffd4;
 			}
 			.row {
   			padding: 3px 0;
@@ -67,7 +71,7 @@
 				width:auto;
 				word-break:break-all;
 				word-wrap:break-word;
-				margin-left:75px;
+				margin-left:90px;
 				color:#999;
 				min-height: 21px;
 			}

@@ -23,9 +23,9 @@
 						{{each data as item i}}
 						<li class="mui-table-view-cell mui-collapse">
 							<a class="mui-navigate-right" href="#">
-								<div>{{item.BorrowDate}}</div>
+								<div style="color: #666;">{{item.BorrowDate}}</div>
 								<div style="color:{{item.stateColor}}">{{item.State}}</div>
-								<div style="color:#1AAD19;padding-right: 18px;font-weight:bold;">{{item.Amount}}</div>
+								<div style="color:#f30;padding-right: 18px;font-size: 16px; font-weight:bold;">{{item.Amount}}</div>
 							</a>
 							<div class="mui-collapse-content">
 								<p>代理申请人：{{item.DispatcherName}}</p>
@@ -55,9 +55,9 @@
 							{{each data as item i}}
 							<li class="mui-table-view-cell mui-collapse">
 								<a class="mui-navigate-right" href="#">
-									<div>{{item.CreateDate}}</div>
+									<div style="color: #666;">{{item.CreateDate}}</div>
 									<div>{{item.DriverName}}</div>
-									<div style="color:#1AAD19;padding-right: 18px;font-weight:bold;">{{item.AmountOf}}</div>
+									<div style="color:#f30;padding-right: 18px;font-size: 16px; font-weight:bold;">{{item.AmountOf}}</div>
 								</a>
 								<div class="mui-collapse-content">
 									<p>委托单号：{{item.OrderEntrustId}}</p>

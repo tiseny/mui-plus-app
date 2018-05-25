@@ -22,7 +22,7 @@ const task = {
 
     //格式化数据列表
     formatData: (data) => {
-        data.forEach(element => {
+        data && data.forEach(element => {
             element.CheckSheetDate = element.CheckSheetDate.split(' ')[0]
         });
         return data

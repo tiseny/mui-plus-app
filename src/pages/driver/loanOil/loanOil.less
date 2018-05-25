@@ -39,12 +39,29 @@
         .mui-table-view {
             margin-bottom: 15px;
             border-radius: 0;
+            .mui-table-view-cell{
+                padding: 15px;
+                &.mui-collapse.mui-active{
+                    margin-top: 0;
+                }
+                &:after{
+                    left: 0;
+                    background-color: #dedede;
+                }
+            }
             .mui-navigate-right {
                 display: flex;
                 justify-content: space-between;
             }
             .mui-collapse-content{
                 background-color: #eff2f5;
+                position: relative;
+                overflow: hidden;
+                margin: 13px -15px -14px;
+                padding: 12px 15px;
+                -webkit-transition: height .35s ease;
+                -o-transition: height .35s ease;
+                transition: height .35s ease;
             }
         }
     }
