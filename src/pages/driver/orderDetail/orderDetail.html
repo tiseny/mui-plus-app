@@ -34,17 +34,17 @@
                       {{each data.Factories as Factory key}}
                         <div class="factory-row">
                           {{if data.Factories.length == 1}}
-                            <div class="row">
+                            <div class="row full">
                               <span class="name">装货工厂</span>
                               <span class="value">{{Factory.FactoryFullName}}</span> 
                             </div>
                           {{else}}
-                            <div class="row">
+                            <div class="row full">
                               <span class="name">装货工厂{{key + 1}}</span>
                               <span class="value">{{Factory.FactoryFullName}}</span> 
                             </div>
                           {{/if}}
-                          <div class="row">
+                          <div class="row full">
                             <span class="name">联系人</span>
                             <span class="value">{{Factory.Contact}}</span> 
                           </div>

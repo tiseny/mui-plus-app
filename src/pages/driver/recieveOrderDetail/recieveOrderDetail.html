@@ -64,31 +64,31 @@
                   <span class="value">{{data.PresentTime}}</span> 
                 </div>
                 {{each data.Factories as Factory key}}
-                  <div class="factory-row">
-                    {{if data.Factories.length == 1}}
-                      <div class="row">
-                        <span class="name">装货工厂</span>
-                        <span class="value">{{Factory.FactoryFullName}}</span> 
-                      </div>
-                    {{else}}
-                      <div class="row">
-                        <span class="name">装货工厂{{key + 1}}</span>
-                        <span class="value">{{Factory.FactoryFullName}}</span> 
-                      </div>
-                    {{/if}}
-                    <div class="row">
-                      <span class="name">联系人</span>
-                      <span class="value">{{Factory.Contact}}</span> 
+                <div class="factory-row">
+                  {{if data.Factories.length == 1}}
+                    <div class="row full">
+                      <span class="name">装货工厂</span>
+                      <span class="value">{{Factory.FactoryFullName}}</span> 
                     </div>
-                    <div class="row full arrow-right sys-mobile" data-mobile="{{Factory.Mobile}}">
-                      <span class="name">电话</span>
-                      <span class="value">{{Factory.Mobile}}</span> 
+                  {{else}}
+                    <div class="row full">
+                      <span class="name">装货工厂{{key + 1}}</span>
+                      <span class="value">{{Factory.FactoryFullName}}</span> 
                     </div>
-                    <div class="row full arrow-right sys-address" data-address="{{Factory.FullPathAddress}}">
-                      <span class="name">装卸地址</span>
-                      <span class="value">{{Factory.FullPathAddress}}</span> 
-                    </div>
+                  {{/if}}
+                  <div class="row full">
+                    <span class="name">联系人</span>
+                    <span class="value">{{Factory.Contact}}</span> 
                   </div>
+                  <div class="row full arrow-right sys-mobile" data-mobile="{{Factory.Mobile}}">
+                    <span class="name">电话</span>
+                    <span class="value">{{Factory.Mobile}}</span> 
+                  </div>
+                  <div class="row full arrow-right sys-address" data-address="{{Factory.FullPathAddress}}">
+                    <span class="name">装卸地址</span>
+                    <span class="value">{{Factory.FullPathAddress}}</span> 
+                  </div>
+                </div>
                 {{/each}}  
                 <div class="row">
                   <span class="name">贸易方式</span>
