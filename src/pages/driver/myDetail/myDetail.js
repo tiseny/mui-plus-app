@@ -15,20 +15,22 @@ const task = {
             mui.os.plus && plus.nativeUI.closeWaiting()
             //检查是否过期
             const checkData = () => {
-                for (let i in json.data) {
-                    // json数据存在且可转化成时间戳
-                    if (!!json.data[i] && !isNaN(new Date(json.data[i].toString()).getTime())) {
-                        let dateStr = json.data[i].toString().split(" ")[0]
-                        json.data[i] = dateStr
-                        const end_time = new Date(json.data[i].toString()).getTime()
-                        const now_time = new Date().getTime()
-                        const D_value = (end_time * 1) - (now_time * 1)
-                        const days = D_value / 24 / 60 / 60 / 1000      //转换为天数
-                        if (days >= 0 && days <= 30) {
-                            json.data[i + '_end'] = '即将过期'
-                        } else {
-                            json.data[i + '_end'] = '已过期'
-                        }
+                //司机信息解析，如果时间过期添加_end数据
+                for (let key in json.data) {
+                    if (Date.parse(json.data[key]) && key !== 'Id') {
+                        // console.log(key)
+                        // console.log(Date.parse(json.data[key]))
+                        let time = new Date()
+                        let D_value = time.getTime() - Date.parse(json.data[key])  //现在的时间与司机信息里的时间差值
+                        try {
+                            json.data[key] = json.data[key].split(' ')[0]
+                            if (D_value > 0) {
+                                json.data[key + '_end'] = '已过期'              //如果大于0，则是已过期
+                                //添加trailer元素
+                            } else if (D_value <= 0 && Math.abs(D_value / 1000 / 60 / 60 / 24) <= 30) {      //如果差值小于30天  
+                                json.data[key + '_end'] = '即将过期'
+                            }
+                        } catch (err) { }
                     }
                 }
             }
