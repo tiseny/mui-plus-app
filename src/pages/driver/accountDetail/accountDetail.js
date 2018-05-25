@@ -74,6 +74,21 @@ const task = {
                 }
             })
         });
+    },
+
+    //跳转至运单费用详情
+    bindToOrderCost: () => {
+        mui('body').on('tap', '.fee-detail', function() {
+            const id = this.getAttribute('data-id')
+            mui.openWindow({
+                url: `feeDetail.html?order_id=${id}&OrderStatus=11`,
+                id: 'feeDetail.html',
+                extras: {
+                    order_id: id,
+                    OrderStatus: 11
+                }
+            })
+        })
     }
 }
 
@@ -93,6 +108,8 @@ mui._ready(function () {
     task.fetchList()
 
     task.bindCheck()
+
+    task.bindToOrderCost()
 
 });
 
