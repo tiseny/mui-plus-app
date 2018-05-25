@@ -67,8 +67,16 @@
                 font-size: 14px;
                 display: flex;
                 justify-content: space-between;
+                > a:not(.mui-btn){
+                    display: flex;
+                    flex: 1;
+                    justify-content: space-between;
+                    white-space: normal;
+                    text-overflow: unset;
+                }
                 .cell-hd {
                     line-height: 22px;
+                    flex: 1;
                     .cell-hd-part span {
                         color: #888;
                     }
