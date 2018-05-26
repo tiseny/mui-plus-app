@@ -21,7 +21,7 @@ export default {
       feeDefault: driver_url + '/api/CostItem/GetDefault',                   // 获取司机端的默认费用
       loan: driver_url + '/api/DriverRequest',                               // 借款列表与添加
       oil: driver_url + '/api/Refuelling',                                   // 打油列表
-      DriverLocation: driver_url + '/api/Location',                          //上传位置信息
+      DriverLocation: driver_url + '/api/Location',         //上传位置信息
     }
   },
   business: {
