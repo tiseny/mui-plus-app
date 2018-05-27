@@ -90,6 +90,7 @@ function goLogin(mui) {
 
 function watchLocation(mui) {
   // 如果已经登录 有已接订单 获取司机信息并上传位置
+  //plus.networkinfo.getCurrentType()网络状态
   if (getState("token")) {
     uploadLocation.recievedList().then(recieved => {
       if (recieved.result && recieved.data.length > 0) {
@@ -200,7 +201,7 @@ let uploadLocation = {
         Longitude: 116.410254,
         Latitude: 39.91641,
         Address: "广东省深圳市福田区下沙路",
-        CreateDate: new Date().toISOString().split("T")[0]
+        CreateDate: new Date().toISOString()//.split("T")[0]
       })
       .then(json => {
         if (json.result) {
