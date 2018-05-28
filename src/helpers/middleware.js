@@ -51,6 +51,8 @@ function middleware() {
 		let wvs = plus.webview.currentWebview().getURL()
 		if (wvs == curr) {
 			// 定位信息，未登录、切换到后台、退出应用不定位。
+			//第一次进入应用时首先获取一次位置
+			watchLocation(mui);
 			let clearInter = function () {
 				clearInterval(localInterval)
 				clearState("login_url");

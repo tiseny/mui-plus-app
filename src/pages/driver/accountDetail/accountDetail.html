@@ -47,7 +47,7 @@
                         {{if waybill.length > 0}}
                         {{each waybill as item i}}
                         <ul class="mui-table-view">
-                                <li class="mui-table-view-cell fee-detail" data-id="{{item.TruckId}}" >
+                                <li class="mui-table-view-cell fee-detail" data-id="{{item.TruckId}}" data-partnerbillid="{{item.PartnerBillId}}" >
                                     <div class="cell-hd">
                                         <div class="cell-hd-part">
                                             <span>柜号：</span>{{item.TankNo}}

@@ -180,6 +180,7 @@ const task = {
 
 		func({
 			OrderId: getQuery(mui,'order_id'),
+			partnerBillId: getQuery(mui,'partnerBillId'),
 		}).then(json => {
 			//费用总金额
 			let total = 0;
