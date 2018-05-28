@@ -37,57 +37,7 @@ function goLogin(mui) {
   plus.webview.open("login.html");
   curr.close();
 }
-
-// 监听定位
-// function watchLocation(mui) {
-// 	// 如果已经登录了
-// 	if (getState('token')) {
-// 		geoWatch = plus.geolocation.getCurrentPosition(function (position) {
-// 			// coords 经纬度
-// 			const coords = {
-// 				lng: position.coords.longitude,
-// 				lat: position.coords.latitude
-// 			}
-// 			// address
-// 			const address = `${position.address.province}${position.address.city}${position.address.district}${position.address.street}`
-
-// 			//上传位置
-// 			Promise.all([uploadLocation.trailer(), uploadLocation.recievedList()]).then(json => {
-// 				if (json.result) {
-// 					console.log(json.msg || '网络连接成功，司机信息获取成功，进行位置上传...')
-// 					//位置接口调用
-// 					uploadLocation.DriverLocation({
-// 						DriverId: json[0].data.Id,
-// 						PlateNumber: json[0].data.Partner_Id,
-// 						OrderNo: json[1].data[0].OrderNo,
-// 						Longitude: coords.lng,
-// 						Latitude: coords.lat,
-// 						Address: address,
-// 						CreateDate: new Date().toISOString().split('T')[0]
-// 					}).then(json => {
-// 						if (json.result) {
-// 							console.log(json.msg || '上传位置成功')
-// 						} else {
-// 							console.log(json.msg || '上传位置失败')
-// 						}
-// 					})
-// 				} else {
-// 					console.log(json.msg || '网络连接失败，司机信息获取失败，将位置信息存入队列...')
-// 				}
-// 			})
-
-// 			// 清楚监听位置
-// 			plus.geolocation.clearWatch(geoWatch);
-// 			geoWatch = null
-// 		}, function (e) {
-// 			//plus.nativeUI.toast("异常:" + e.message);
-// 			// 清楚监听位置
-// 			plus.geolocation.clearWatch(geoWatch);
-// 			geoWatch = null
-// 		}, { provider: 'baidu' });
-// 	}
-// }
-
+//位置监听
 function watchLocation(mui) {
   // 如果已经登录 有已接订单 获取司机信息并上传位置
   //plus.networkinfo.getCurrentType()网络状态
@@ -107,7 +57,6 @@ function watchLocation(mui) {
                     orderNo += element.OrderNo + ",";
                   }
                 });
-                console.log('qwr')
                 let params = []
                 //获取本地存储的位置信息
                 if (getState('location')) {
@@ -117,8 +66,8 @@ function watchLocation(mui) {
                     element.OrderNo = orderNo
                     params.push(JSON.stringify(element))
                   });
+                  console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置')
                 }
-                console.log('qwr')
                 params.push({
                   DriverId: trailerInfo.data.Id,
                   PlateNumber: trailerInfo.data.PartnerName,
@@ -128,7 +77,6 @@ function watchLocation(mui) {
                   Address: uploadLocation.getLocation().address,
                   CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
                 });
-                console.log('qwr')
                 //位置上传
                 uploadLocation.DriverLocation(params).then(json => {
                   if (json.result) {
@@ -161,7 +109,7 @@ function watchLocation(mui) {
         CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
       }]
       if (getState('location')) {
-        JSON.parse(getState('location')).forEach( item=> {
+        JSON.parse(getState('location')).forEach(item => {
           location.push(item)
         })
         setState('location', JSON.stringify(location))
@@ -238,42 +186,10 @@ let uploadLocation = {
       address: address
     }
   },
-
-  //
-  asd: () => {
-    //位置上传
-    uploadLocation
-      .DriverLocation([{
-        DriverId: 59,
-        PlateNumber: '老死机车牌',
-        OrderNo: "ON-20180516-0043",
-        Longitude: 116.410254,
-        Latitude: 39.91641,
-        Address: "广东省深圳市福田区下沙路",
-        CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
-      }])
-      .then(json => {
-        if (json.result) {
-          console.log("上传位置成功");
-        } else {
-          console.log("上传位置失败");
-        }
-      });
-  },
-
-  getAny: () => {
-    Promise.all([uploadLocation.trailer(), uploadLocation.recievedList()]).then(
-      json => {
-        console.log(json);
-      }
-    );
-  }
-};
+}
 
 // 调用系统电话
 function callPhone(number) {
-  // console.log(uploadLocation.getTrailer())
-  uploadLocation.asd();
   plus.nativeUI.confirm(
     `拨打${number}？`,
     function (e) {

@@ -12,12 +12,11 @@ function getState(name) {
 	return localStorage.getItem(`${config.state_prefix}_${name}`)
 }
 
-function clearState(item) {	
-	console.log(item)
-	if(!item){
+function clearState(name) {	
+	if(!name){
 		localStorage.clear()
 	}else{
-		localStorage.removeItem(item);
+		localStorage.removeItem(`${config.state_prefix}_${name}`);
 	}
 }
 
