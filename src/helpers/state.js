@@ -13,6 +13,7 @@ function getState(name) {
 }
 
 function clearState(item) {	
+	console.log(item)
 	if(!item){
 		localStorage.clear()
 	}else{

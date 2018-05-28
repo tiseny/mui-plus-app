@@ -92,23 +92,13 @@ function watchLocation(mui) {
   // 如果已经登录 有已接订单 获取司机信息并上传位置
   //plus.networkinfo.getCurrentType()网络状态
   if (getState("token")) {
-    uploadLocation.recievedList().then(recieved => {
-      if (recieved.result && recieved.data.length > 0) {
-        uploadLocation.trailer().then(trailerInfo => {
-          if (trailerInfo.result) {
-            //获取位置信息
-            geoWatch = plus.geolocation.getCurrentPosition(
-              function(position) {
-                // coords 经纬度
-                const coords = {
-                  lng: position.coords.longitude,
-                  lat: position.coords.latitude
-                };
-                // address
-                const address = `${position.address.province}${
-                  position.address.city
-                }${position.address.district}${position.address.street}`;
-                //有几个已接运单
+    if (plus.networkinfo.getCurrentType() > 0) {
+      uploadLocation.recievedList().then(recieved => {
+        if (recieved.result) {
+          if (recieved.data.length > 0) {
+            uploadLocation.trailer().then(trailerInfo => {
+              if (trailerInfo.result) {
+                //可能会有多个已接
                 let orderNo = "";
                 recieved.data.forEach(element => {
                   if (recieved.data[recieved.data.length - 1] == element) {
@@ -117,43 +107,68 @@ function watchLocation(mui) {
                     orderNo += element.OrderNo + ",";
                   }
                 });
-                let param = {
+                console.log('qwr')
+                let params = []
+                //获取本地存储的位置信息
+                if (getState('location')) {
+                  JSON.parse(getState('location')).forEach(element => {
+                    element.DriverId = trailerInfo.data.Id
+                    element.PlateNumber = trailerInfo.data.PlateNumber
+                    element.OrderNo = orderNo
+                    params.push(JSON.stringify(element))
+                  });
+                }
+                console.log('qwr')
+                params.push({
                   DriverId: trailerInfo.data.Id,
-                  PlateNumber: trailerInfo.data.Partner_Id,
+                  PlateNumber: trailerInfo.data.PartnerName,
                   OrderNo: orderNo,
-                  Longitude: coords.lng,
-                  Latitude: coords.lat,
-                  Address: address,
-                  CreateDate: new Date().toISOString().split("T")[0]
-                };
+                  Longitude: uploadLocation.getLocation().lng,
+                  Latitude: uploadLocation.getLocation().lat,
+                  Address: uploadLocation.getLocation().address,
+                  CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
+                });
+                console.log('qwr')
                 //位置上传
-                uploadLocation.DriverLocation(param).then(json => {
+                uploadLocation.DriverLocation(params).then(json => {
                   if (json.result) {
                     console.log("上传位置成功");
+                    clearState('location')
                   } else {
-                    console.log("上传位置失败");
+                    console.log("上传位置失败,添加当前位置到本地存储");
+                    setState('location', JSON.stringify(params))
                   }
                 });
-                // 清楚监听位置
-                plus.geolocation.clearWatch(geoWatch);
-                geoWatch = null;
-              },
-              function(e) {
-                //plus.nativeUI.toast("异常:" + e.message);
-                // 清楚监听位置
-                plus.geolocation.clearWatch(geoWatch);
-                geoWatch = null;
-              },
-              { provider: "baidu" }
-            );
+
+              } else {
+                console.log("司机信息获取失败");
+              }
+            });
           } else {
-            console.log("司机信息获取失败");
+            //没有已接订单删除定位存储
+            clearState('location')
           }
-        });
+        } else {
+          console.log("已接运单获取失败");
+        }
+      });
+    } else {
+      console.log('没网则存储位置到数组')
+      let location = [{
+        Longitude: uploadLocation.getLocation().lng,
+        Latitude: uploadLocation.getLocation().lat,
+        Address: uploadLocation.getLocation().address,
+        CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
+      }]
+      if (getState('location')) {
+        JSON.parse(getState('location')).forEach( item=> {
+          location.push(item)
+        })
+        setState('location', JSON.stringify(location))
       } else {
-        console.log("已接运单获取失败");
+        setState('location', JSON.stringify(location))
       }
-    });
+    }
   }
 }
 
@@ -190,19 +205,53 @@ let uploadLocation = {
     });
   },
 
+  getLocation: () => {
+    let lng = 0
+    let lat = 0
+    let address = ''
+    //获取位置信息
+    geoWatch = plus.geolocation.getCurrentPosition(
+      function (position) {
+        // coords 经纬度
+        lng = position.coords.longitude
+        lat = position.coords.latitude
+        // address
+        address = `${position.address.province}${
+          position.address.city
+          }${position.address.district}${position.address.street}`;
+
+        // 清楚监听位置
+        plus.geolocation.clearWatch(geoWatch);
+        geoWatch = null;
+      },
+      function (e) {
+        plus.nativeUI.toast("异常:" + e.message);
+        // 清楚监听位置
+        plus.geolocation.clearWatch(geoWatch);
+        geoWatch = null;
+      },
+      { provider: "baidu" }
+    );
+    return {
+      lng: lng,
+      lat: lat,
+      address: address
+    }
+  },
+
   //
   asd: () => {
     //位置上传
     uploadLocation
-      .DriverLocation({
+      .DriverLocation([{
         DriverId: 59,
-        PlateNumber: 10214,
+        PlateNumber: '老死机车牌',
         OrderNo: "ON-20180516-0043",
         Longitude: 116.410254,
         Latitude: 39.91641,
         Address: "广东省深圳市福田区下沙路",
-        CreateDate: new Date().toISOString()//.split("T")[0]
-      })
+        CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
+      }])
       .then(json => {
         if (json.result) {
           console.log("上传位置成功");
@@ -227,7 +276,7 @@ function callPhone(number) {
   uploadLocation.asd();
   plus.nativeUI.confirm(
     `拨打${number}？`,
-    function(e) {
+    function (e) {
       if (e.index == 0) {
         plus.device.dial(number, true);
       }
@@ -243,7 +292,7 @@ function openMap(address) {
   loadBmap(() => {
     new BMap.Geocoder().getPoint(address, res => {
       plus.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
           const currentLon = position.coords.longitude;
           const currentLat = position.coords.latitude;
 
@@ -252,7 +301,7 @@ function openMap(address) {
 
           plus.maps.openSysMap(dst, "导航", src); // 调用系统地图显示
         },
-        function(e) {
+        function (e) {
           plus.nativeUI.toast("异常:" + e.message);
         }
       );
@@ -264,22 +313,22 @@ function openMap(address) {
 function photo(callback) {
   const cmr = plus.camera.getCamera();
   cmr.captureImage(
-    function(p) {
+    function (p) {
       //alert(p);//_doc/camera/1467602809090.jpg
       plus.io.resolveLocalFileSystemURL(
         p,
-        function(entry) {
+        function (entry) {
           //alert(entry.toLocalURL());//file:///storage/emulated/0/Android/data/io.dcloud...../doc/camera/1467602809090.jpg
           //alert(entry.name);//1467602809090.jpg
           const path = plus.io.convertLocalFileSystemURL(p);
           compressImage(path, entry, callback);
         },
-        function(e) {
+        function (e) {
           plus.nativeUI.toast("读取拍照文件错误：" + e.message);
         }
       );
     },
-    function(e) {},
+    function (e) { },
     {
       filename: "_doc/camera/",
       index: 1
@@ -297,16 +346,16 @@ function compressImage(url, file, callback) {
       quality: 20, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
       overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
     },
-    function(event) {
+    function (event) {
       //uploadf(event.target,pid);
       //event.target获取压缩转换后的图片url路
       //filename图片名称
       let img = new Image();
       img.src = url;
-      img.onload = function() {
+      img.onload = function () {
         let that = this;
         //获取照片方向角属性，用户旋转控制 ,判断当前图片是否需要做旋转操作。
-        EXIF.getData(img, function() {
+        EXIF.getData(img, function () {
           /**
            * 图片的旋转方向信息
            * 1、图片没有发生旋转
@@ -319,17 +368,17 @@ function compressImage(url, file, callback) {
           callback(file.name, base64, bitData);
           // 删除文件
           file.remove(
-            function() {
+            function () {
               console.log("删除成功");
             },
-            function() {
+            function () {
               console.log("删除失败");
             }
           );
         });
       };
     },
-    function(error) {
+    function (error) {
       plus.nativeUI.toast("压缩图片失败");
     }
   );
@@ -375,14 +424,14 @@ function pageBack(mui) {
   // 退出
   let backButtonPress = 0;
   // 区分 mui.back 方法
-  mui.back = function(event) {
+  mui.back = function (event) {
     backButtonPress++;
     if (backButtonPress > 1) {
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");
     }
-    setTimeout(function() {
+    setTimeout(function () {
       backButtonPress = 0;
     }, 1000);
     return false;
@@ -434,7 +483,7 @@ function imagePreview(mui, src, deleteFunc) {
   document.body.appendChild(popup);
 
   // 监听弹窗
-  popup.addEventListener("tap", function(e) {
+  popup.addEventListener("tap", function (e) {
     const targetClass = e.target.getAttribute("class");
     // 如果不是操作元素
     if (targetClass.indexOf("opt-btn") === -1) {
@@ -443,13 +492,13 @@ function imagePreview(mui, src, deleteFunc) {
   });
 
   // 监听删除
-  mui(".fix-popup").on("tap", ".opt-btn", function(e) {
+  mui(".fix-popup").on("tap", ".opt-btn", function (e) {
     e.stopPropagation();
     const action = this.getAttribute("data-action");
     switch (action) {
       case "delete":
         {
-          mui.confirm("确认要删除图片？", "提示", ["是", "否"], function(e) {
+          mui.confirm("确认要删除图片？", "提示", ["是", "否"], function (e) {
             if (e.index == 0) {
               deleteFunc().then(() => {
                 popup.parentNode.removeChild(popup);
@@ -542,7 +591,7 @@ function getDeviceInfo() {
 }
 // 更新版本
 function update(mui) {
-  plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+  plus.runtime.getProperty(plus.runtime.appid, function (inf) {
     var current_version = inf.version;
     var url = severUlr + "version/gainApkVersion";
     var ua = navigator.userAgent.toLowerCase();
@@ -556,10 +605,10 @@ function update(mui) {
           id: 111030274 //APP唯一标识ID
         },
         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-        success: function(data) {
-          mui.each(data, function(i, norms) {
-            mui.each(norms, function(key, value) {
-              mui.each(value, function(j, version) {
+        success: function (data) {
+          mui.each(data, function (i, norms) {
+            mui.each(norms, function (key, value) {
+              mui.each(value, function (j, version) {
                 if (j == "version") {
                   if (version > current_version) {
                     console.log("发现新版本:V" + version);
@@ -581,13 +630,13 @@ function update(mui) {
         dataType: "json",
         type: "POST",
         timeout: 10000,
-        success: function(data) {
+        success: function (data) {
           if (data.success) {
             mui.toast("发现新版本:V" + data.data.apkVersion); //获取远程数据库中上新andriod版本号
             var dtask = plus.downloader.createDownload(
               data.data.apkUrl,
               {},
-              function(d, status) {
+              function (d, status) {
                 if (status == 200) {
                   plus.nativeUI.toast("正在准备环境，请稍后！");
                   plus.runtime.install(d.filename); // 自动安装apk文件
@@ -602,7 +651,7 @@ function update(mui) {
             return;
           }
         },
-        error: function(xhr, type, errerThrown) {
+        error: function (xhr, type, errerThrown) {
           mui.toast("网络异常,请稍候再试");
         }
       });
