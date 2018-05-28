@@ -23,8 +23,8 @@ function isLogin(mui) {
 }
 
 function goLogin(mui) {
-  // 清除 所有 localStorage
-  clearState();
+  // 清除 登录信息
+  clearState('token');
   // 获取所有Webview窗口
   let curr = plus.webview.currentWebview();
   let wvs = plus.webview.all();
@@ -66,7 +66,7 @@ function watchLocation(mui) {
                     element.OrderNo = orderNo
                     params.push(JSON.stringify(element))
                   });
-                  console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置')
+                  console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置' + new Date().toISOString())
                 }
                 params.push({
                   DriverId: trailerInfo.data.Id,
@@ -80,16 +80,16 @@ function watchLocation(mui) {
                 //位置上传
                 uploadLocation.DriverLocation(params).then(json => {
                   if (json.result) {
-                    console.log("上传位置成功");
+                    console.log("上传位置成功" + new Date().toISOString());
                     clearState('location')
                   } else {
-                    console.log("上传位置失败,添加当前位置到本地存储");
+                    console.log("上传位置失败,添加当前位置到本地存储" + new Date().toISOString());
                     setState('location', JSON.stringify(params))
                   }
                 });
 
               } else {
-                console.log("司机信息获取失败");
+                console.log("司机信息获取失败" + new Date().toISOString());
               }
             });
           } else {
@@ -97,11 +97,11 @@ function watchLocation(mui) {
             clearState('location')
           }
         } else {
-          console.log("已接运单获取失败");
+          console.log("已接运单获取失败" + new Date().toISOString());
         }
       });
     } else {
-      console.log('没网则存储位置到数组')
+      console.log('没网则存储位置到数组' + new Date().toISOString())
       let location = [{
         Longitude: uploadLocation.getLocation().lng,
         Latitude: uploadLocation.getLocation().lat,
@@ -343,6 +343,7 @@ function pageBack(mui) {
   mui.back = function (event) {
     backButtonPress++;
     if (backButtonPress > 1) {
+      clearState('token')
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");

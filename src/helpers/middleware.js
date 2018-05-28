@@ -30,6 +30,10 @@ function middleware() {
 			// 判断是否已经登录
 			isLogin(mui);
 
+			//第一次进入应用时首先获取一次位置
+			watchLocation(mui);
+
+			//获取上传位置
 			getLocal()
 
 			//从后台切换到前台开始定位。
@@ -51,8 +55,6 @@ function middleware() {
 		let wvs = plus.webview.currentWebview().getURL()
 		if (wvs == curr) {
 			// 定位信息，未登录、切换到后台、退出应用不定位。
-			//第一次进入应用时首先获取一次位置
-			watchLocation(mui);
 			let clearInter = function () {
 				clearInterval(localInterval)
 				clearState("login_url");
