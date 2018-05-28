@@ -62,7 +62,7 @@ function middleware() {
 				} else {
 					document.addEventListener("pause", clearInter, false);
 				}
-			}, 10000)
+			}, 300000)
 		}
 	}
 
