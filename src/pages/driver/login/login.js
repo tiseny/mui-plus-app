@@ -45,13 +45,9 @@ const task = {
 
 	//记住密码按钮状态
 	checkedState: () => {
-		if (!$("#rememberBox").is(":checked")) {
-			setState('account', $("#account").val())
-			setState('password', $("#password").val())
+		if (!$("#rememberBox").prop("checked")) {
 			setState('rememberDate', Date.now())
 		} else {
-			clearState('account')
-			clearState('password')
 			clearState('rememberDate')
 		}
 	},
@@ -66,16 +62,41 @@ const task = {
 	//进入页面判断是否有本地登录信息
 	isLocalLogin: () => {
 		let loginState = ''
-		if (getState('account') && getState('password')) {
-			//如果密码存储时间大于7天 重新登录
-			if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 > 7) {
-				loginState = "notLogin"
-			} else {
-				$("#rememberBox").attr("checked", true);
-				loginState = "isLogin"
+		//如果密码存储时间大于7天 重新登录
+		if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 < 7 && getState('token')) {
+			if (plus) {
+				plus.nativeUI.showWaiting({
+					title: "登录中...",
+					options: {
+						background: '#eff2f5',
+						color: '#999'
+					}
+				});
 			}
+			setTimeout(() => {
+				mui.openWindow({
+					url: FORWARD_URL,
+					id: FORWARD_URL,
+					preload: true,
+					show: {
+						aniShow: 'pop-in'
+					},
+					styles: {
+						popGesture: 'hide'
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+			}, 1000)
+		} else {
+			loginState = "notLogin"
+			clearState('rememberDate')
+			clearState('token')
 		}
-
+		if (loginState === 'isLogin') {
+			$('#login-form').hide()
+		}
 	}
 }
 
@@ -94,8 +115,6 @@ mui._ready(function () {
 	task.isLocalLogin()
 
 	task.rememberPass()
-
-	task.checkedState()
 
 });
 

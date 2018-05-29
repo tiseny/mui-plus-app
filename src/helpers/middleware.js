@@ -39,8 +39,6 @@ function middleware() {
 			//从后台切换到前台开始定位。
 			document.addEventListener("resume", getLocal, false);
 
-			//网络状态变化
-			document.addEventListener("netchange", getLocal, false);
 		})
 
 	}

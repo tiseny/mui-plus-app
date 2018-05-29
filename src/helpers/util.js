@@ -343,7 +343,7 @@ function pageBack(mui) {
   mui.back = function (event) {
     backButtonPress++;
     if (backButtonPress > 1) {
-      clearState('token')
+      // clearState('token')
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");
