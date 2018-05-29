@@ -87,7 +87,8 @@ const task = {
                 extras: {
                     order_id: id,
                     OrderStatus: 11,
-                    isAccount: true
+                    isAccount: true,
+                    partnerBillId: partnerBillId
                 }
             })
         })

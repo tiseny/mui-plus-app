@@ -15,6 +15,12 @@ const task = {
 		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
+			plus.nativeUI.showWaiting("登录中...");
+			if (!$account.value && !$password.value) {
+				mui._toast('登录名或密码不可为空')
+				mui(this).button('reset');
+				return
+			}
 			app.login({
 				userCode: $account.value,
 				password: $password.value,
@@ -35,6 +41,9 @@ const task = {
 							autoShow: false
 						}
 					});
+					mui(this).button('reset');
+					$('#login-form').hide()
+					plus.nativeUI.closeWaiting();
 				} else {
 					mui._toast(json.msg)
 					mui(this).button('reset');
@@ -61,18 +70,10 @@ const task = {
 
 	//进入页面判断是否有本地登录信息
 	isLocalLogin: () => {
-		let loginState = ''
 		//如果密码存储时间大于7天 重新登录
 		if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 < 7 && getState('token')) {
-			if (plus) {
-				plus.nativeUI.showWaiting({
-					title: "登录中...",
-					options: {
-						background: '#eff2f5',
-						color: '#999'
-					}
-				});
-			}
+			$('#login-form').hide()
+			plus.nativeUI.showWaiting("登录中...");
 			setTimeout(() => {
 				mui.openWindow({
 					url: FORWARD_URL,
@@ -88,14 +89,12 @@ const task = {
 						autoShow: false
 					}
 				});
+				plus.nativeUI.closeWaiting();
 			}, 1000)
 		} else {
-			loginState = "notLogin"
+			$('#login-form').show()
 			clearState('rememberDate')
 			clearState('token')
-		}
-		if (loginState === 'isLogin') {
-			$('#login-form').hide()
 		}
 	}
 }

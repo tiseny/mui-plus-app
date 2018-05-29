@@ -25,17 +25,9 @@ function isLogin(mui) {
 function goLogin(mui) {
   // 清除 登录信息
   clearState('token');
-  // 获取所有Webview窗口
-  let curr = plus.webview.currentWebview();
-  let wvs = plus.webview.all();
-  for (let i = 0, len = wvs.length; i < len; i++) {
-    //关闭除当前页面外的其他页面
-    if (wvs[i].getURL() == curr.getURL()) continue;
-    plus.webview.close(wvs[i]);
-  }
   //打开login页面后再关闭setting页面
   plus.webview.open("login.html");
-  curr.close();
+  plus.webview.close('home.html');
 }
 //位置监听
 function watchLocation(mui) {

@@ -12,7 +12,6 @@ const task = {
 		$quitBtn.addEventListener('tap', function (e) {
 			mui(this).button('loading');
 			goLogin(mui)
-			mui.openWindow({ url: 'login.html' })
 		})
 	},
 	//点击标签获取标签id跳转到相关页面并传参
