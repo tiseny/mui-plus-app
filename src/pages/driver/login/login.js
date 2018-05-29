@@ -15,11 +15,14 @@ const task = {
 		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
-			plus.nativeUI.showWaiting("登录中...");
-			if (!$account.value && !$password.value) {
-				mui._toast('登录名或密码不可为空')
-				mui(this).button('reset');
-				return
+			if (navigator.userAgent.indexOf('Windows') === -1) {
+				plus.nativeUI.showWaiting("登录中...");
+				if ($account.value=='' || $password.value=='') {
+					mui._toast('登录名或密码不可为空')
+					mui(this).button('reset');
+					plus.nativeUI.closeWaiting();
+					return
+				}
 			}
 			app.login({
 				userCode: $account.value,
@@ -50,6 +53,22 @@ const task = {
 				}
 			})
 		})
+	},
+
+	//判断是电脑还是手机
+	IsPC: () => {
+		let userAgentInfo = navigator.userAgent;
+		let Agents = ["Android", "iPhone",
+			"SymbianOS", "Windows Phone",
+			"iPad", "iPod"];
+		let flag = true;
+		for (let v = 0; v < Agents.length; v++) {
+			if (userAgentInfo.indexOf(Agents[v]) > 0) {
+				flag = false;
+				break;
+			}
+		}
+		return flag;
 	},
 
 	//记住密码按钮状态
