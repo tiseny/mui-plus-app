@@ -64,69 +64,130 @@ function watchLocation(mui) {
                       orderNo += element.OrderNo + ",";
                     }
                   });
-                  let params = []
-                  //获取本地存储的位置信息
-                  if (getState('location')) {
-                    JSON.parse(getState('location')).forEach(element => {
-                      element.DriverId = trailerInfo.data.Id
-                      element.PlateNumber = trailerInfo.data.PlateNumber
-                      element.OrderNo = orderNo
-                      params.push(JSON.stringify(element))
-                    });
-                    console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置' + new Date().toISOString())
-                  }
-                  params.push({
-                    DriverId: trailerInfo.data.Id,
-                    PlateNumber: trailerInfo.data.PartnerName,
-                    OrderNo: orderNo,
-                    Longitude: uploadLocation.getLocation().lng,
-                    Latitude: uploadLocation.getLocation().lat,
-                    Address: uploadLocation.getLocation().address,
-                    CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
-                  });
-                  //位置上传
-                  uploadLocation.DriverLocation(params).then(json => {
-                    if (json.result) {
-                      console.log("上传位置成功" + new Date().toISOString());
-                      clearState('location')
-                    } else {
-                      console.log("上传位置失败,添加当前位置到本地存储" + new Date().toISOString());
-                      setState('location', JSON.stringify(params))
-                    }
-                  });
+                  geoWatch = plus.geolocation.getCurrentPosition(
+                    function (position) {
+                      // coords 经纬度
+                      let lng = position.coords.longitude
+                      let lat = position.coords.latitude
+                      // address
+                      let address = `${position.address.province}${
+                        position.address.city
+                        }${position.address.district}${position.address.street}`;
+                      let params = []
+                      //获取本地存储的位置信息
+                      if (getState('location')) {
+                        JSON.parse(getState('location')).forEach(element => {
+                          element.DriverId = trailerInfo.data.Id
+                          element.PlateNumber = trailerInfo.data.PlateNumber
+                          element.OrderNo = orderNo
+                          params.push(JSON.stringify(element))
+                        });
+                        console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置' + formatDate())
+                      }
+                      params.push({
+                        DriverId: trailerInfo.data.Id,
+                        PlateNumber: trailerInfo.data.PartnerName,
+                        OrderNo: orderNo,
+                        Longitude: lng,
+                        Latitude: lat,
+                        Address: address,
+                        CreateDate: formatDate()
+                      });
+                      //位置上传
+                      uploadLocation.DriverLocation(params).then(json => {
+                        if (json.result) {
+                          console.log("上传位置成功" + formatDate());
+                          clearState('location')
+                        } else {
+                          console.log("上传位置失败,添加当前位置到本地存储" + formatDate());
+                          setState('location', JSON.stringify(params))
+                        }
+                      });
+                      // 清楚监听位置
+                      plus.geolocation.clearWatch(geoWatch);
+                      geoWatch = null;
+                    },
+                    function (e) {
+                      plus.nativeUI.toast("异常:" + e.message);
+                      // 清楚监听位置
+                      plus.geolocation.clearWatch(geoWatch);
+                      geoWatch = null;
+                    },
+                    { provider: "baidu" }
+                  );
+
 
                 } else {
-                  console.log("司机信息获取失败" + new Date().toISOString());
+                  console.log("司机信息获取失败" + formatDate());
                 }
               });
             } else {
               //没有已接订单删除定位存储
               clearState('location')
+              //进入应用时的第一个页面
+              clearState('login_url')
+              //上次定位时间
+              clearState('locationTime')
             }
           } else {
-            console.log("已接运单获取失败" + new Date().toISOString());
+            console.log("已接运单获取失败" + formatDate());
           }
         });
       } else {
-        console.log('没网则存储位置到数组' + new Date().toISOString())
-        let location = [{
-          Longitude: uploadLocation.getLocation().lng,
-          Latitude: uploadLocation.getLocation().lat,
-          Address: uploadLocation.getLocation().address,
-          CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
-        }]
-        if (getState('location')) {
-          JSON.parse(getState('location')).forEach(item => {
-            location.push(item)
-          })
-          setState('location', JSON.stringify(location))
-        } else {
-          setState('location', JSON.stringify(location))
-        }
+        console.log('没网则存储位置到数组' + formatDate())
+        geoWatch = plus.geolocation.getCurrentPosition(
+          function (position) {
+            // coords 经纬度
+            let lng = position.coords.longitude
+            let lat = position.coords.latitude
+            // address
+            let address = `${position.address.province}${
+              position.address.city
+              }${position.address.district}${position.address.street}`;
+            let location = [{
+              Longitude: lng,
+              Latitude: lat,
+              Address: address,
+              CreateDate: formatDate()
+            }]
+            if (getState('location')) {
+              JSON.parse(getState('location')).forEach(item => {
+                location.push(item)
+              })
+              setState('location', JSON.stringify(location))
+            } else {
+              setState('location', JSON.stringify(location))
+            }
+            // 清楚监听位置
+            plus.geolocation.clearWatch(geoWatch);
+            geoWatch = null;
+          },
+          function (e) {
+            plus.nativeUI.toast("异常:" + e.message);
+            // 清楚监听位置
+            plus.geolocation.clearWatch(geoWatch);
+            geoWatch = null;
+          },
+          { provider: "baidu" }
+        );
+
       }
     }
 
   }
+}
+
+//格式化时间
+let formatDate = () => {
+  let y = new Date().getFullYear() + '-'
+  let m = new Date().getMonth() + 1 > 9 ? new Date().getMonth() + 1 + '-' : '0' + (new Date().getMonth() + 1) + '-'
+  let d = new Date().getDate() > 9 ? new Date().getDate() + ' ' : '0' + new Date().getDate() + ' '
+  let h = new Date().getHours() > 9 ? new Date().getHours() + ':' : '0' + new Date().getHours() + ':'
+  let min = new Date().getMinutes() > 9 ? new Date().getMinutes() + ':' : '0' + new Date().getMinutes() + ':'
+  let s = new Date().getSeconds() > 9 ? new Date().getSeconds() : '0' + new Date().getSeconds()
+  let _date = y + m + d + h + min + s
+
+  return _date
 }
 
 //位置信息接口
@@ -163,38 +224,34 @@ let uploadLocation = {
   },
 
   getLocation: () => {
-    let lng = 0
-    let lat = 0
-    let address = ''
     //获取位置信息
     geoWatch = plus.geolocation.getCurrentPosition(
       function (position) {
         // coords 经纬度
-        lng = position.coords.longitude
-        lat = position.coords.latitude
+        let lng = position.coords.longitude
+        let lat = position.coords.latitude
         // address
-        address = `${position.address.province}${
+        let address = `${position.address.province}${
           position.address.city
           }${position.address.district}${position.address.street}`;
-
-        // 清楚监听位置
-        plus.geolocation.clearWatch(geoWatch);
-        geoWatch = null;
+        return {
+          lng: lng,
+          lat: lat,
+          address: address
+        }
       },
       function (e) {
         plus.nativeUI.toast("异常:" + e.message);
-        // 清楚监听位置
-        plus.geolocation.clearWatch(geoWatch);
-        geoWatch = null;
       },
       { provider: "baidu" }
     );
-    return {
-      lng: lng,
-      lat: lat,
-      address: address
-    }
+    return geoWatch()
+    // 清楚监听位置
+    plus.geolocation.clearWatch(geoWatch);
+    geoWatch = null;
   },
+
+
 }
 
 // 调用系统电话
@@ -357,8 +414,6 @@ function pageBack(mui) {
       }
       //进入应用时的第一个页面
       clearState('login_url')
-      //上次定位时间
-      clearState('locationTime')
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");

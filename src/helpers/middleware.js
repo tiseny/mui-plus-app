@@ -17,6 +17,7 @@ Number.prototype.formatMoney = function (places, symbol, thousand, decimal) {
 const mui = require('../libs/mui.min.js');
 
 function middleware() {
+
 	// 重新定义 
 	mui._ready = func => {
 
@@ -30,43 +31,51 @@ function middleware() {
 			// 判断是否已经登录
 			isLogin(mui);
 
+			//从后台切换到前台开始定位。
+			// document.addEventListener("resume", resetLocal, false);
+			document.addEventListener("resume", getLocal, false);
+
 			//获取上传位置
 			getLocal()
 
 			//第一次进入首先上传一次位置
 			watchLocation(mui);
 
-			//从后台切换到前台开始定位。
-			document.addEventListener("resume", getLocal, false);
-
 		})
+	}
 
+	//重置本地存储
+	function resetLocal() {
+		//进入应用时的第一个页面
+		clearState('login_url')
+		//上次定位时间
+		clearState('locationTime')
 	}
 
 	//定时获取定位信息
 	function getLocal() {
-		if (!getState("login_url")) {
-			setState('login_url', plus.webview.currentWebview().getURL());
-		}
+		// if (!getState("login_url")) {
+		// 	setState('login_url', plus.webview.currentWebview().getURL());
+		// }
 		let localInterval = null
-		let curr = getState("login_url")
-		let wvs = plus.webview.currentWebview().getURL()
-		if (wvs == curr) {
-			// 定位信息，未登录、切换到后台、退出应用不定位。
-			let clearInter = function () {
-				clearInterval(localInterval)
-				clearState("login_url");
-			}
-
-			localInterval = setInterval(function () {
-				watchLocation(mui);
-				if (!getState('token')) {
-					clearInter()
-				} else {
-					document.addEventListener("pause", clearInter, false);
-				}
-			}, 300000)
+		// let curr = getState("login_url")
+		// let wvs = plus.webview.currentWebview().getURL()
+		// if (wvs == curr) {
+		// 定位信息，未登录、切换到后台、退出应用不定位。
+		let clearInter = function () {
+			clearInterval(localInterval)
+			clearState("login_url");
 		}
+
+		localInterval = setInterval(function () {
+			watchLocation(mui);
+			if (!getState('token')) {
+				clearInter()
+			} else {
+				document.addEventListener("pause", clearInter, false);
+			}
+		}, 300000)
+		// }
 	}
 
 	mui._toast = msg => {

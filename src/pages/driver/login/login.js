@@ -16,15 +16,15 @@ const task = {
 		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
-			if (navigator.userAgent.indexOf('Windows') === -1) {
-				plus.nativeUI.showWaiting("登录中...");
-				if ($account.value == '' || $password.value == '') {
-					mui._toast('登录名或密码不可为空')
-					mui(this).button('reset');
-					plus.nativeUI.closeWaiting();
-					return
-				}
-			}
+			// if (navigator.userAgent.indexOf('Windows') === -1) {
+			// 	plus.nativeUI.showWaiting("登录中...");
+			// 	if ($account.value == '' || $password.value == '') {
+			// 		mui._toast('登录名或密码不可为空')
+			// 		mui(this).button('reset');
+			// 		plus.nativeUI.closeWaiting();
+			// 		return
+			// 	}
+			// }
 			app.login({
 				userCode: $account.value,
 				password: $password.value,
@@ -101,6 +101,18 @@ const task = {
 			clearState('rememberDate')
 			clearState('token')
 		}
+	},
+
+	//启动界面关闭事件
+	splashclosedEvent: () => {
+		function resetLocal() {
+			//重置本地存储
+			//进入应用时的第一个页面
+			clearState('login_url')
+			//上次定位时间
+			clearState('locationTime')
+		}
+		document.addEventListener("splashclosed", resetLocal, false);
 	}
 }
 
@@ -114,7 +126,9 @@ mui.init({
 mui._ready(function () {
 
 	pageBack(mui)
-	
+
+	// task.splashclosedEvent()
+
 	// 登录时间
 	task.login()
 
