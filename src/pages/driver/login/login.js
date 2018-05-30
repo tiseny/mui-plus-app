@@ -16,15 +16,15 @@ const task = {
 		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
-			// if (navigator.userAgent.indexOf('Windows') === -1) {
-			// 	plus.nativeUI.showWaiting("登录中...");
-			// 	if ($account.value == '' || $password.value == '') {
-			// 		mui._toast('登录名或密码不可为空')
-			// 		mui(this).button('reset');
-			// 		plus.nativeUI.closeWaiting();
-			// 		return
-			// 	}
-			// }
+			if (navigator.userAgent.indexOf('Windows') === -1) {
+				plus.nativeUI.showWaiting("登录中...");
+				if ($account.value == '' || $password.value == '') {
+					mui._toast('登录名或密码不可为空')
+					mui(this).button('reset');
+					plus.nativeUI.closeWaiting();
+					return
+				}
+			}
 			app.login({
 				userCode: $account.value,
 				password: $password.value,
@@ -61,8 +61,12 @@ const task = {
 	checkedState: () => {
 		if (!$("#rememberBox").prop("checked")) {
 			setState('rememberDate', Date.now())
+			// setState('account', $("#account").val())
+			// setState('password', $("#password").val())
 		} else {
 			clearState('rememberDate')
+			// clearState('account')
+			// clearState('password')
 		}
 	},
 
@@ -76,26 +80,28 @@ const task = {
 	//进入页面判断是否有本地登录信息
 	isLocalLogin: () => {
 		//如果密码存储时间大于7天 重新登录
-		if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 < 7 && getState('token')) {
-			$('#login-form').hide()
-			plus.nativeUI.showWaiting("登录中...");
-			setTimeout(() => {
-				mui.openWindow({
-					url: FORWARD_URL,
-					id: FORWARD_URL,
-					preload: true,
-					show: {
-						aniShow: 'pop-in'
-					},
-					styles: {
-						popGesture: 'hide'
-					},
-					waiting: {
-						autoShow: false
-					}
-				});
-				plus.nativeUI.closeWaiting();
-			}, 1000)
+		if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 < 7) {
+			if (getState('token')) {
+				$('#login-form').hide()
+				plus.nativeUI.showWaiting("登录中...");
+				setTimeout(() => {
+					mui.openWindow({
+						url: FORWARD_URL,
+						id: FORWARD_URL,
+						preload: true,
+						show: {
+							aniShow: 'pop-in'
+						},
+						styles: {
+							popGesture: 'hide'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+					plus.nativeUI.closeWaiting();
+				}, 1000)
+			}
 		} else {
 			$('#login-form').show()
 			clearState('rememberDate')

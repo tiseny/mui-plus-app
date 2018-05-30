@@ -42,9 +42,9 @@ const task = {
             if (json.result) {
               mui.toast(json.msg || '提交成功')
               setTimeout(() => {
-                mui.openWindow({
+                mui._openWindow({
                   url: `${LOAN_URL}`,
-                  extras: {}
+                  id:LOAN_URL
                 });
               }, 1500);
             } else {
