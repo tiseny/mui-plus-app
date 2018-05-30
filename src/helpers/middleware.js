@@ -30,11 +30,11 @@ function middleware() {
 			// 判断是否已经登录
 			isLogin(mui);
 
-			//第一次进入应用时首先获取一次位置
-			watchLocation(mui);
-
 			//获取上传位置
 			getLocal()
+
+			//第一次进入首先上传一次位置
+			watchLocation(mui);
 
 			//从后台切换到前台开始定位。
 			document.addEventListener("resume", getLocal, false);
@@ -57,6 +57,7 @@ function middleware() {
 				clearInterval(localInterval)
 				clearState("login_url");
 			}
+
 			localInterval = setInterval(function () {
 				watchLocation(mui);
 				if (!getState('token')) {

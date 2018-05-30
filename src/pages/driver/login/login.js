@@ -1,5 +1,6 @@
 import mui from '../../../helpers/middleware';
 import { setState, getState, clearState } from '../../../helpers/state';
+import { goLogin, pageBack } from '../../../helpers/util';
 import './login.redux';
 import './login.less';
 import $ from 'jquery';
@@ -17,7 +18,7 @@ const task = {
 			mui(this).button('loading');
 			if (navigator.userAgent.indexOf('Windows') === -1) {
 				plus.nativeUI.showWaiting("登录中...");
-				if ($account.value=='' || $password.value=='') {
+				if ($account.value == '' || $password.value == '') {
 					mui._toast('登录名或密码不可为空')
 					mui(this).button('reset');
 					plus.nativeUI.closeWaiting();
@@ -127,6 +128,8 @@ mui.init({
 // 调用h5 plus的事件系统
 mui._ready(function () {
 
+	pageBack(mui)
+	
 	// 登录时间
 	task.login()
 

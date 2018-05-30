@@ -25,9 +25,18 @@ function isLogin(mui) {
 function goLogin(mui) {
   // 清除 登录信息
   clearState('token');
+  clearState('login_url');
+  let wvs = plus.webview.all();
+  let curr = plus.webview.currentWebview();
+  for (let i = 0, len = wvs.length; i < len; i++) {
+    //关闭除setting页面外的其他页面
+    if (wvs[i].getURL() == curr.getURL())
+      continue;
+    plus.webview.close(wvs[i]);
+  }
   //打开login页面后再关闭setting页面
   plus.webview.open("login.html");
-  plus.webview.close('home.html');
+  plus.webview.close(curr);
 }
 //位置监听
 function watchLocation(mui) {
@@ -335,7 +344,10 @@ function pageBack(mui) {
   mui.back = function (event) {
     backButtonPress++;
     if (backButtonPress > 1) {
-      // clearState('token')
+      if (!getState('rememberDate')) {
+        clearState('token')
+      }
+      clearState('login_url')
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");
