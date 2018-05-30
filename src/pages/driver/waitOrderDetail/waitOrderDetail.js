@@ -10,24 +10,24 @@ let ids = []
 const task = {
 
 	listenMobile: () => {
-		mui('body').on('tap', '.sys-mobile', function() {
+		mui('body').on('tap', '.sys-mobile', function () {
 			const mobile = this.getAttribute('data-mobile')
 			callPhone(mobile);
 		})
 	},
 
 	listenAddress: () => {
-		mui('body').on('tap', '.sys-address', function() {
+		mui('body').on('tap', '.sys-address', function () {
 			const address = this.getAttribute('data-address')
 			openMap(address)
 		})
 	},
 
 	acceptOrder: () => {
-		mui('body').on('tap', '.mui-btn', function() {
+		mui('body').on('tap', '.mui-btn', function () {
 			const accept = this.getAttribute('data-accept')
-			const confirm_title = accept ? '接单提醒' : '拒单提醒'
-			const confirm_content = accept ? '确定要接取订单？' : '拒接订单后，需要等待一定的时间直到下次订单的派发！'
+			const confirm_title = accept == true ? '接单提醒' : '拒单提醒'
+			const confirm_content = accept == true ? '确定要接取订单？' : '拒接订单后，需要等待一定的时间直到下次订单的派发！'
 
 			mui.confirm(confirm_content, confirm_title, ['确认', '取消'], e => {
 				if (e.index == 0) {
@@ -39,37 +39,37 @@ const task = {
 					}).then(json => {
 						mui(this).button('reset');
 						if (json.result) {
-							mui._toast(accept ? '接单成功' : '拒单成功')
-							if (accept) {
-								setTimeout(() => {
-									mui.openWindow({
-								    url:`order.html?activeIndex=1`,
-								    id: 'order.html',
-								    extras:{
-							        activeIndex:1
-								    }
-									});
-								}, 1500)
-							}
+							mui._toast(accept == true ? '接单成功' : '拒单成功')
+							setTimeout(() => {
+								mui.openWindow({
+									url: `order.html?activeIndex=1`,
+									id: 'order.html',
+									extras: {
+										activeIndex: 1
+									}
+								});
+							}, 1500)
+						}else{
+							mui._toast(json.msg)
 						}
 					})
-				} 
+				}
 			})
-		})		
+		})
 	},
 
 	// 获取 待解运单数据
 	fetchDetail: () => {
 		mui.os.plus && plus.nativeUI.showWaiting('加载中...');
 		app.waitOrderDetail.fetchDetail({
-      id: getQuery(mui,'order_id')
+			id: getQuery(mui, 'order_id')
 		}).then(json => {
 			if (json.result) {
 				ids = json.data ? [json.data].map(item => item.Id) : []
 			}
 			mui.os.plus && plus.nativeUI.closeWaiting();
 			//mui('#waitOrderDetail-page').pullRefresh().endPulldownToRefresh(); 
-			const html = template('waitOrderDetail-template', {data: json.data});
+			const html = template('waitOrderDetail-template', { data: json.data });
 			document.getElementById('waitOrderDetail-page').innerHTML = html;
 		})
 	}
@@ -94,7 +94,7 @@ mui.init({
 
 
 // 调用h5 plus的事件系统
-mui._ready(function() {
+mui._ready(function () {
 
 	task.fetchDetail()
 

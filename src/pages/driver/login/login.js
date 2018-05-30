@@ -51,25 +51,10 @@ const task = {
 				} else {
 					mui._toast(json.msg)
 					mui(this).button('reset');
+					plus.nativeUI.closeWaiting();
 				}
 			})
 		})
-	},
-
-	//判断是电脑还是手机
-	IsPC: () => {
-		let userAgentInfo = navigator.userAgent;
-		let Agents = ["Android", "iPhone",
-			"SymbianOS", "Windows Phone",
-			"iPad", "iPod"];
-		let flag = true;
-		for (let v = 0; v < Agents.length; v++) {
-			if (userAgentInfo.indexOf(Agents[v]) > 0) {
-				flag = false;
-				break;
-			}
-		}
-		return flag;
 	},
 
 	//记住密码按钮状态

@@ -25,7 +25,10 @@ function isLogin(mui) {
 function goLogin(mui) {
   // 清除 登录信息
   clearState('token');
-  clearState('login_url');
+  //进入应用时的第一个页面
+  clearState('login_url')
+  //上次定位时间
+  clearState('locationTime')
   let wvs = plus.webview.all();
   let curr = plus.webview.currentWebview();
   for (let i = 0, len = wvs.length; i < len; i++) {
@@ -38,86 +41,91 @@ function goLogin(mui) {
   plus.webview.open("login.html");
   plus.webview.close(curr);
 }
+
 //位置监听
 function watchLocation(mui) {
   // 如果已经登录 有已接订单 获取司机信息并上传位置
   //plus.networkinfo.getCurrentType()网络状态
   if (getState("token")) {
-    if (plus.networkinfo.getCurrentType() > 0) {
-      uploadLocation.recievedList().then(recieved => {
-        if (recieved.result) {
-          if (recieved.data.length > 0) {
-            uploadLocation.trailer().then(trailerInfo => {
-              if (trailerInfo.result) {
-                //可能会有多个已接
-                let orderNo = "";
-                recieved.data.forEach(element => {
-                  if (recieved.data[recieved.data.length - 1] == element) {
-                    orderNo += element.OrderNo;
-                  } else {
-                    orderNo += element.OrderNo + ",";
-                  }
-                });
-                let params = []
-                //获取本地存储的位置信息
-                if (getState('location')) {
-                  JSON.parse(getState('location')).forEach(element => {
-                    element.DriverId = trailerInfo.data.Id
-                    element.PlateNumber = trailerInfo.data.PlateNumber
-                    element.OrderNo = orderNo
-                    params.push(JSON.stringify(element))
+    if (!getState('locationTime') || Date.now() - getState('locationTime') * 1 >= 270000) {
+      setState('locationTime', Date.now())
+      if (plus.networkinfo.getCurrentType() > 0) {
+        uploadLocation.recievedList().then(recieved => {
+          if (recieved.result) {
+            if (recieved.data.length > 0) {
+              uploadLocation.trailer().then(trailerInfo => {
+                if (trailerInfo.result) {
+                  //可能会有多个已接
+                  let orderNo = "";
+                  recieved.data.forEach(element => {
+                    if (recieved.data[recieved.data.length - 1] == element) {
+                      orderNo += element.OrderNo;
+                    } else {
+                      orderNo += element.OrderNo + ",";
+                    }
                   });
-                  console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置' + new Date().toISOString())
-                }
-                params.push({
-                  DriverId: trailerInfo.data.Id,
-                  PlateNumber: trailerInfo.data.PartnerName,
-                  OrderNo: orderNo,
-                  Longitude: uploadLocation.getLocation().lng,
-                  Latitude: uploadLocation.getLocation().lat,
-                  Address: uploadLocation.getLocation().address,
-                  CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
-                });
-                //位置上传
-                uploadLocation.DriverLocation(params).then(json => {
-                  if (json.result) {
-                    console.log("上传位置成功" + new Date().toISOString());
-                    clearState('location')
-                  } else {
-                    console.log("上传位置失败,添加当前位置到本地存储" + new Date().toISOString());
-                    setState('location', JSON.stringify(params))
+                  let params = []
+                  //获取本地存储的位置信息
+                  if (getState('location')) {
+                    JSON.parse(getState('location')).forEach(element => {
+                      element.DriverId = trailerInfo.data.Id
+                      element.PlateNumber = trailerInfo.data.PlateNumber
+                      element.OrderNo = orderNo
+                      params.push(JSON.stringify(element))
+                    });
+                    console.log('上传了' + JSON.parse(getState('location')).length + '条本地位置' + new Date().toISOString())
                   }
-                });
+                  params.push({
+                    DriverId: trailerInfo.data.Id,
+                    PlateNumber: trailerInfo.data.PartnerName,
+                    OrderNo: orderNo,
+                    Longitude: uploadLocation.getLocation().lng,
+                    Latitude: uploadLocation.getLocation().lat,
+                    Address: uploadLocation.getLocation().address,
+                    CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
+                  });
+                  //位置上传
+                  uploadLocation.DriverLocation(params).then(json => {
+                    if (json.result) {
+                      console.log("上传位置成功" + new Date().toISOString());
+                      clearState('location')
+                    } else {
+                      console.log("上传位置失败,添加当前位置到本地存储" + new Date().toISOString());
+                      setState('location', JSON.stringify(params))
+                    }
+                  });
 
-              } else {
-                console.log("司机信息获取失败" + new Date().toISOString());
-              }
-            });
+                } else {
+                  console.log("司机信息获取失败" + new Date().toISOString());
+                }
+              });
+            } else {
+              //没有已接订单删除定位存储
+              clearState('location')
+            }
           } else {
-            //没有已接订单删除定位存储
-            clearState('location')
+            console.log("已接运单获取失败" + new Date().toISOString());
           }
-        } else {
-          console.log("已接运单获取失败" + new Date().toISOString());
-        }
-      });
-    } else {
-      console.log('没网则存储位置到数组' + new Date().toISOString())
-      let location = [{
-        Longitude: uploadLocation.getLocation().lng,
-        Latitude: uploadLocation.getLocation().lat,
-        Address: uploadLocation.getLocation().address,
-        CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
-      }]
-      if (getState('location')) {
-        JSON.parse(getState('location')).forEach(item => {
-          location.push(item)
-        })
-        setState('location', JSON.stringify(location))
+        });
       } else {
-        setState('location', JSON.stringify(location))
+        console.log('没网则存储位置到数组' + new Date().toISOString())
+        let location = [{
+          Longitude: uploadLocation.getLocation().lng,
+          Latitude: uploadLocation.getLocation().lat,
+          Address: uploadLocation.getLocation().address,
+          CreateDate: new Date().toISOString().split('.')[0].split('T')[0] + ' ' + new Date().toISOString().split('.')[0].split('T')[1]
+        }]
+        if (getState('location')) {
+          JSON.parse(getState('location')).forEach(item => {
+            location.push(item)
+          })
+          setState('location', JSON.stringify(location))
+        } else {
+          setState('location', JSON.stringify(location))
+        }
       }
     }
+
   }
 }
 
@@ -347,7 +355,10 @@ function pageBack(mui) {
       if (!getState('rememberDate')) {
         clearState('token')
       }
+      //进入应用时的第一个页面
       clearState('login_url')
+      //上次定位时间
+      clearState('locationTime')
       plus.runtime.quit();
     } else {
       plus.nativeUI.toast("再按一次退出应用");
