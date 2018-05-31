@@ -21,10 +21,10 @@ const task = {
 		feeList: [],																										    // 选择的分类
 		feeArrs: []																													// 选择项 index
 	},
-	
+
 	//监听加一笔按钮显示复选框
 	listenerAddFee: () => {
-		mui('body').on('tap', '#add-btn', function(){
+		mui('body').on('tap', '#add-btn', function () {
 			// 勾选已经选择的选择
 			$('#category-wrap').find('.item').removeClass('selected');
 			task.state.feeArrs.forEach(item => {
@@ -36,7 +36,7 @@ const task = {
 	},
 
 	listenButton: () => {
-		mui('body').on('tap', '.mui-btn', function(){
+		mui('body').on('tap', '.mui-btn', function () {
 			const action = this.getAttribute('data-action')
 			switch (action) {
 				case "0":
@@ -44,7 +44,7 @@ const task = {
 					const params = []
 					// todo 添加费用
 					task.checkValid().then(() => {
-						mui.confirm('请确认信息是否正确, 提交后无法修改？', '提交提醒', ['确认','取消'], function(e) {
+						mui.confirm('请确认信息是否正确, 提交后无法修改？', '提交提醒', ['确认', '取消'], function (e) {
 							if (e.index == 0) {
 								const list = task.state.defaultFeeList.concat(task.state.feeList)
 								// 开启loading
@@ -53,12 +53,12 @@ const task = {
 								list.forEach(item => {
 									params.push({
 										Id: getQuery(mui, 'order_id'),
-						        OrderNo: getQuery(mui, 'order_no'),
-						        CostItem_Id: item.Id,
-						        CostName: item.Name,
-						        CurrencyName: item.CurrencyName,
-						        Currency_Id: item.Currency_Id,
-						        CostType: item.Category,
+										OrderNo: getQuery(mui, 'order_no'),
+										CostItem_Id: item.Id,
+										CostName: item.Name,
+										CurrencyName: item.CurrencyName,
+										Currency_Id: item.Currency_Id,
+										CostType: item.Category,
 										Amount: item.Money,
 										Quantity: 1										//费用数量,不可删除
 									})
@@ -70,11 +70,11 @@ const task = {
 										mui._toast('添加成功')
 										setTimeout(() => {
 											// mui._openWindow({
-										  //   url:'home.html',
-										  //   id: 'home.html',
-										  //   extras:{
-									    //     activeIndex:2
-										  //   }
+											//   url:'home.html',
+											//   id: 'home.html',
+											//   extras:{
+											//     activeIndex:2
+											//   }
 											// });
 											plus.webview.currentWebview().close()
 										}, 1500)
@@ -82,7 +82,7 @@ const task = {
 										mui._toast(json.msg || '添加失败')
 									}
 								})
-							} 
+							}
 						})
 					})
 					break;
@@ -92,7 +92,7 @@ const task = {
 					break;
 				case "2":
 					// 选择了费用项
-					$('#category-wrap').find('.item.selected').each(function() {
+					$('#category-wrap').find('.item.selected').each(function () {
 						let currIndex = $(this).index()
 						let currItem = task.state.categoryList[currIndex]
 						// 如果已经被选择则不加入
@@ -118,7 +118,7 @@ const task = {
 	},
 
 	listenInput: () => {
-		$('body').on('input propertychange','.input-wrap input', function(e) {
+		$('body').on('input propertychange', '.input-wrap input', function (e) {
 			const index = $(this).parent().index()
 			const feeIndex = index - task.state.defaultFeeList.length
 			if (feeIndex >= 0) {
@@ -141,11 +141,11 @@ const task = {
 		})
 
 		// 监听滑动事件 （不属于默认费用）
-		mui('body').on('swipeleft','.input-wrap .mui-input-row', function(e) {
-			const currIndex = $(this).index() - task.state.defaultFeeList.length 
-			const distance = e.detail.distance 
+		mui('body').on('swipeleft', '.input-wrap .mui-input-row', function (e) {
+			const currIndex = $(this).index() - task.state.defaultFeeList.length
+			const distance = e.detail.distance
 			if (distance > 50 && currIndex >= 0) {
-				mui.confirm('确认要删除？', '删除提醒', ['确认','取消'], function(e) {
+				mui.confirm('确认要删除？', '删除提醒', ['确认', '取消'], function (e) {
 					if (e.index == 0) {
 						task.state.feeList.splice(currIndex, 1)
 						task.state.feeArrs.splice(currIndex, 1)
@@ -162,26 +162,26 @@ const task = {
 						task.state.total = total
 
 						task.renderAddPage(list)
-					} 
+					}
 				})
 			}
 		})
 	},
 
 	listenCategory: () => {
-		mui('body').on('tap','.category-wrap .item', function(e) {
+		mui('body').on('tap', '.category-wrap .item', function (e) {
 			$(this).toggleClass('selected')
 		})
 	},
 
 	//获取费用数据
-	fetchFeeDetail:() => {
+	fetchFeeDetail: () => {
 		const isAccount = getQuery(mui, 'isAccount')
 		const func = !!isAccount ? app.feeDetail.fetchDetail : app.feeDetail.fetchFee
 
 		func({
-			OrderId: getQuery(mui,'order_id'),
-			partnerBillId: getQuery(mui,'partnerBillId'),
+			OrderId: getQuery(mui, 'order_id'),
+			partnerBillId: getQuery(mui, 'partnerBillId'),
 		}).then(json => {
 			//费用总金额
 			let total = 0;
@@ -197,7 +197,7 @@ const task = {
 	},
 
 	//获取费用种类数据
-	fetchFeeCategory:() => {
+	fetchFeeCategory: () => {
 		return new Promise((resolve, reject) => {
 			app.feeDetail.feeCategory().then(json => {
 				task.state.categoryList = json.data
@@ -209,7 +209,7 @@ const task = {
 	fetchDefaultFee: () => {
 		return new Promise((resolve, reject) => {
 			let total = 0;
-			
+
 			app.feeDetail.fetchDefault().then(json => {
 				json.data.forEach(item => {
 					total += +item.Money
@@ -222,7 +222,7 @@ const task = {
 	},
 
 	initPage: () => {
-		task.state.mode = getQuery(mui,'OrderStatus') == '11' ? 'show' : 'add'
+		task.state.mode = getQuery(mui, 'OrderStatus') == '11' ? 'show' : 'add'
 		if (task.state.mode == 'show') {
 			task.fetchFeeDetail()
 		} else {
@@ -249,9 +249,9 @@ const task = {
 	// 校验 是否录入了 默认费用项目
 	checkValid: () => {
 		return new Promise((resolve, reject) => {
-			const item = task.state.defaultFeeList.concat(task.state.feeList).filter(item => item.Money ==='')
-			if (item.length>0) {
-				mui._toast(`请填写${item.Name}！`)
+			const item = task.state.defaultFeeList.concat(task.state.feeList).filter(item => item.Money <= 0)
+			if (item.length > 0) {
+				mui._toast(`请正确填写${item.Name}！`)
 			} else {
 				resolve()
 			}
@@ -268,13 +268,13 @@ mui.init({
 
 
 // 调用h5 plus的事件系统
-mui._ready(function() {
+mui._ready(function () {
 
 	task.initPage()
 
 	task.listenerAddFee()
 
-	task.listenButton() 
+	task.listenButton()
 
 	task.listenCategory()
 

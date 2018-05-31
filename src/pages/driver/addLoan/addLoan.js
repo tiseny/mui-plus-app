@@ -31,6 +31,10 @@ const task = {
   //提交按钮
   bindSubmit: () => {
     $('#submitApply').click(function () {
+      if($('#Amount').val()<=0){
+        mui.toast('请正确填写借款金额！')
+        return
+      }
       mui.confirm('是否确认提交？', '申请信息影响借款速度', ['确认', '取消'], e => {
         if (e.index === 0) {
           mui(this).button('loading');
