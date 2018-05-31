@@ -6,7 +6,7 @@ import './home.less';
 let subpages = []
 let pageshow = {};
 
-mui('.mui-bar-tab .mui-tab-item').each(function(e) {
+mui('.mui-bar-tab .mui-tab-item').each(function (e) {
 	let page = this.getAttribute('href')
 	subpages.push(page)
 })
@@ -17,8 +17,8 @@ mui.init({
 });
 
 
- //创建子页面，首个选项卡页面显示，其它均隐藏；
-mui._ready(function() {
+//创建子页面，首个选项卡页面显示，其它均隐藏；
+mui._ready(function () {
 	plus.nativeUI.showWaiting();
 	// 如果 plus 支持
 	if (mui.os.plus) {
@@ -30,8 +30,8 @@ mui._ready(function() {
 				styles: {
 					hardwareAccelerated: true
 				},
-				show:{
-					event:"loaded"
+				show: {
+					event: "loaded"
 				},
 				waiting: {
 					autoShow: false
@@ -45,12 +45,12 @@ mui._ready(function() {
 			self.append(sub);
 		}
 	}
-	 //当前激活选项
+	//当前激活选项
 	let activeTab = subpages[0];
 	let title = document.getElementById("title");
 
-	 //选项卡点击事件
-	mui('.mui-bar-tab').on('tap', 'a', function(e) {
+	//选项卡点击事件
+	mui('.mui-bar-tab').on('tap', 'a', function (e) {
 		let targetTab = this.getAttribute('href');
 		if (targetTab == activeTab) {
 			return;
@@ -61,18 +61,18 @@ mui._ready(function() {
 		} else {
 			document.getElementById('header').classList.remove('black')
 		}
-		
+
 		//更换标题
 		title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
-		if(mui.os.ios|| pageshow[targetTab]){
+		if (mui.os.ios || pageshow[targetTab]) {
+			plus.webview.getWebviewById(targetTab).reload(true)
 			plus.webview.show(targetTab);
-			
-		}else{
+		} else {
 			//否则，使用fade-in动画，且保存变量
 			pageshow[targetTab] = true;
-			plus.webview.show(targetTab,"fade-in",300);
+			plus.webview.show(targetTab, "fade-in", 300);
 		}
 		//隐藏当前;
 		plus.webview.hide(activeTab);
@@ -81,8 +81,8 @@ mui._ready(function() {
 
 		plus.nativeUI.closeWaiting()
 	});
-	 //自定义事件，模拟点击“首页选项卡”
-	document.addEventListener('gohome', function() {
+	//自定义事件，模拟点击“首页选项卡”
+	document.addEventListener('gohome', function () {
 		let defaultTab = document.getElementById("defaultTab");
 		//模拟首页点击
 		mui.trigger(defaultTab, 'tap');
