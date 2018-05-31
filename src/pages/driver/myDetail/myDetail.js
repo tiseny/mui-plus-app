@@ -96,6 +96,7 @@ const task = {
                             }, 1500);
                         } else {
                             mui.toast(json.msg || '出现错误')
+                            mui(this).button('reset');
                         }
                     })
                 } else {
