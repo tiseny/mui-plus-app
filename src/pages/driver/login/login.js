@@ -16,21 +16,28 @@ const task = {
 		$loginbtn.addEventListener('tap', function (e) {
 			// 开启loading
 			mui(this).button('loading');
-			if (navigator.userAgent.indexOf('Windows') === -1) {
-				plus.nativeUI.showWaiting("登录中...");
-				if ($account.value == '' || $password.value == '') {
-					mui._toast('登录名或密码不可为空')
-					mui(this).button('reset');
-					plus.nativeUI.closeWaiting();
-					return
-				}
+
+			if ($account.value == '' || $password.value == '') {
+				mui._toast('登录名或密码不可为空')
+				mui(this).button('reset');
+				return
 			}
-			app.login({
+
+			const params = {
 				userCode: $account.value,
 				password: $password.value,
 				loginType: 1 // 司机端
-			}).then(json => {
+			}
+
+			app.login(params).then(json => {
+				mui(this).button('reset');
 				if (json.result) {
+					// 如果有记住密码
+					if (getState('rememberDate')) {
+						setState('userInfo', JSON.stringify(params))
+					} else {
+						clearState('userInfo')
+					}
 					mui.openWindow({
 						url: FORWARD_URL,
 						id: FORWARD_URL,
@@ -45,86 +52,38 @@ const task = {
 							autoShow: false
 						}
 					});
-					mui(this).button('reset');
-					$('#login-form').hide()
-					plus.nativeUI.closeWaiting();
 				} else {
 					mui._toast(json.msg)
-					mui(this).button('reset');
-					$('#login-form').show()
-					plus.nativeUI.closeWaiting();
 				}
 			})
 		})
 	},
 
-	//记住密码按钮状态
-	checkedState: () => {
-		if (!$("#rememberBox").prop("checked")) {
-			setState('rememberDate', Date.now())
-			// setState('account', $("#account").val())
-			// setState('password', $("#password").val())
-		} else {
-			clearState('rememberDate')
-			// clearState('account')
-			// clearState('password')
-		}
-	},
-
 	//记住密码
 	rememberPass: () => {
 		mui('body').on('tap', '#remember', function () {
-			task.checkedState()
+			if (!$("#rememberBox").prop("checked")) {
+				setState('rememberDate', Date.now())
+			} else {
+				clearState('rememberDate')
+			}
 		})
 	},
 
 	//进入页面判断是否有本地登录信息
 	isLocalLogin: () => {
-		//如果密码存储时间大于7天 重新登录
-		if ((Date.now() - (getState('rememberDate') * 1)) / 1000 / 60 / 60 / 24 < 7) {
-			if (getState('token')) {
-				$('#login-form').hide()
-				plus.nativeUI.showWaiting("登录中...");
-				setTimeout(() => {
-					mui.openWindow({
-						url: FORWARD_URL,
-						id: FORWARD_URL,
-						preload: true,
-						show: {
-							aniShow: 'pop-in'
-						},
-						styles: {
-							popGesture: 'hide'
-						},
-						waiting: {
-							autoShow: false
-						}
-					});
-					plus.nativeUI.closeWaiting();
-				}, 1000)
-			} else {
-				$('#login-form').show()
-				clearState('rememberDate')
-				clearState('token')
-			}
+		// 如果有记住密码
+		if (getState('userInfo')) {
+			const userInfo = JSON.parse(getState('userInfo'))
+			$('#rememberBox').prop('checked', true)
+			$('#account').val(userInfo.userCode)
+			$('#password').val(userInfo.password)
 		} else {
-			$('#login-form').show()
-			clearState('rememberDate')
-			clearState('token')
+			$('#account').val('')
+			$('#password').val('')
 		}
-	},
-
-	//启动界面关闭事件
-	splashclosedEvent: () => {
-		function resetLocal() {
-			//重置本地存储
-			//进入应用时的第一个页面
-			clearState('login_url')
-			//上次定位时间
-			clearState('locationTime')
-		}
-		document.addEventListener("splashclosed", resetLocal, false);
 	}
+
 }
 
 // ios 导航状态
@@ -139,13 +98,13 @@ mui._ready(function () {
 	pageBack(mui)
 
 	// task.splashclosedEvent()
+	task.isLocalLogin()
 
 	// 登录时间
 	task.login()
 
-	task.isLocalLogin()
-
 	task.rememberPass()
-
 });
 
+
+task.isLocalLogin()
