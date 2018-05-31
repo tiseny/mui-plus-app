@@ -69,8 +69,8 @@ const task = {
 									if (json.result) {
 										mui._toast('添加成功')
 										setTimeout(() => {
-											mui.openWindow({
-										    url:`order.html?activeIndex=2`,
+											mui._openWindow({
+										    url:'home.html',
 										    id: 'order.html',
 										    extras:{
 									        activeIndex:2

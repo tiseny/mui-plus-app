@@ -7,7 +7,6 @@ import './addLoan.less';
 import { decode } from 'punycode';
 
 const template = require('../../../libs/art.template');
-const LOAN_URL = 'loanOil.html'
 
 const task = {
 
@@ -42,9 +41,9 @@ const task = {
             if (json.result) {
               mui.toast(json.msg || '提交成功')
               setTimeout(() => {
-                mui._openWindow({
-                  url: `${LOAN_URL}`,
-                  id:LOAN_URL
+                mui.openWindow({
+                  url: 'home.html',
+                  id: 'home.html'
                 });
               }, 1500);
             } else {

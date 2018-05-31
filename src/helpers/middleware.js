@@ -54,13 +54,7 @@ function middleware() {
 
 	//定时获取定位信息
 	function getLocal() {
-		// if (!getState("login_url")) {
-		// 	setState('login_url', plus.webview.currentWebview().getURL());
-		// }
 		let localInterval = null
-		// let curr = getState("login_url")
-		// let wvs = plus.webview.currentWebview().getURL()
-		// if (wvs == curr) {
 		// 定位信息，未登录、切换到后台、退出应用不定位。
 		let clearInter = function () {
 			clearInterval(localInterval)
@@ -75,7 +69,6 @@ function middleware() {
 				document.addEventListener("pause", clearInter, false);
 			}
 		}, 300000)
-		// }
 	}
 
 	mui._toast = msg => {
