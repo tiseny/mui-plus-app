@@ -25,21 +25,15 @@ function isLogin(mui) {
 function goLogin(mui) {
   // 清除 登录信息
   clearState('token');
-  //进入应用时的第一个页面
-  clearState('login_url')
   //上次定位时间
   clearState('locationTime')
-  let wvs = plus.webview.all();
-  let curr = plus.webview.currentWebview();
-  for (let i = 0, len = wvs.length; i < len; i++) {
-    //关闭除setting页面外的其他页面
-    if (wvs[i].getURL() == curr.getURL())
-      continue;
-    plus.webview.close(wvs[i]);
-  }
+  // let curr = plus.webview.currentWebview();
   //打开login页面后再关闭setting页面
   plus.webview.open("login.html");
-  plus.webview.close(curr);
+  // plus.webview.close(curr);
+  if (plus.webview.getWebviewById('myDetail.html')) {
+    plus.webview.getWebviewById('myDetail.html').close()
+  }
 }
 
 //位置监听

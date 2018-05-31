@@ -69,13 +69,14 @@ const task = {
 									if (json.result) {
 										mui._toast('添加成功')
 										setTimeout(() => {
-											mui._openWindow({
-										    url:'home.html',
-										    id: 'order.html',
-										    extras:{
-									        activeIndex:2
-										    }
-											});
+											// mui._openWindow({
+										  //   url:'home.html',
+										  //   id: 'home.html',
+										  //   extras:{
+									    //     activeIndex:2
+										  //   }
+											// });
+											plus.webview.currentWebview().close()
 										}, 1500)
 									} else {
 										mui._toast(json.msg || '添加失败')

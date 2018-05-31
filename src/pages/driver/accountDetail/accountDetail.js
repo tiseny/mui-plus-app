@@ -32,7 +32,7 @@ const task = {
                 }
             })
             const html = template('accountDetail-template', {
-                waybill, 
+                waybill,
                 oil,
                 loan,
                 state: decodeURI(state),
@@ -44,7 +44,7 @@ const task = {
             document.getElementById('mui-content').innerHTML = html;
         })
     },
-    
+
     //核对账单
     bindCheck: () => {
         mui(document.body).on('tap', '.mui-btn', function (ele) {
@@ -60,10 +60,11 @@ const task = {
                         if (json.result) {
                             mui.toast('提交成功')
                             setTimeout(() => {
-                                mui.openWindow({
-                                    url: `${ACCOUNT_URL}`,
-                                    extras: {}
-                                });
+                                // mui.openWindow({
+                                //     url: `${ACCOUNT_URL}`,
+                                //     extras: {}
+                                // });
+                                plus.webview.currentWebview().close()
                             }, 1500);
                         } else {
                             mui.toast(json.msg || '提交失败')
@@ -78,7 +79,7 @@ const task = {
 
     //跳转至运单费用详情
     bindToOrderCost: () => {
-        mui('body').on('tap', '.fee-detail', function() {
+        mui('body').on('tap', '.fee-detail', function () {
             const id = this.getAttribute('data-id')
             const partnerBillId = this.getAttribute('data-partnerbillid')
             mui.openWindow({
@@ -107,7 +108,7 @@ mui.init({
 
 // 调用h5 plus的事件系统
 mui._ready(function () {
-    
+
     task.fetchList()
 
     task.bindCheck()

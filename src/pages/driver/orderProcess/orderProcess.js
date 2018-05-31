@@ -199,7 +199,8 @@ const task = {
 							    }
 								}
 							}
-							mui.openWindow(params);
+							// mui.openWindow(params);
+							plus.webview.currentWebview().close()
 						},1500)
 					} else {
 						mui._toast(json.msg || '服务异常')

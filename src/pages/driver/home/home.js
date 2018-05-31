@@ -68,6 +68,7 @@ mui._ready(function() {
 		//若为iOS平台或非首次显示，则直接显示
 		if(mui.os.ios|| pageshow[targetTab]){
 			plus.webview.show(targetTab);
+			
 		}else{
 			//否则，使用fade-in动画，且保存变量
 			pageshow[targetTab] = true;

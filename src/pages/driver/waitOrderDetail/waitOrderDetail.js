@@ -26,8 +26,8 @@ const task = {
 	acceptOrder: () => {
 		mui('body').on('tap', '.mui-btn', function () {
 			const accept = this.getAttribute('data-accept')
-			const confirm_title = accept == true ? '接单提醒' : '拒单提醒'
-			const confirm_content = accept == true ? '确定要接取订单？' : '拒接订单后，需要等待一定的时间直到下次订单的派发！'
+			const confirm_title = accept == 'true' ? '接单提醒' : '拒单提醒'
+			const confirm_content = accept == 'true' ? '确定要接取订单？' : '拒接订单后，需要等待一定的时间直到下次订单的派发！'
 
 			mui.confirm(confirm_content, confirm_title, ['确认', '取消'], e => {
 				if (e.index == 0) {
@@ -39,17 +39,18 @@ const task = {
 					}).then(json => {
 						mui(this).button('reset');
 						if (json.result) {
-							mui._toast(accept == true ? '接单成功' : '拒单成功')
+							mui._toast(accept == 'true' ? '接单成功' : '拒单成功')
 							setTimeout(() => {
-								mui.openWindow({
-									url: `order.html?activeIndex=1`,
-									id: 'order.html',
-									extras: {
-										activeIndex: 1
-									}
-								});
+								// mui.openWindow({
+								// 	url: `order.html?activeIndex=1`,
+								// 	id: 'order.html',
+								// 	extras: {
+								// 		activeIndex: 1
+								// 	}
+								// });
+								plus.webview.currentWebview().close()
 							}, 1500)
-						}else{
+						} else {
 							mui._toast(json.msg)
 						}
 					})

@@ -40,7 +40,6 @@ const task = {
 	listenMobile: () => {
 		mui('body').on('tap', '.sys-mobile', function() {
 			const mobile = this.getAttribute('data-mobile')
-
 			callPhone(mobile);
 		})
 	},
@@ -48,7 +47,6 @@ const task = {
 	listenAddress: () => {
 		mui('body').on('tap', '.sys-address', function() {
 			const address = this.getAttribute('data-address')
-
 			openMap(address)
 		})
 	},

@@ -41,10 +41,11 @@ const task = {
             if (json.result) {
               mui.toast(json.msg || '提交成功')
               setTimeout(() => {
-                mui.openWindow({
-                  url: 'home.html',
-                  id: 'home.html'
-                });
+                // mui.openWindow({
+                //   url: 'home.html',
+                //   id: 'home.html'
+                // });
+                plus.webview.currentWebview().close()
               }, 1500);
             } else {
               mui.toast(json.msg || '提交失败')
