@@ -51,6 +51,7 @@ const task = {
 				} else {
 					mui._toast(json.msg)
 					mui(this).button('reset');
+					$('#login-form').show()
 					plus.nativeUI.closeWaiting();
 				}
 			})
