@@ -102,6 +102,10 @@ const task = {
 					});
 					plus.nativeUI.closeWaiting();
 				}, 1000)
+			} else {
+				$('#login-form').show()
+				clearState('rememberDate')
+				clearState('token')
 			}
 		} else {
 			$('#login-form').show()
