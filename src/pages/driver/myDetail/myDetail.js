@@ -67,6 +67,7 @@ const task = {
     //密码修改
     changePass: () => {
         mui("body").on('tap', '#changePassBtn', function () {
+            mui(this).button('loading');
             let check = true
             let param = []
             mui("#myDetail-mui input").each(function () {
@@ -75,6 +76,7 @@ const task = {
                     let label = this.previousElementSibling;
                     mui.toast(label.innerText + "不允许为空", { duration: 'long', type: 'div' });
                     check = false;
+                    mui(this).button('reset');
                     return false;
                 }
                 param.push(this.value.trim())
@@ -98,6 +100,7 @@ const task = {
                     })
                 } else {
                     mui.toast('两次输入密码不一致', { duration: 'long', type: 'div' })
+                    mui(this).button('reset');
                 }
             }
 
