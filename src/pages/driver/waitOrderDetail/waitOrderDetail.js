@@ -37,7 +37,7 @@ const task = {
 						ids,
 						accept
 					}).then(json => {
-						mui(this).button('reset');
+						// mui(this).button('reset');
 						if (json.result) {
 							mui._toast(accept == 'true' ? '接单成功' : '拒单成功')
 							setTimeout(() => {
