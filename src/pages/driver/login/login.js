@@ -38,6 +38,7 @@ const task = {
 					} else {
 						clearState('userInfo')
 					}
+					plus.webview.getWebviewById('home').reload(true)
 					mui.openWindow({
 						url: FORWARD_URL,
 						id: FORWARD_URL,
