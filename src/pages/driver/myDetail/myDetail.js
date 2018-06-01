@@ -46,65 +46,32 @@ const task = {
         })
     },
 
-    // //获取评论
-    fetchEvaluate: () => {
-        app.myDetail.fetchEvaluate({
-
-        }).then(json => {
-            mui.os.plus && plus.nativeUI.closeWaiting()
-            const html = template('myDetail-template', {
-                data: json.data,
-                id: getQuery(mui, 'part_id'),
-                title: decodeURI(getQuery(mui, 'part_title'))
-            })
-            document.getElementById('evaluate-part').innerHTML = html
-        }).catch(err => {
-            console.log(err)
-            console.log("评论接口未完成吗？")
-        })
-    },
-
     //密码修改
     changePass: () => {
         mui("body").on('tap', '#changePassBtn', function () {
-            mui(this).button('loading');
-            let check = true
-            let param = []
-            mui("#myDetail-mui input").each(function () {
-                //若当前input为空，则提醒 
-                if (!this.value || this.value.trim() == "") {
-                    let label = this.previousElementSibling;
-                    mui.toast(label.innerText + "不允许为空", { duration: 'long', type: 'div' });
-                    check = false;
-                    mui(this).button('reset');
-                    return false;
-                }
-                param.push(this.value.trim())
-            });
-            //新密码与确认密码是否相同
-            if (check) {
-                if (param[1] === param[2]) {
-                    app.myDetail.changePass({
-                        "OldPassword": param[0],
-                        "NewPassword": param[1],
-                        "NewPasswordConfirm": param[2]
-                    }).then(json => {
-                        if (json.result) {
-                            mui.toast(json.msg || '修改成功')
-                            setTimeout(() => {
-                                goLogin(mui)
-                            }, 1500);
-                        } else {
-                            mui.toast(json.msg || '出现错误')
-                            mui(this).button('reset');
-                        }
-                    })
-                } else {
-                    mui.toast('两次输入密码不一致', { duration: 'long', type: 'div' })
-                    mui(this).button('reset');
-                }
-            }
+            let oldPass = $('#oldPass').val();
+            let newPass = $('#newPass').val();
+            let rePass = $('#confirmPass').val();
 
+            //新密码与确认密码是否相同
+            if (newPass == rePass && oldPass) {
+                mui(this).button('loading');
+                app.myDetail.changePass({
+                    "OldPassword": oldPass,
+                    "NewPassword": newPass,
+                    "NewPasswordConfirm": rePass
+                }).then(json => {
+                    mui(this).button('reset');
+                    if (json.result) {
+                        mui.toast('修改成功')
+                        setTimeout(() => {
+                            goLogin(mui)
+                        }, 1500);
+                    } else {
+                        mui.toast(json.msg || '出现错误')
+                    }
+                })
+            }
         })
     }
 }
@@ -113,12 +80,11 @@ mui.init({
     statusBarBackground: '#f7f7f7',
     swipeBack: true
 });
+
 // 调用h5 plus的事件系统
 mui._ready(function () {
 
     task.fetchDetail()
-
-    // task.fetchEvaluate()
 
     task.changePass()
 

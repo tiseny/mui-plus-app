@@ -64,9 +64,7 @@ function watchLocation(mui) {
                       let lng = position.coords.longitude
                       let lat = position.coords.latitude
                       // address
-                      let address = `${position.address.province}${
-                        position.address.city
-                        }${position.address.district}${position.address.street}`;
+                      let address = position.address ? `${position.address.province}${position.address.city}${position.address.district}${position.address.street}` : '';
                       let params = []
                       //获取本地存储的位置信息
                       if (getState('location')) {

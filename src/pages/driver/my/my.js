@@ -12,7 +12,6 @@ const task = {
 		$quitBtn.addEventListener('tap', function (e) {
 			mui(this).button('loading');
 			goLogin(mui)
-			mui(this).button('reset');
 		})
 	},
 	//点击标签获取标签id跳转到相关页面并传参
@@ -20,8 +19,9 @@ const task = {
 		mui('.mui-table-view').on('tap', '.mui-table-view-cell', function () {
 			const id = this.getAttribute('data-id')
 			const title = this.childNodes[0].innerText
+
 			mui.openWindow({
-				url: `${DETAIL_URL}?part_id=${id}&part_title=${title}`,
+				url: DETAIL_URL,
 				id: DETAIL_URL,
 				extras: {
 					part_id: id,
