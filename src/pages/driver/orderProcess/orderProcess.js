@@ -72,6 +72,7 @@ const task = {
 
 			mui.os.plus && plus.nativeUI.showWaiting('上传中...');
 			photo((path, base64, bitdata) => {
+				console.log(bitdata)
 				app.orderProcess.upaloadImage({
 		      orderId: getQuery(mui, 'order_id'),
 		      businessKey: IMG_KEY[type],
