@@ -26,7 +26,7 @@ const task = {
 			if (isvalid == 'true') {
 				mui.openWindow({
 			    url:`${FORWARD_URL}?order_id=${order_id}&action=${action}&mode=${mode}`,
-			    id: FORWARD_URL,
+			    id: FORWARD_URL,  
 			    extras:{
 		        action,
 		        order_id,

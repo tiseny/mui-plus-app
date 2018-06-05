@@ -23,10 +23,36 @@
         </div>
       </form>
       <div>
-        <header style="padding: 10px 15px;">申请事由</header>
-        <textarea id="cause" class="textarea" rows="3" cols="20" placeholder="请输入申请事由"></textarea>
+        <header style="padding: 10px;">申请事由</header>
+        <textarea id="cause" class="textarea" rows="3" cols="20" placeholder="请输入申请事由" style="margin-bottom: 0;"></textarea>
       </div>
-      <div class="btn">
+      <div id="image-wrap">
+        <script id="image-template" type="text/html">
+        <div class="mui-input-row camera">
+          <label>附件图片</label>
+          {{if imageUrl}}
+          <span class="mui-icon mui-icon-close" ></span>
+          {{/if}}
+        </div>
+        <div class="mui-input-row img-preview-wrap">
+          {{if !imageUrl}}
+          <div class="image-box">
+            <div class="image-box-inner plus">
+              <span class="mui-icon mui-icon-camera"></span>    
+            </div>
+          </div>
+          {{/if}}
+          {{if imageUrl}}
+          <div class="image-box">
+            <div class="image-box-inner image" data-src="{{imageUrl}}">
+              <img class="mui-media-object" src="{{imageUrl}}">  
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        </script>
+      </div>
+      <div class="btn" style="margin-top: 30px">
         <button id="submitApply" disabled="true" type="button" data-loading-text="提交中" class="mui-btn mui-btn-success applyVal">提交申请</button>
       </div>
     </div>

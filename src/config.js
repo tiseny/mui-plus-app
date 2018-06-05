@@ -1,4 +1,4 @@
-const url = 'https://wlTestApi.wlwulian.com'
+const url = 'http://wlTestApi.wlwulian.com'
 
 export default {
   state_prefix: '$app::',                                             // localStorage 数据缓存前缀
@@ -14,7 +14,7 @@ export default {
       feeCategory: url + '/api/CostItem',                             // 费用类目
       trailer: url + '/api/Trailer',                                  // 司机资料
       orderContainer: url + '/api/OrderContainer',                    // 货柜信息
-      orderContainerImage: url + '/api/OrderContainerImage',          // 货柜信息环节图片上传
+      orderContainerImage: url + '/api/AttachmentUpload/PostBase',    // 货柜信息环节图片上传
       checkSheet: url + '/api/DriverBillDetail',                      // 对账单
       feeDefault: url + '/api/CostItem/GetDefault',                   // 获取司机端的默认费用
       loan: url + '/api/DriverRequest',                               // 借款列表与添加

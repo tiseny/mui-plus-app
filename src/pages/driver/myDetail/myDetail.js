@@ -1,6 +1,7 @@
 import mui from '../../../helpers/middleware';
 import { getQuery, goLogin } from '../../../helpers/util';
 import { setState, getState } from '../../../helpers/state';
+import $ from 'jquery';
 import './myDetail.redux';
 import './myDetail.less';
 
@@ -54,7 +55,15 @@ const task = {
             let rePass = $('#confirmPass').val();
 
             //新密码与确认密码是否相同
-            if (newPass == rePass && oldPass) {
+            if(!oldPass){
+                mui.toast('旧密码不能为空')
+            } else if(!newPass){
+                mui.toast('新密码不能为空')
+            } else if(!rePass){
+                mui.toast('确认密码不能为空')
+            } else if(rePass != newPass){
+                mui.toast('密码不一致')
+            } else if (newPass == rePass && oldPass) {
                 mui(this).button('loading');
                 app.myDetail.changePass({
                     "OldPassword": oldPass,
@@ -71,7 +80,7 @@ const task = {
                         mui.toast(json.msg || '出现错误')
                     }
                 })
-            }
+            } 
         })
     }
 }

@@ -18,10 +18,10 @@ window.app.orderProcess = {
 	upaloadImage: params => {
 		return new Promise((resolve, reject) => {
 			const header = {
-				orderId: params.orderId,
-				businessKey: params.businessKey
+				businessId: params.businessId,
+				businessCode: params.businessCode
 			}
-			const body =  params.data
+			const body = params.body
 			fetch(config.driver.api.orderContainerImage, {header, body}, 'upload').then(json => {
 				resolve(json)
 			})

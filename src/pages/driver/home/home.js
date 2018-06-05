@@ -67,7 +67,7 @@ mui._ready(function () {
 		//显示目标选项卡
 		//若为iOS平台或非首次显示，则直接显示
 		if (mui.os.ios || pageshow[targetTab]) {
-			if (targetTab == 'account.html') {
+			if (targetTab != 'my.html') {
 				plus.webview.getWebviewById(targetTab).reload(true)
 			}
 			plus.webview.show(targetTab);

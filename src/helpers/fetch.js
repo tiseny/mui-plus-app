@@ -54,7 +54,7 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 	url = getApiPath(url, header)
 
 	let headers = {
-		'Content-Type': method == 'UPLOAD' ? "multipart/form-data" : 'application/json'
+		'Content-Type': 'application/json'
 	}
 	// 如果需要 token, 除了登录注册以外.
 	if (hasToken) {
@@ -64,9 +64,6 @@ function fetch(url, params = {header: null, body: null}, method, hasToken = true
 	}
 	// 如果是上传文件。 数据改成文件流形式
 	if (method == 'UPLOAD') {
-		let formData = new FormData();
-		formData.append('file', body)
-		body = formData
 		// 重置 method
 		method = 'post'
 	}

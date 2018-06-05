@@ -195,7 +195,7 @@ mui.init({
 
 // 调用h5 plus的事件系统
 mui._ready(function () {
-
+	
 	task.listenFee()
 
 	task.listenForward()

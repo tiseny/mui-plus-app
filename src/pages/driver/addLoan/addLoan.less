@@ -22,4 +22,116 @@
       padding: 10px;
     }
   }
+
+  .mui-input-row{
+    background: #fff;
+    > label {
+      font-size: 14px;
+      padding: 10px;
+      color: #666;
+      line-height: 20px;
+    }
+    input{
+      font-size: 14px;
+    }
+    &.unit{
+      padding-right: 50px;
+      .mui-input-unit{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 14px;
+      }
+
+      label~input, 
+      label~select, 
+      label~textarea{
+        width: calc(~"66% - 20px");
+      }
+
+      .mui-input-clear~.mui-icon-clear, 
+      .mui-input-password~.mui-icon-eye, 
+      .mui-input-speech~.mui-icon-speech{
+        right: 50px;
+      }
+    }
+    &.camera{
+      background: transparent;
+      padding-right: 50px;
+      .mui-icon-close{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 24px;
+        color: #007aff;
+      }
+    }
+    &.img-preview-wrap{
+      padding: 1px 5px;
+      height: auto;
+      border-top: 1px solid rgba(0, 0, 0, .2);
+      border-bottom: 1px solid rgba(0, 0, 0, .2);
+      img{
+        max-width: 100%;
+        max-height: 100%;
+        display: inline-block;
+      }
+      .image-box{
+        float: left;
+        width: 25%;
+        text-align: center;
+        overflow: hidden;
+        padding: 0 5px;
+        height: 80px;
+        margin: 5px 0;
+        .image-box-inner{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #eee;
+          font-size: 12px;
+          color: #aaa;
+          &.plus{
+            background: none;
+            border: 1px solid #e4e2e2;
+            .mui-icon{
+              color: #ccc;
+              font-size: 40px;
+            }
+          }
+        }
+      }
+    }
+    &:after, &:before{
+      left: 0;
+    }
+    &.readonly{
+      line-height: 34px;
+      height: 34px;
+      label{
+        line-height: 18px;
+        padding: 8px 10px;
+      }
+      input{
+        padding-top: 2px;
+        padding-bottom: 2px;
+        height: 34px;
+      }
+      .mui-input-unit{
+        line-height: 34px;
+      }
+      &:after, &:before{
+        display: none;
+      }
+    }
+  } 
 }

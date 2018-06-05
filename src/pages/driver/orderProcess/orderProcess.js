@@ -70,13 +70,14 @@ const task = {
 			const field = this.getAttribute('data-field');
 			const type = this.getAttribute('data-type');
 
-			mui.os.plus && plus.nativeUI.showWaiting('上传中...');
 			photo((path, base64, bitdata) => {
-				console.log(bitdata)
+				mui.os.plus && plus.nativeUI.showWaiting('上传中...');
 				app.orderProcess.upaloadImage({
-		      orderId: getQuery(mui, 'order_id'),
-		      businessKey: IMG_KEY[type],
-		      data: bitdata
+		      businessId: getQuery(mui, 'order_id'),
+		      businessCode: IMG_KEY[type],
+		      body: {
+		      	baseCode: bitdata
+		      }
 		    }).then(json => {
 		    	mui.os.plus && plus.nativeUI.closeWaiting();
 		      // 如果成功
